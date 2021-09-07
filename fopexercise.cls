@@ -81,99 +81,99 @@
 \lstdefinelanguage{Racket}{%
     alsoletter=+-*/?\=<>!~\#,%
     morekeywords={%                                                                                                                                                          
-        empty, true, \#true, \#t, false, \#false, \#f%
-    },%
+            empty, true, \#true, \#t, false, \#false, \#f%
+        },%
     morekeywords={%                                                                                                                                                          
-        lambda, define-datatype, begin, begin0, set!, delay, shared, recur,%
-        case, match, when, unless%
-    },%
+            lambda, define-datatype, begin, begin0, set!, delay, shared, recur,%
+            case, match, when, unless%
+        },%
     morekeywords={%                                                                                                                                                          
-        local, letrec, let*, let, time, define, define-struct, cond, else, if,%
-        and, or, check-expect, check-random, check-satisfied, check-within,%
-        check-error, check-member-of, check-range, require%
-    },%
+            local, letrec, let*, let, time, define, define-struct, cond, else, if,%
+            and, or, check-expect, check-random, check-satisfied, check-within,%
+            check-error, check-member-of, check-range, require%
+        },%
     morekeywords={%                                                                                                                                                          
-        -, <, <=, =, >, >=, abs, acos, add1, angle, asin, atan, ceiling,%
-        complex?, conjugate, cos, cosh, current-seconds, denominator, e, even?,%
-        exact->inexact, exact?, exp, expt, floor, gcd, imag-part,%
-        inexact->exact, inexact?, integer->char, integer-sqrt, integer?, lcm,%
-        log, magnitude, make-polar, make-rectangular, max, min, modulo,%
-        negative?, number->string, number?, numerator, odd?, pi, positive?,%
-        quotient, random, rational?, real-part, real?, remainder, round, sgn,%
-        sin, sinh, sqr, sqrt, sub1, tan, zero?%
-    },%
+            -, <, <=, =, >, >=, abs, acos, add1, angle, asin, atan, ceiling,%
+            complex?, conjugate, cos, cosh, current-seconds, denominator, e, even?,%
+            exact->inexact, exact?, exp, expt, floor, gcd, imag-part,%
+            inexact->exact, inexact?, integer->char, integer-sqrt, integer?, lcm,%
+            log, magnitude, make-polar, make-rectangular, max, min, modulo,%
+            negative?, number->string, number?, numerator, odd?, pi, positive?,%
+            quotient, random, rational?, real-part, real?, remainder, round, sgn,%
+            sin, sinh, sqr, sqrt, sub1, tan, zero?%
+        },%
     morekeywords={%                                                                                                                                                          
-        boolean->string, boolean=?, boolean?, false?, not%
-    },%
+            boolean->string, boolean=?, boolean?, false?, not%
+        },%
     morekeywords={%                                                                                                                                                          
-        symbol->string, symbol=?, symbol%
-    },%
+            symbol->string, symbol=?, symbol%
+        },%
     morekeywords={%                                                                                                                                                          
-        append, assoc, assq, caaar, caadr, caar, cadar, cadddr, caddr, cadr,%
-        car, cdaar, cdadr, cdar, cddar, cdddr, cddr, cdr, cons, cons?, eighth,%
-        empty?, fifth, first, for-each, fourth, length, list, list*, list-ref,%
-        list?, make-list, member, member?, memq, memq?, memv, null, null?,%
-        range, remove, remove-all, rest, reverse, second, seventh, sixth, third%
-    },%
+            append, assoc, assq, caaar, caadr, caar, cadar, cadddr, caddr, cadr,%
+            car, cdaar, cdadr, cdar, cddar, cdddr, cddr, cdr, cons, cons?, eighth,%
+            empty?, fifth, first, for-each, fourth, length, list, list*, list-ref,%
+            list?, make-list, member, member?, memq, memq?, memv, null, null?,%
+            range, remove, remove-all, rest, reverse, second, seventh, sixth, third%
+        },%
     morekeywords={%
-        make-posn, posn-x, posn-y, posn?, set-posn-x!, set-posn-y!%
-    },%
+            make-posn, posn-x, posn-y, posn?, set-posn-x!, set-posn-y!%
+        },%
     morekeywords={%
-        char->integer, char-alphabetic?, char-ci<=?, char-ci<?, char-ci=?,%
-        char-ci>=?, char-ci>?, char-downcase, char-lower-case?, char-numeric?,%
-        char-upcase, char-upper-case?, char-whitespace?, char<=?, char<?,%
-        char=?, char>=?, char>?, char?%
-    },%
+            char->integer, char-alphabetic?, char-ci<=?, char-ci<?, char-ci=?,%
+            char-ci>=?, char-ci>?, char-downcase, char-lower-case?, char-numeric?,%
+            char-upcase, char-upper-case?, char-whitespace?, char<=?, char<?,%
+            char=?, char>=?, char>?, char?%
+        },%
     morekeywords={%
-        explode, format, implode, int->string, list->string, make-string,%
-        replicate, string, string->int, string->list, string->number,%
-        string->symbol, string-alphabetic?, string-contains-ci?,%
-        string-contains?, string-copy, string-downcase, string-ith,%
-        string-length, string-lower-case?, string-numeric?, string-ref,%
-        string-upcase, string-upper-case?, string-whitespace?, string?,%
-        substring%
-    },%
+            explode, format, implode, int->string, list->string, make-string,%
+            replicate, string, string->int, string->list, string->number,%
+            string->symbol, string-alphabetic?, string-contains-ci?,%
+            string-contains?, string-copy, string-downcase, string-ith,%
+            string-length, string-lower-case?, string-numeric?, string-ref,%
+            string-upcase, string-upper-case?, string-whitespace?, string?,%
+            substring%
+        },%
     morekeywords={%
-        image=?, image?%
-    },%
+            image=?, image?%
+        },%
     morekeywords={%
-        =~, current-milliseconds, eof, eof-object?, eq?, equal?, equal~?, eqv?,%
-        error, exit, force, gensym, identity, promise?, sleep, struct?, void,%
-        void?%
-    },%
+            =~, current-milliseconds, eof, eof-object?, eq?, equal?, equal~?, eqv?,%
+            error, exit, force, gensym, identity, promise?, sleep, struct?, void,%
+            void?%
+        },%
     morekeywords={%
-        +, *, /
-    },%
+            +, *, /
+        },%
     morekeywords={%
-        string-append, string-ci<=?, string-ci<?, string-ci=?, string-ci>=?,%
-        string-ci>?, string<=?, string<?, string=?, string>=?, string>?%
-    },%
+            string-append, string-ci<=?, string-ci<?, string-ci=?, string-ci>=?,%
+            string-ci>?, string<=?, string<?, string=?, string>=?, string>?%
+        },%
     morekeywords={%
-        posn%
-    },%
+            posn%
+        },%
     morekeywords={%
-        andmap, apply, argmax, argmin, build-list, build-string, compose,%
-        filter, foldl, foldr, map, memf, ormap, procedure?, quicksort, sort%
-    },%
+            andmap, apply, argmax, argmin, build-list, build-string, compose,%
+            filter, foldl, foldr, map, memf, ormap, procedure?, quicksort, sort%
+        },%
     morekeywords={%
-        display, newline, pretty-print, print, printf, read,%
-        with-input-from-file, with-input-from-string, with-output-to-file,%
-        with-output-to-string, write%
-    },%
+            display, newline, pretty-print, print, printf, read,%
+            with-input-from-file, with-input-from-string, with-output-to-file,%
+            with-output-to-string, write%
+        },%
     morekeywords={%
-        build-vector, list->vector, make-vector, vector, vector->list,%
-        vector-length, vector-ref, vector-set!, vector?%
-    },%
+            build-vector, list->vector, make-vector, vector, vector->list,%
+            vector-length, vector-ref, vector-set!, vector?%
+        },%
     morekeywords={%
-        box, box?, set-box!, unbox
-    },%
+            box, box?, set-box!, unbox
+        },%
     morekeywords={%
-        hash-copy, hash-count, hash-eq?, hash-equal?, hash-eqv?, hash-for-each,%
-        hash-has-key?, hash-map, hash-ref, hash-ref!, hash-remove,%
-        hash-remove!, hash-set, hash-set!, hash-update, hash-update!, hash?,%
-        make-hash, make-hasheq, make-hasheqv, make-immutable-hash,%
-        make-immutable-hasheq, make-immutable-hasheqv
-    },%
+            hash-copy, hash-count, hash-eq?, hash-equal?, hash-eqv?, hash-for-each,%
+            hash-has-key?, hash-map, hash-ref, hash-ref!, hash-remove,%
+            hash-remove!, hash-set, hash-set!, hash-update, hash-update!, hash?,%
+            make-hash, make-hasheq, make-hasheqv, make-immutable-hash,%
+            make-immutable-hasheq, make-immutable-hasheqv
+        },%
     morecomment=[l]{;},%
     morecomment=[s]{\#|}{|\#},%
     morestring=[b]{"}%
@@ -266,43 +266,43 @@
 \newcommand\supervisor[1]{\renewcommand\fopexercise@supervisor{#1}}
 \newcommand\fopexercise@supervisor{%
     \ClassError{fopexercise}
-        {Kein Veranstalter angegeben}
-        {Verwenden Sie den Befehl \@backslashchar supervisor{<veranstalter>} um einen Veranstalter festzulegen.}
+    {Kein Veranstalter angegeben}
+    {Verwenden Sie den Befehl \@backslashchar supervisor{<veranstalter>} um einen Veranstalter festzulegen.}
 }
 
 \newcommand\semester[1]{\renewcommand\fopexercise@semester{#1}}
 \newcommand\fopexercise@semester{%
     \ClassError{fopexercise}
-        {Kein Semester angegeben}
-        {Verwenden Sie den Befehl \@backslashchar semester{<semester>} um ein Semester festzulegen.}
+    {Kein Semester angegeben}
+    {Verwenden Sie den Befehl \@backslashchar semester{<semester>} um ein Semester festzulegen.}
 }
 
 \newcommand\version[1]{\renewcommand\fopexercise@version{#1}}
 \newcommand\fopexercise@version{%
     \ClassError{fopexercise}
-        {Keine Versionsnummer angegeben}
-        {Verwenden Sie den Befehl \@backslashchar version{<versionsnummer>} um eine Versionsnummer festzulegen.}
+    {Keine Versionsnummer angegeben}
+    {Verwenden Sie den Befehl \@backslashchar version{<versionsnummer>} um eine Versionsnummer festzulegen.}
 }
 
 \newcommand\topics[1]{\renewcommand\fopexercise@topics{#1}}
 \newcommand\fopexercise@topics{%
     \ClassError{fopexercise}
-        {Keine Themen angegeben}
-        {Verwenden Sie den Befehl \@backslashchar topics{<themen>} um eine Versionsnummer festzulegen.}
+    {Keine Themen angegeben}
+    {Verwenden Sie den Befehl \@backslashchar topics{<themen>} um eine Versionsnummer festzulegen.}
 }
 
 \newcommand\slides[1]{\renewcommand\fopexercise@slides{#1}}
 \newcommand\fopexercise@slides{%
     \ClassError{fopexercise}
-        {Kein Foliensatz angegeben}
-        {Verwenden Sie den Befehl \@backslashchar slides{<foliennummern>} um einen relevanten Foliensatz festzulegen.}
+    {Kein Foliensatz angegeben}
+    {Verwenden Sie den Befehl \@backslashchar slides{<foliennummern>} um einen relevanten Foliensatz festzulegen.}
 }
 
 \newcommand\duedate[1]{\renewcommand\fopexercise@duedate{#1}}
 \newcommand\fopexercise@duedate{%
     \ClassError{fopexercise}
-        {Kein Abgabedatum angegeben}
-        {Verwenden Sie den Befehl \@backslashchar duedate{<datum>} um ein Abgabedatum festzulegen.}
+    {Kein Abgabedatum angegeben}
+    {Verwenden Sie den Befehl \@backslashchar duedate{<datum>} um ein Abgabedatum festzulegen.}
 }
 
 \iffopexercise@fopdesign
@@ -346,7 +346,7 @@
             \vspace{3mm}
 
             {\large Abgabe der Hausübung:\hfill\fopexercise@duedate}
-            
+
             \rule{\linewidth}{0.2mm}\\[4mm]
         \end{center}
 
@@ -378,51 +378,51 @@
 \else
     \let\corporateDesignHeader\maketitle
     \renewcommand{\maketitle}{%
-        \renewcommand{\@title}{%
-            Funktionale und objektorientierte Programmierkonzepte\\
-            \originalTitle
-            % {\large \qquad v\fopexercise@version}
-            % Test {\large \qquad v\fopexercise@version}
-        }
-        % \renewcommand{\@title}{%
-        %     Funktionale und objektorientierte Programmierkonzepte\\
-        %     \originalTitle \hfill {\large v\fopexercise@version}
-        % }
-        \corporateDesignHeader
-        % \vspace*{-4.8\baselineskip}
-        % {\null\hfill v\fopexercise@version}\\ \\
-        \vspace*{-1.8\baselineskip}
-        {\fopexercise@semester \hfill v\fopexercise@version}\\
-        {Themen:\hfill\fopexercise@topics}\\
-        {Relevante Foliensätze:\hfill\fopexercise@slides}\\
-        {Abgabe der Hausübung:\hfill\fopexercise@duedate}\\
-        \rule{\linewidth}{0.2mm}\\[4mm]
-        \vspace*{-2\baselineskip}
+    \renewcommand{\@title}{%
+        Funktionale und objektorientierte Programmierkonzepte\\
+\originalTitle
+        % {\large \qquad v\fopexercise@version}
+        % Test {\large \qquad v\fopexercise@version}
+    }
+    % \renewcommand{\@title}{%
+    %     Funktionale und objektorientierte Programmierkonzepte\\
+    %     \originalTitle \hfill {\large v\fopexercise@version}
+    % }
+    \corporateDesignHeader
+    % \vspace*{-4.8\baselineskip}
+    % {\null\hfill v\fopexercise@version}\\ \\
+    \vspace*{-1.8\baselineskip}
+    {\fopexercise@semester \hfill v\fopexercise@version}\\
+    {Themen:\hfill\fopexercise@topics}\\
+    {Relevante Foliensätze:\hfill\fopexercise@slides}\\
+    {Abgabe der Hausübung:\hfill\fopexercise@duedate}\\
+    \rule{\linewidth}{0.2mm}\\[4mm]
+    \vspace*{-2\baselineskip}
 
-        \thispagestyle{plain}
+    \thispagestyle{plain}
 
-        \global\let\thanks\relax
-        \global\let\maketitle\relax
-        \global\let\@maketitle\relax
-        \global\let\@thanks\@empty
-        \global\let\@author\@empty
-        \global\let\@date\@empty
-        \global\let\fopexercise@supervisor\relax
-        \global\let\fopexercise@semester\relax
-        \global\let\fopexercise@version\relax
-        \global\let\fopexercise@topics\relax
-        \global\let\fopexercise@slides\relax
-        \global\let\fopexercise@duedate\relax
-        \global\let\title\relax
-        \global\let\author\relax
-        \global\let\date\relax
-        \global\let\and\relax
-        \global\let\supervisor\relax
-        \global\let\semester\relax
-        \global\let\version\relax
-        \global\let\topics\relax
-        \global\let\slides\relax
-        \global\let\duedate\relax
+    \global\let\thanks\relax
+    \global\let\maketitle\relax
+    \global\let\@maketitle\relax
+    \global\let\@thanks\@empty
+    \global\let\@author\@empty
+    \global\let\@date\@empty
+    \global\let\fopexercise@supervisor\relax
+    \global\let\fopexercise@semester\relax
+    \global\let\fopexercise@version\relax
+    \global\let\fopexercise@topics\relax
+    \global\let\fopexercise@slides\relax
+    \global\let\fopexercise@duedate\relax
+    \global\let\title\relax
+    \global\let\author\relax
+    \global\let\date\relax
+    \global\let\and\relax
+    \global\let\supervisor\relax
+    \global\let\semester\relax
+    \global\let\version\relax
+    \global\let\topics\relax
+    \global\let\slides\relax
+    \global\let\duedate\relax
     }
 \fi
 
@@ -442,39 +442,39 @@
 
 \newcommand\vues[0]{
     \@startsection{vues}{1}{\z@}%
-                  {-3.5ex \@plus -1ex \@minus -.2ex}%
-                  {2.3ex \@plus .2ex}%
-                  {\normalfont\Large\bfseries}{Vorbereitende Übungen}}
-                              
+    {-3.5ex \@plus -1ex \@minus -.2ex}%
+    {2.3ex \@plus .2ex}%
+    {\normalfont\Large\bfseries}{Vorbereitende Übungen}}
+
 \newcommand\vue[2]{
     \@startsection{vue}{2}{\z@}%
-                  {-3.25ex \@plus -1ex \@minus -.2ex}%
-                  {1.5ex \@plus .2ex}%
-                  {\normalfont\large\bfseries}[#1]{#1\hfill\fopexercise@stars{#2}{\fopexercise@maxdifficulty}}}
-                              
+    {-3.25ex \@plus -1ex \@minus -.2ex}%
+    {1.5ex \@plus .2ex}%
+    {\normalfont\large\bfseries}[#1]{#1\hfill\fopexercise@stars{#2}{\fopexercise@maxdifficulty}}}
+
 \newcommand\vueaufgabe{
     \@startsection{vueaufgabe}{3}{\z@}%
-                  {-3.25ex \@plus -1ex \@minus -.2ex}%
-                  {1.5ex \@plus .2ex}%
-                  {\normalfont\large\bfseries}}
-                              
+    {-3.25ex \@plus -1ex \@minus -.2ex}%
+    {1.5ex \@plus .2ex}%
+    {\normalfont\large\bfseries}}
+
 \newcommand\hue[3]{
     \@startsection{hue}{1}{\z@}%
-                  {-3.5ex \@plus -1ex \@minus -.2ex}%
-                  {2.3ex \@plus .2ex}%
-                  {\normalfont\Large\bfseries}[#1 -- #2]{#1\hfill Gesamt \fopexercise@points{#3}\\\textit{#2}}}
-                              
+    {-3.5ex \@plus -1ex \@minus -.2ex}%
+    {2.3ex \@plus .2ex}%
+    {\normalfont\Large\bfseries}[#1 -- #2]{#1\hfill Gesamt \fopexercise@points{#3}\\\textit{#2}}}
+
 \newcommand\hueaufgabe[2]{
     \@startsection{hueaufgabe}{2}{\z@}%
-                  {-3.25ex \@plus -1ex \@minus -.2ex}%
-                  {1.5ex \@plus .2ex}%
-                  {\normalfont\large\bfseries}[#1]{#1\hfill \fopexercise@points{#2}}}
-                              
+    {-3.25ex \@plus -1ex \@minus -.2ex}%
+    {1.5ex \@plus .2ex}%
+    {\normalfont\large\bfseries}[#1]{#1\hfill \fopexercise@points{#2}}}
+
 \newcommand\hueteilaufgabe[2]{
     \@startsection{hueteilaufgabe}{3}{\z@}%
-                  {-3.25ex\@plus -1ex \@minus -.2ex}%
-                  {1.5ex \@plus .2ex}%
-                  {\normalfont\normalfont\bfseries}[#1]{#1\hfill \fopexercise@points{#2}}}
+    {-3.25ex\@plus -1ex \@minus -.2ex}%
+    {1.5ex \@plus .2ex}%
+    {\normalfont\normalfont\bfseries}[#1]{#1\hfill \fopexercise@points{#2}}}
 
 \let\vuesmark\@gobble
 \let\vuemark\@gobble
@@ -491,37 +491,37 @@
 \providecommand*{\toclevel@hueteilaufgabe}{3}
 
 \newcommand*\l@vues[2]{%
-  \ifnum \c@tocdepth >\z@
-    \addpenalty\@secpenalty
-    \addvspace{1.0em \@plus\p@}%
-    \setlength\@tempdima{1.5em}%
-    \begingroup
-      \parindent \z@ \rightskip \@pnumwidth
-      \parfillskip -\@pnumwidth
-      \leavevmode \bfseries
-      \advance\leftskip\@tempdima
-      \hskip -\leftskip
-      #1\nobreak\hfil
-      \nobreak\hb@xt@\@pnumwidth{\hss #2%
-                                 \kern-\p@\kern\p@}\par
-    \endgroup
-  \fi}
+    \ifnum \c@tocdepth >\z@
+        \addpenalty\@secpenalty
+        \addvspace{1.0em \@plus\p@}%
+        \setlength\@tempdima{1.5em}%
+        \begingroup
+        \parindent \z@ \rightskip \@pnumwidth
+        \parfillskip -\@pnumwidth
+        \leavevmode \bfseries
+        \advance\leftskip\@tempdima
+        \hskip -\leftskip
+        #1\nobreak\hfil
+        \nobreak\hb@xt@\@pnumwidth{\hss #2%
+            \kern-\p@\kern\p@}\par
+        \endgroup
+    \fi}
 \newcommand*\l@hue[2]{%
-  \ifnum \c@tocdepth >\z@
-    \addpenalty\@secpenalty
-    \addvspace{1.0em \@plus\p@}%
-    \setlength\@tempdima{1.5em}%
-    \begingroup
-      \parindent \z@ \rightskip \@pnumwidth
-      \parfillskip -\@pnumwidth
-      \leavevmode \bfseries
-      \advance\leftskip\@tempdima
-      \hskip -\leftskip
-      #1\nobreak\hfil
-      \nobreak\hb@xt@\@pnumwidth{\hss #2%
-                                 \kern-\p@\kern\p@}\par
-    \endgroup
-  \fi}
+    \ifnum \c@tocdepth >\z@
+        \addpenalty\@secpenalty
+        \addvspace{1.0em \@plus\p@}%
+        \setlength\@tempdima{1.5em}%
+        \begingroup
+        \parindent \z@ \rightskip \@pnumwidth
+        \parfillskip -\@pnumwidth
+        \leavevmode \bfseries
+        \advance\leftskip\@tempdima
+        \hskip -\leftskip
+        #1\nobreak\hfil
+        \nobreak\hb@xt@\@pnumwidth{\hss #2%
+            \kern-\p@\kern\p@}\par
+        \endgroup
+    \fi}
 \newcommand*\l@vue{\@dottedtocline{2}{1.5em}{2.3em}}
 \newcommand*\l@vueaufgabe{\@dottedtocline{3}{3.8em}{3.2em}}
 \newcommand*\l@hueaufgabe{\@dottedtocline{2}{1.5em}{2.3em}}
@@ -556,7 +556,7 @@
     \tl_set:Nx \g_tudaci_version_tl { \seq_item:Nn \g_tuda_version_seq { 2 } }
     \tl_set:Nx \g_tudaci_version_tl {\tl_tail:N \g_tudaci_version_tl}
     \regex_replace_once:nnN { [a-z] } { } \g_tudaci_version_tl
-    
+
     \newcommand{\getTudaciVersion}[1]{
         \tl_use:N \g_tudaci_version_tl
     }
@@ -566,7 +566,7 @@
     \newcommand{\IfTudaciVersionBetweenTF}[4]{
         \fp_compare:nTF {#1<=\getTudaciVersion{}<=#2}{#3}{#4}
     }
-    
+
     % Compatibility with newer TUDA-Versions
     \IfTudaciVersionAtLeastTF{3.12}{
         \clist_map_inline:nn {vues,vue,vueaufgabe,hue,hueaufgabe,hueteilaufgabe} {
@@ -736,7 +736,7 @@
 
     % Minted Line Number Styling
     \renewcommand{\theFancyVerbLine}{\tikz{\coordinate(a);\node[text width=5mm,inner sep=0pt,align=center]{\ttfamily\textcolor{white}{\scriptsize\arabic{FancyVerbLine}}};}}
-    
+
     % Environment für meinen Code-Style (Arg 1 = minted Options, Arg 2 = tcolorbox Options)
     \definecolor{codebg}{RGB}{22,43,58}
     \newtcblisting{codeBlock}[2][]{
@@ -768,7 +768,7 @@
             },
         #2 % Weitere Argumente zulassen
     }
-    
+
 }{
     \lstnewenvironment{codeBlock}[2][]{}{}%
 }
