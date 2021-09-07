@@ -2,7 +2,13 @@
 
 ## Installation
 Das Repo muss in den TeX-Path geklont werden.
-(Unter Linux liegt der meist bei `~/texmf/tex/latex`)
+Diesen findet man mit dem Befehl:
+```sh
+kpsewhich -var-value=TEXMFHOME
+```
+> Unter Linux liegt der meist bei `~/texmf/tex/latex`
+
+Beispiel:
 
 ```sh
 cd path/to/texmf/tex/latex/
