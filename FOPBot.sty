@@ -1,0 +1,162 @@
+\NeedsTeXFormat{LaTeX2e}[2014/08/21]
+\ProvidesPackage{FOPBot}[2020/12/10 FOP-Bot LaTeX Package]
+
+% Made by Ruben Deisenroth, 2020
+% Available at https://github.com/Rdeisenroth/FOPBot-Latex-Package
+
+\usepackage{tikz}
+\usetikzlibrary{patterns, shapes, intersections, arrows, math, decorations,decorations.pathreplacing, decorations.pathmorphing, positioning, calc, automata, chains,matrix, arrows.meta, , shadows.blur, shapes.symbols, backgrounds}
+
+\definecolor{FBlightgray}{RGB}{192, 192, 192}
+\definecolor{FBdarkgray}{RGB}{128, 128, 128}
+\definecolor{botblue}{RGB}{41, 171, 226}
+\definecolor{botdarkblue}{RGB}{1, 0, 66}
+\definecolor{tetrisorangeborder}{RGB}{255, 179, 128}
+\definecolor{tetrislightorange}{RGB}{255, 143, 64}
+\definecolor{tetrisdarkorange}{RGB}{255, 103, 1}
+\definecolor{tetrisgray}{RGB}{102, 102, 102}
+\definecolor{chessdarkgray}{RGB}{64,64,64}
+
+% Definition der FOPBotWorld-Umgebung
+
+\newenvironment{FOPBotWorld}[2]{
+    \def\tilesize{1cm}
+    
+    %Makros
+    \newcommand*\setcoin[3]{\expandafter\xdef\csname C-##1-##2-\endcsname{##3}}
+    \newcommand*\getcoin[2]{\csname C-##1-##2-\endcsname}
+    \newcommand{\putcoin}[3]{
+        \expandafter \ifx \csname C-##1-##2-\endcsname \relax
+            \expandafter\xdef\csname C-##1-##2-\endcsname{##3}
+        \else
+            \def\temp{\the\numexpr \getcoin{##1}{##2} + ##3\relax}
+            \expandafter\xdef\csname C-##1-##2-\endcsname{\temp}
+        \fi
+    }
+    \def\worldwidth{#1}
+    \def\worldheight{#2}
+    
+    % Icons
+    \tikzset{
+        pics/Coin/.style={code={
+                        \path[draw=none, semithick, fill=red] (0,0) circle (.4cm) node[font=\scriptsize\sffamily\bfseries]{##1};
+                    }},
+        pics/Coin/.default=1,
+        pics/Trianglebot/.style={code={
+            %\draw (-.5,-.5) rectangle (.5,.5);
+            %Triangle 
+            \draw[draw=botdarkblue,fill=##1]
+            (-.38,-.2) coordinate (c1) --
+            (.38,-.2) coordinate (c2) --
+            (0, .45) coordinate (c3) -- cycle;
+            \draw[fill=white,draw=botdarkblue] (0,.03) circle (1.38mm) coordinate (cc);
+            \draw[fill=botdarkblue,draw=botdarkblue] (cc) circle (1.28pt);
+            %Legs
+            \draw[fill=white,draw=botdarkblue] (-.195,-.2) rectangle (-.06,-.29);
+            \draw[fill=white,draw=botdarkblue] (-.195,-.29) rectangle (-.06,-.4);
+            \draw[fill=white,draw=botdarkblue] (.185,-.2) rectangle (.05,-.29);
+            \draw[fill=white,draw=botdarkblue] (.185,-.29) rectangle (.05,-.4);
+            %Feet
+            \draw[fill=##1,draw=botdarkblue](-.04, -.445) arc(0:180:.09) --cycle;
+            \draw[fill=##1,draw=botdarkblue](.21, -.445) arc(0:180:.09) --cycle;
+        }},
+        pics/Trianglebot/.default={botblue},
+        pics/Tetrisbot/.style={code={
+            \edef\temp{##1}
+            %blue
+            \edef\tempp{blue}
+            \ifx \temp \tempp
+                \definecolor{tetrisborder}{RGB}{128, 179, 255}
+                \definecolor{tetrisupper}{RGB}{65, 141, 255}
+                \definecolor{tetrislower}{RGB}{0, 102, 255}
+            \else
+                % aqua
+                \edef\tempp{aqua}
+                \ifx \temp \tempp
+                    \definecolor{tetrisborder}{RGB}{128, 230, 255}
+                    \definecolor{tetrisupper}{RGB}{65, 217, 255}
+                    \definecolor{tetrislower}{RGB}{0, 204, 255}
+                \else
+                    % green
+                    \edef\tempp{green}
+                    \ifx \temp \tempp
+                        \definecolor{tetrisborder}{RGB}{128, 234, 128}
+                        \definecolor{tetrisupper}{RGB}{65, 223, 65}
+                        \definecolor{tetrislower}{RGB}{0, 212, 0}
+                    \else
+                        % purple
+                        \edef\tempp{purple}
+                        \ifx \temp \tempp
+                            \definecolor{tetrisborder}{RGB}{184, 155, 228}
+                            \definecolor{tetrisupper}{RGB}{149, 106, 214}
+                            \definecolor{tetrislower}{RGB}{113, 55, 200}
+                        \else
+                            % red
+                            \edef\tempp{red}
+                            \ifx \temp \tempp
+                                \definecolor{tetrisborder}{RGB}{255, 128, 128}
+                                \definecolor{tetrisupper}{RGB}{255, 64, 64}
+                                \definecolor{tetrislower}{RGB}{255, 0, 0}
+                            \else
+                                % yellow
+                                \edef\tempp{yellow}
+                                \ifx \temp \tempp
+                                    \definecolor{tetrisborder}{RGB}{255, 230, 128}
+                                    \definecolor{tetrisupper}{RGB}{255, 217, 64}
+                                    \definecolor{tetrislower}{RGB}{255, 204, 0}
+                                \else
+                                \definecolor{tetrisborder}{RGB}{255, 179, 128}
+                                \definecolor{tetrisupper}{RGB}{255, 143, 64}
+                                \definecolor{tetrislower}{RGB}{255, 103, 1}
+                                \fi
+                            \fi
+                        \fi
+                    \fi
+                \fi
+            \fi
+            \draw[draw=tetrisborder, ultra thick, bottom color=tetrislower, top color = tetrisupper] ([xshift=.8pt,yshift=.8pt]-.425,-.425) rectangle ([xshift=-.8pt,yshift=-.8pt].425,.425);
+            \draw[draw=tetrisborder, thick,fill=white] (0,.1) circle (2mm);
+            \draw[draw=none,fill=tetrisgray] (0,.185) circle (.55mm);
+        }},
+        pics/Tetrisbot/.default={orange},
+    }
+    %Layers
+    \pgfdeclarelayer{board}
+    \pgfdeclarelayer{coins}
+    \pgfdeclarelayer{walls}
+    \pgfsetlayers{background, board, coins, walls, main}  % set the order of the layers (main is the standard layer)
+    % Begin Tikz Picture
+    \begin{tikzpicture}%[scale=#3, every node/.style={scale=#3}] %Scaling Planned for future release
+        % Initialize world
+        \begin{pgfonlayer}{board}
+            \foreach \x in {0,...,\the\numexpr\worldwidth - 1\relax}{
+                    \foreach \y in {0,...,\the\numexpr\worldheight - 1\relax}{
+                            \setcoin{\x}{\y}{0} % Reset Coins from previous worlds
+                            \node[draw=FBdarkgray,fill=FBlightgray,minimum width=\tilesize,minimum height=\tilesize, inner sep=0pt,anchor=center,very thick] (n-\x-\y) at (0cm + \tilesize * \x ,0cm + \tilesize * \y ){};
+                        }
+                }
+        \end{pgfonlayer}
+        }
+        {%After
+        % Finish World
+        \begin{pgfonlayer}{coins}
+            \foreach \x in {0,...,\the\numexpr\worldwidth - 1\relax}{
+                    \foreach \y in {0,...,\the\numexpr\worldheight - 1\relax}{
+                            %\def\temp{\getcoin{\x}{\y}}
+                            \expandafter \ifx \csname C-\x-\y-\endcsname \relax
+                                % Do not draw Coin
+                            \else
+                                \ifnum \csname C-\x-\y-\endcsname > 0
+                                    \path (\x,\y) pic {Coin={\csname C-\x-\y-\endcsname}};
+                                \fi
+                            \fi
+    
+                        }
+                }
+        \end{pgfonlayer}
+        %World Border
+        \begin{pgfonlayer}{walls}
+            \draw[very thick] ([xshift=.6pt,yshift=.6pt]n-0-0.south west) rectangle ([xshift=-.6pt,yshift=-.6pt]n-\the\numexpr\worldwidth-1\relax-\the\numexpr\worldheight-1\relax.north east);
+        \end{pgfonlayer}
+    \end{tikzpicture}
+} 
