@@ -11,12 +11,12 @@
 \RequirePackage{pagecolor} % Used for dark Mode
 \DeclareStringOption[3]{maxdifficulty}[3]
 \DeclareStringOption{inlineshortcut}[java]
+\DeclareStringOption[0pt]{boxarc}[3pt]
 \DeclareStringOption[tuda_logo]{logopath}[tuda_logo]
 \DeclareBoolOption[true]{showpoints}
 \DeclareBoolOption[true]{fopdesign}
 \DeclareBoolOption[false]{dark_mode}
 \DeclareBoolOption[true]{shell_escape}
-\ProcessKeyvalOptions*
 \DeclareComplementaryOption{hidepoints}{showpoints}
 \DeclareComplementaryOption{corporatedesign}{fopdesign}
 \ProcessKeyvalOptions*
@@ -219,7 +219,7 @@
 }
 
 \newcommand{\inlineracket}[1]{\lstinline[style=racket]{#1}}
-\newcommand{\inlinejava}[1]{\lstinline[style=java]{#1}}
+\newcommand{\inlinejava}[1]{\texorpdfstring{\lstinline[style=java]{#1}}{#1}}
 
 \lstnewenvironment{racket}[1][]{\lstset{style=racket, #1}}{}
 \lstnewenvironment{java}[1][]{\lstset{style=java, #1}}{}
@@ -667,7 +667,6 @@
 
 % Boxes and Environments
 
-\def\boxarc{0pt}% No boxarc default
 \RequirePackage{pdftexcmds}
 % A Gray Info Box (gray bar on the Left+ light gray background)
 \newtcolorbox{grayInfoBox}[1][]{
@@ -677,7 +676,7 @@
     colframe=gray, % Randfarbe
     frame hidden,
     title style=black!80,
-    arc=\boxarc,
+    arc=\fopexercise@boxarc,
     boxrule=0pt,
     left=5pt, % Links Platz lassen
     enhanced, % Erlaubt uns, den ramen zu zeichnen
@@ -697,7 +696,7 @@
     coltext=.,
     frame hidden,
     title style=gray,
-    arc=\boxarc,
+    arc=\fopexercise@boxarc,
     boxrule=0pt,
     left=5pt, % Links Platz lassen
     enhanced, % Erlaubt uns, den ramen zu zeichnen
@@ -717,7 +716,7 @@
     coltext=.,
     frame hidden,
     title style=accentcolor,
-    arc=\boxarc,
+    arc=\fopexercise@boxarc,
     boxrule=0pt,
     left=5pt, % Links Platz lassen
     enhanced, % Erlaubt uns, den ramen zu zeichnen
@@ -747,7 +746,7 @@
         listing only,  % Sonst will er den Plain Text nach dem Minted Listing noch anfügen
         frame hidden,
         boxrule=0pt,
-        arc=\boxarc,
+        arc=\fopexercise@boxarc,
         %hbox, % This option could be used to limit the Length of Code Blocks automatically, but does not work with the minted Line Numbers
         title style=\IfDarkModeTF{accentcolor!60!black}{black!90},
         minted style=\IfDarkModeTF{paraiso-dark}{default}, %Sieht actually worse aus imo
