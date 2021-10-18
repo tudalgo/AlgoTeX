@@ -30,14 +30,17 @@
     \LoadClass[
         ngerman,
         color=7b,
-        colorback=false
+        colorback=false,
+        T1
     ]{tudaexercise}
 \fi
 
 \RequirePackage{tcolorbox}
 \tcbuselibrary{skins}
 
-% \RequirePackage[utf8]{inputenc}
+\ifPDFTeX
+\RequirePackage[utf8]{inputenc}
+\fi
 \RequirePackage[german, ngerman]{babel}
 
 % \RequirePackage{parskip}
@@ -218,7 +221,7 @@
     moredelim=[is][\underline]{\#|!}{|\#}
 }
 
-\newcommand{\inlineracket}[1]{\lstinline[style=racket]{#1}}
+\newcommand{\inlineracket}[1]{\texorpdfstring{\lstinline[style=racket]{#1}}{#1}}
 \newcommand{\inlinejava}[1]{\texorpdfstring{\lstinline[style=java]{#1}}{#1}}
 
 \lstnewenvironment{racket}[1][]{\lstset{style=racket, #1}}{}
@@ -602,8 +605,9 @@
 \cs_set_eq:NN\IfDarkModeF \__ptxcd_if_dark_mode:F
 \cs_set_eq:NN\IfDarkModeTF \__ptxcd_if_dark_mode:TF
 
+\definecolor{fopexercise@anthrazitgrau}{HTML}{293133}
 \IfDarkModeT{
-    \pagecolor{black}
+    \pagecolor{fopexercise@anthrazitgrau}
     \color{white}
     \selectcolormodel{RGB}
     \IfTudaciVersionAtLeastTF{3.12}{
@@ -613,6 +617,7 @@
     }
     \lstset{
         keywordstyle=\color{cyan!70!blue},
+        commentstyle=\color{green},
     }
 }
 
@@ -670,7 +675,7 @@
 \RequirePackage{pdftexcmds}
 % A Gray Info Box (gray bar on the Left+ light gray background)
 \newtcolorbox{grayInfoBox}[1][]{
-    colback=\IfDarkModeTF{white!10!black}{gray!10}, %Hintergrundfarbe
+    colback=\IfDarkModeTF{white!10!\thepagecolor}{gray!10}, %Hintergrundfarbe
     % colback=fgcolor!10!\thepagecolor, %Hintergrundfarbe
     coltext=.,
     colframe=gray, % Randfarbe
