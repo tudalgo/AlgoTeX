@@ -9,7 +9,7 @@
 
 
 % \DeclareGraphicsExtensions{.pdf,.png,.jpg}
-
+\RequirePackage{pagecolor} % Used for dark Mode
 \ExplSyntaxOn
 \bool_gset_false:N \g_dark_mode_bool
 \bool_gset_false:N \g_is_summary_bool
@@ -74,6 +74,7 @@
 \usetikzlibrary{matrix, calc, positioning, chains, shapes,arrows}
 
 \ExplSyntaxOn
+\def\fopexercise@boxarc{\prop_item:Nn \g_ptxcd_template_opts_prop {boxarc}} % Used for Code Blocks, Info boxes, etc.
 \tl_new:N \l_listings_boxed_options_tl
 \keys_define:nn { listings/boxed }
 {
@@ -110,4 +111,53 @@
     \leavevmode\box_use:N \l_listings_boxed_box
 }
 
+\newcommand{\slidehead}{\frametitle{\insertsectionhead} \framesubtitle{\insertsubsectionhead}\vspace{3mm}}
+\newcommand{\tocslide}{\begin{frame}[t]\frametitle{Inhaltsverzeichnis}\vspace{3mm}{\small\tableofcontents[subsectionstyle=shaded]}\end{frame}}
+\prg_new_conditional:Nnn \__ptxcd_if_dark_mode: {T,F,TF} {
+    \bool_if:NTF \g_dark_mode_bool {
+        \prg_return_true:
+    } {
+        \prg_return_false:
+    }
+}
+\cs_set_eq:NN\IfDarkModeT \__ptxcd_if_dark_mode:T
+\cs_set_eq:NN\IfDarkModeF \__ptxcd_if_dark_mode:F
+\cs_set_eq:NN\IfDarkModeTF \__ptxcd_if_dark_mode:TF
+\RequirePackage{tcolorbox}
+\tcbuselibrary{skins,minted}
 \ExplSyntaxOff
+% Minted Line Number Styling
+\renewcommand{\theFancyVerbLine}{\tikz{\coordinate(a);\node[text width=5mm,inner sep=0pt,align=center]{\ttfamily\textcolor{white}{\scriptsize\arabic{FancyVerbLine}}};}}
+
+% Environment für meinen Code-Style (Arg 1 = minted Options, Arg 2 = tcolorbox Options)
+\definecolor{codebg}{RGB}{22,43,58}
+\newtcblisting{codeBlock}[2][]{
+    listing engine=minted, % Minted verwenden
+    colback=\IfDarkModeTF{codebg}{black!10!\thepagecolor}, %Hintergrundfarbe
+    colframe=black!70, % Randfarbe
+    coltext=.,
+    listing only,  % Sonst will er den Plain Text nach dem Minted Listing noch anfügen
+    frame hidden,
+    boxrule=0pt,
+    arc=3pt,
+    % hbox, % This option could be used to limit the Length of Code Blocks automatically, but does not work with the minted Line Numbers
+    title style=\IfDarkModeTF{accentcolor!60!black}{black!90},
+    minted style=\IfDarkModeTF{paraiso-dark}{friendly}, %Sieht actually worse aus imo
+    minted language=java, % Sprache setzen
+    minted options={ %Minted Optionen
+            linenos=true,
+            numbersep=3mm,
+            texcl=true,
+            #1 % weitere optionen für Minted zulassen
+        },
+    left=7.1mm, % Links Platz lassen
+    enhanced, % Erlaubt uns, den ramen zu zeichnen
+    fonttitle=\sffamily, % Titelschriftart auf 
+    overlay={ % Für Grauen Bereich links
+            \begin{tcbclipinterior}
+                \fill[black!70] (frame.south west) rectangle ([xshift=5mm]frame.north west); % Zeilennummernbereich färben
+            \end{tcbclipinterior}
+        },
+    #2 % Weitere Argumente zulassen
+}
+
