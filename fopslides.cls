@@ -9,6 +9,7 @@
 
 
 % \DeclareGraphicsExtensions{.pdf,.png,.jpg}
+\RequirePackage[table, dvipsnames]{xcolor}
 \RequirePackage{pagecolor} % Used for dark Mode
 \ExplSyntaxOn
 \bool_gset_false:N \g_dark_mode_bool
@@ -21,13 +22,34 @@
 \tl_gclear_new:N \g_rubos_external_label_prefix_tl
 \tl_gset:Nn \g_rubos_external_label_prefix_tl {ext:}
 \prop_new:N \g_ptxcd_template_opts_prop
+\definecolor{rubos@anthrazitgrau}{HTML}{293133}
+
 
 \tl_gclear_new:N \g_rubos_keys_tl
 \tl_gset:Nn \g_rubos_keys_tl {
     boxarc .code:n = \prop_gput:Nnn \g_ptxcd_template_opts_prop {boxarc} {#1},
     boxarc .initial:n = {0pt},
     boxarc .default:n = {3pt},
-    dark_mode .code:n = \pagecolor{rubos@anthrazitgrau}\color{white}\selectcolormodel{RGB}\bool_gset_true:N \g_dark_mode_bool,
+    dark_mode .code:n = {
+            \pagecolor{rubos@anthrazitgrau}
+            \color{white}
+            \selectcolormodel{RGB}
+            \cs_if_exist:NT \setbeamercolor {
+                \setbeamercolor*{smallrule}{bg=.}
+                \setbeamercolor*{normal~text}{bg=,fg=.}
+                \setbeamercolor*{background canvas}{parent=normal~text}
+                \setbeamercolor*{section~in~toc}{parent=normal~text}
+                \setbeamercolor*{subsection~in~toc}{parent=normal~text,fg=\thepagecolor}
+                \setbeamercolor*{footline}{parent=normal~text}
+                \setbeamercolor{block~title~alerted}{fg=white,bg=white!20!\thepagecolor}
+                \setbeamercolor*{block~body}{bg=black!70!gray!98!blue}
+                \setbeamercolor*{block~body~alerted}{bg=\thepagecolor}
+            }
+            \cs_if_exist:NT \setbeamertemplate {
+                \setbeamertemplate{subsection~in~toc~shaded}[default][50]
+            }
+            \bool_gset_true:N \g_dark_mode_bool
+        },
     load_common .bool_gset:N = \g_ptxcd_ex_load_common_bool,
     load_common .initial:n = false,
     load_common . default:n = true,
@@ -42,9 +64,9 @@
     main .default:n = true,
 }
 % Additional Class Options
-\exp_args:Nno \keys_define:nn {ptxcd/exercise} { \g_rubos_keys_tl }
+\exp_args:Nno \keys_define:nn {ptxcd/beamer} { \g_rubos_keys_tl }
 % Compatibility with older versions (We can't use version check makros before loading the class)
-\exp_args:Nno \keys_define:nn {TUDa/pub} { \g_rubos_keys_tl }
+\exp_args:Nno \keys_define:nn {TUDa/beamer} { \g_rubos_keys_tl }
 \ExplSyntaxOff
 
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{tudabeamer}}
@@ -53,6 +75,7 @@
 \LoadClass[]{tudabeamer}
 
 %Includes
+\RequirePackage[ngerman]{babel}
 \RequirePackage{float}
 \RequirePackage{minted}
 \RequirePackage[babel]{csquotes}
@@ -139,10 +162,10 @@
     listing only,  % Sonst will er den Plain Text nach dem Minted Listing noch anfügen
     frame hidden,
     boxrule=0pt,
-    arc=3pt,
+    arc=\fopexercise@boxarc{},
     % hbox, % This option could be used to limit the Length of Code Blocks automatically, but does not work with the minted Line Numbers
-    title style=\IfDarkModeTF{accentcolor!60!black}{black!90},
-    minted style=\IfDarkModeTF{paraiso-dark}{friendly}, %Sieht actually worse aus imo
+    title style=\IfDarkModeTF{accentcolor!60!black}{accentcolor!60!black},
+    minted style=\IfDarkModeTF{paraiso-dark}{tango}, %Sieht actually worse aus imo
     minted language=java, % Sprache setzen
     minted options={ %Minted Optionen
             linenos=true,
@@ -161,3 +184,4 @@
     #2 % Weitere Argumente zulassen
 }
 
+\colorlet{fgcolor}{.}
