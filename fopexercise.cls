@@ -754,7 +754,7 @@
         arc=\fopexercise@boxarc,
         %hbox, % This option could be used to limit the Length of Code Blocks automatically, but does not work with the minted Line Numbers
         title style=\IfDarkModeTF{accentcolor!60!black}{black!90},
-        minted style=\IfDarkModeTF{paraiso-dark}{default}, %Sieht actually worse aus imo
+        minted style=\IfDarkModeTF{paraiso-dark}{tango}, %Sieht actually worse aus imo
         minted language=java, % Sprache setzen
         minted options={ %Minted Optionen
                 linenos=true,
