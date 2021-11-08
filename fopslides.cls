@@ -34,20 +34,6 @@
             \pagecolor{rubos@anthrazitgrau}
             \color{white}
             \selectcolormodel{RGB}
-            \cs_if_exist:NT \setbeamercolor {
-                \setbeamercolor*{smallrule}{bg=.}
-                \setbeamercolor*{normal~text}{bg=,fg=.}
-                \setbeamercolor*{background canvas}{parent=normal~text}
-                \setbeamercolor*{section~in~toc}{parent=normal~text}
-                \setbeamercolor*{subsection~in~toc}{parent=normal~text,fg=\thepagecolor}
-                \setbeamercolor*{footline}{parent=normal~text}
-                \setbeamercolor{block~title~alerted}{fg=white,bg=white!20!\thepagecolor}
-                \setbeamercolor*{block~body}{bg=black!70!gray!98!blue}
-                \setbeamercolor*{block~body~alerted}{bg=\thepagecolor}
-            }
-            \cs_if_exist:NT \setbeamertemplate {
-                \setbeamertemplate{subsection~in~toc~shaded}[default][50]
-            }
             \bool_gset_true:N \g_dark_mode_bool
         },
     load_common .bool_gset:N = \g_ptxcd_ex_load_common_bool,
@@ -164,7 +150,7 @@
     boxrule=0pt,
     arc=\fopexercise@boxarc{},
     % hbox, % This option could be used to limit the Length of Code Blocks automatically, but does not work with the minted Line Numbers
-    title style=\IfDarkModeTF{accentcolor!60!black}{accentcolor!60!black},
+    title style=\IfDarkModeTF{accentcolor}{accentcolor},
     minted style=\IfDarkModeTF{paraiso-dark}{tango}, %Sieht actually worse aus imo
     minted language=java, % Sprache setzen
     minted options={ %Minted Optionen
@@ -185,3 +171,23 @@
 }
 
 \colorlet{fgcolor}{.}
+\ExplSyntaxOn
+
+
+\IfDarkModeT{
+    \cs_if_exist:NT \setbeamercolor {
+        \setbeamercolor*{smallrule}{bg=.}
+        \setbeamercolor*{normal~text}{bg=,fg=.}
+        \setbeamercolor*{background canvas}{parent=normal~text}
+        \setbeamercolor*{section~in~toc}{parent=normal~text}
+        \setbeamercolor*{subsection~in~toc}{parent=normal~text,fg=\thepagecolor}
+        \setbeamercolor*{footline}{parent=normal~text}
+        \setbeamercolor{block~title~alerted}{fg=white,bg=white!20!\thepagecolor}
+        \setbeamercolor*{block~body}{bg=black!70!gray!98!blue}
+        \setbeamercolor*{block~body~alerted}{bg=\thepagecolor}
+    }
+    \cs_if_exist:NT \setbeamertemplate {
+        \setbeamertemplate{subsection~in~toc~shaded}[default][50]
+    }
+}
+\ExplSyntaxOff
