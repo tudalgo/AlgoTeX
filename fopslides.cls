@@ -3,15 +3,19 @@
 
 % Sets the LaTeX version for the package to work.
 \NeedsTeXFormat{LaTeX2e}
+
+% LateX 3 Syntax
+\RequirePackage{expl3}
+
 % Identification of the class and its date and version.
-\ProvidesClass{fopslides} [\filedate\space\fileversion\space]
+\ProvidesExplClass{fopslides}{\filedate}
+{\fileversion}{FOP Beamer Presentation Template}
 
 
 
 % \DeclareGraphicsExtensions{.pdf,.png,.jpg}
 \RequirePackage[table, dvipsnames]{xcolor}
 \RequirePackage{pagecolor} % Used for dark Mode
-\ExplSyntaxOn
 \bool_gset_false:N \g_dark_mode_bool
 \bool_gset_false:N \g_is_summary_bool
 \bool_gset_false:N \g_is_main_file_bool
@@ -53,7 +57,6 @@
 \exp_args:Nno \keys_define:nn {ptxcd/beamer} { \g_rubos_keys_tl }
 % Compatibility with older versions (We can't use version check makros before loading the class)
 \exp_args:Nno \keys_define:nn {TUDa/beamer} { \g_rubos_keys_tl }
-\ExplSyntaxOff
 
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{tudabeamer}}
 \ProcessOptions\relax
@@ -81,9 +84,10 @@
 \RequirePackage{caption}[2013/01/01] % needs v3.3 or newer
 \RequirePackage{tikz}
 \RequirePackage{tabularx,colortbl}
-\usetikzlibrary{matrix, calc, positioning, chains, shapes,arrows}
-
+\ExplSyntaxOff
+\usetikzlibrary{matrix, calc, positioning, chains, shapes, arrows}
 \ExplSyntaxOn
+
 \def\fopexercise@boxarc{\prop_item:Nn \g_ptxcd_template_opts_prop {boxarc}} % Used for Code Blocks, Info boxes, etc.
 \tl_new:N \l_listings_boxed_options_tl
 \keys_define:nn { listings/boxed }
@@ -134,52 +138,115 @@
 \cs_set_eq:NN\IfDarkModeF \__ptxcd_if_dark_mode:F
 \cs_set_eq:NN\IfDarkModeTF \__ptxcd_if_dark_mode:TF
 \RequirePackage{tcolorbox}
-\tcbuselibrary{skins,minted}
-\ExplSyntaxOff
-% Minted Line Number Styling
-\renewcommand{\theFancyVerbLine}{\tikz{\coordinate(a);\node[text width=5mm,inner sep=0pt,align=center]{\ttfamily\textcolor{white}{\scriptsize\arabic{FancyVerbLine}}};}}
 
-% Environment für meinen Code-Style (Arg 1 = minted Options, Arg 2 = tcolorbox Options)
-\definecolor{codebg}{RGB}{22,43,58}
-\newtcblisting{codeBlock}[2][]{
-    listing engine=minted, % Minted verwenden
-    colback=\IfDarkModeTF{codebg}{black!10!\thepagecolor}, %Hintergrundfarbe
-    colframe=black!70, % Randfarbe
+% Boxes and Environments
+
+\RequirePackage{pdftexcmds}
+% A Gray Info Box (gray bar on the Left+ light gray background)
+\newtcolorbox{grayInfoBox}[1][]{
+    colback=\IfDarkModeTF{white!10!\thepagecolor}{gray!10}, %Hintergrundfarbe
+    % colback=fgcolor!10!\thepagecolor, %Hintergrundfarbe
     coltext=.,
-    listing only,  % Sonst will er den Plain Text nach dem Minted Listing noch anfügen
-    frame hidden,
+    colframe=gray, % Randfarbe
+    frame~hidden,
+    title~style=black!80,
+    arc=\fopexercise@boxarc,
     boxrule=0pt,
-    arc=\fopexercise@boxarc{},
-    % hbox, % This option could be used to limit the Length of Code Blocks automatically, but does not work with the minted Line Numbers
-    title style=\IfDarkModeTF{accentcolor}{accentcolor},
-    minted style=\IfDarkModeTF{paraiso-dark}{tango}, %Sieht actually worse aus imo
-    minted language=java, % Sprache setzen
-    minted options={ %Minted Optionen
-            linenos=true,
-            numbersep=3mm,
-            texcl=true,
-            #1 % weitere optionen für Minted zulassen
-        },
-    left=7.1mm, % Links Platz lassen
+    left=5pt, % Links Platz lassen
     enhanced, % Erlaubt uns, den ramen zu zeichnen
     fonttitle=\sffamily, % Titelschriftart auf 
     overlay={ % Für Grauen Bereich links
             \begin{tcbclipinterior}
-                \fill[black!70] (frame.south west) rectangle ([xshift=5mm]frame.north west); % Zeilennummernbereich färben
+                \fill[gray] (frame.south~west) rectangle ([xshift=4pt]frame.north~west); % Zeilennummernbereich färben
             \end{tcbclipinterior}
         },
-    #2 % Weitere Argumente zulassen
+    #1 % Weitere Argumente zulassen
+}
+
+% A Normal Information Box (Accentcolor bar on the left)
+\newtcolorbox{infoBox}[1][]{
+    colback=\thepagecolor, %Hintergrundfarbe
+    colframe=accentcolor, % Randfarbe
+    coltext=.,
+    frame~hidden,
+    title~style=gray,
+    arc=\fopexercise@boxarc,
+    boxrule=0pt,
+    left=5pt, % Links Platz lassen
+    enhanced, % Erlaubt uns, den ramen zu zeichnen
+    fonttitle=\sffamily, % Titelschriftart auf 
+    overlay={ % Für Grauen Bereich links
+            \begin{tcbclipinterior}
+                \fill[accentcolor] (frame.south~west) rectangle ([xshift=4pt]frame.north~west); % Zeilennummernbereich färben
+            \end{tcbclipinterior}
+        },
+    #1 % Weitere Argumente zulassen
+}
+
+% An Important Information Box (Accentcolor bar on the left+ light Accentcolor BG)
+\newtcolorbox{defBox}[1][]{
+    colback=\IfDarkModeTF{accentcolor!20!\thepagecolor}{accentcolor!10!\thepagecolor}, %Hintergrundfarbe
+    colframe=accentcolor, % Randfarbe
+    coltext=.,
+    frame~hidden,
+    title~style=accentcolor,
+    arc=\fopexercise@boxarc,
+    boxrule=0pt,
+    left=5pt, % Links Platz lassen
+    enhanced, % Erlaubt uns, den ramen zu zeichnen
+    fonttitle=\sffamily, % Titelschriftart auf 
+    overlay={ % Für Grauen Bereich links
+            \begin{tcbclipinterior}
+                \fill[accentcolor] (frame.south~west) rectangle ([xshift=4pt]frame.north~west); % Zeilennummernbereich färben
+            \end{tcbclipinterior}
+        },
+    #1 % Weitere Argumente zulassen
+}
+
+\tcbuselibrary{skins,minted}
+% Minted Line Number Styling
+\renewcommand{\theFancyVerbLine}{\tikz{\coordinate(a);\node[text~width=5mm,inner~sep=0pt,align=center]{\ttfamily\textcolor{white}{\scriptsize\arabic{FancyVerbLine}}};}}
+
+% Environment für meinen Code-Style (Arg 1 = minted Options, Arg 2 = tcolorbox Options)
+\definecolor{codebg}{RGB}{22,43,58}
+\newtcblisting{codeBlock}[2][]{
+listing~engine=minted, % Minted verwenden
+colback=\IfDarkModeTF{codebg}{black!10!\thepagecolor}, %Hintergrundfarbe
+colframe=black!70, % Randfarbe
+coltext=.,
+listing~only,  % Sonst will er den Plain Text nach dem Minted Listing noch anfügen
+frame~hidden,
+boxrule=0pt,
+arc=\fopexercise@boxarc{},
+% hbox, % This option could be used to limit the Length of Code Blocks automatically, but does not work with the minted Line Numbers
+title~style=\IfDarkModeTF{accentcolor}{accentcolor},
+minted~style=\IfDarkModeTF{paraiso-dark}{tango}, %Sieht actually worse aus imo
+minted~language=java, % Sprache setzen
+minted~options={ %Minted Optionen
+linenos=true,
+numbersep=3mm,
+texcl=true,
+#1 % weitere optionen für Minted zulassen
+},
+left=7.1mm, % Links Platz lassen
+enhanced, % Erlaubt uns, den ramen zu zeichnen
+fonttitle=\sffamily, % Titelschriftart auf 
+overlay={ % Für Grauen Bereich links
+        \begin{tcbclipinterior}
+            \fill[black!70] (frame.south~west) rectangle ([xshift=5mm]frame.north~west); % Zeilennummernbereich färben
+        \end{tcbclipinterior}
+    },
+#2 % Weitere Argumente zulassen
 }
 
 \colorlet{fgcolor}{.}
-\ExplSyntaxOn
 
 
 \IfDarkModeT{
     \cs_if_exist:NT \setbeamercolor {
         \setbeamercolor*{smallrule}{bg=.}
         \setbeamercolor*{normal~text}{bg=,fg=.}
-        \setbeamercolor*{background canvas}{parent=normal~text}
+        \setbeamercolor*{background~canvas}{parent=normal~text}
         \setbeamercolor*{section~in~toc}{parent=normal~text}
         \setbeamercolor*{subsection~in~toc}{parent=normal~text,fg=\thepagecolor}
         \setbeamercolor*{footline}{parent=normal~text}
@@ -191,4 +258,3 @@
         \setbeamertemplate{subsection~in~toc~shaded}[default][50]
     }
 }
-\ExplSyntaxOff
