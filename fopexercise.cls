@@ -31,6 +31,7 @@
         ngerman,
         color=7b,
         colorback=false,
+        points=true,
         T1
     ]{tudaexercise}
 \fi
@@ -465,7 +466,7 @@
     \@startsection{hue}{1}{\z@}%
     {-3.5ex \@plus -1ex \@minus -.2ex}%
     {2.3ex \@plus .2ex}%
-    {\normalfont\Large\bfseries}[#1 -- #2]{#1\hfill Gesamt \fopexercise@points{#3}\\\textit{#2}}}
+    {\normalfont\Large\bfseries}[#1 -- #2]{#1\hfill Gesamt #3 Punkte\\\textit{#2}}}
 
 \newcommand\hueaufgabe[2]{
     \@startsection{hueaufgabe}{2}{\z@}%
