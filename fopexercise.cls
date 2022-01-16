@@ -744,34 +744,66 @@
 
     % Environment für meinen Code-Style (Arg 1 = minted Options, Arg 2 = tcolorbox Options)
     \definecolor{codebg}{RGB}{22,43,58}
-    \newtcblisting{codeBlock}[2][]{
-        listing engine=minted, % Minted verwenden
-        colback=\IfDarkModeTF{codebg}{black!10!\thepagecolor}, %Hintergrundfarbe
-        colframe=black!70, % Randfarbe
-        coltext=.,
-        listing only,  % Sonst will er den Plain Text nach dem Minted Listing noch anfügen
-        frame hidden,
-        boxrule=0pt,
-        arc=\fopexercise@boxarc,
-        %hbox, % This option could be used to limit the Length of Code Blocks automatically, but does not work with the minted Line Numbers
-        title style=\IfDarkModeTF{accentcolor!60!black}{black!90},
-        minted style=\IfDarkModeTF{paraiso-dark}{tango}, %Sieht actually worse aus imo
-        minted language=java, % Sprache setzen
-        minted options={ %Minted Optionen
-                linenos=true,
-                numbersep=3mm,
-                texcl=true,
-                #1 % weitere optionen für Minted zulassen
-            },
-        left=7.1mm, % Links Platz lassen
-        enhanced, % Erlaubt uns, den ramen zu zeichnen
-        fonttitle=\sffamily, % Titelschriftart auf 
-        overlay={ % Für Grauen Bereich links
-                \begin{tcbclipinterior}
-                    \fill[black!70] (frame.south west) rectangle ([xshift=5mm]frame.north west); % Zeilennummernbereich färben
-                \end{tcbclipinterior}
-            },
-        #2 % Weitere Argumente zulassen
+    \IfDarkModeTF{
+        \newtcblisting{codeBlock}[2][]{
+            listing engine=minted, % Minted verwenden
+            colback=\IfDarkModeTF{codebg}{black!10!\thepagecolor}, %Hintergrundfarbe
+            colframe=black!70, % Randfarbe
+            coltext=.,
+            listing only,  % Sonst will er den Plain Text nach dem Minted Listing noch anfügen
+            frame hidden,
+            boxrule=0pt,
+            arc=\fopexercise@boxarc,
+            %hbox, % This option could be used to limit the Length of Code Blocks automatically, but does not work with the minted Line Numbers
+            title style=\IfDarkModeTF{accentcolor!60!black}{black!90},
+            minted style=paraiso-dark, %Sieht actually worse aus imo
+            minted language=java, % Sprache setzen
+            minted options={ %Minted Optionen
+                    linenos=true,
+                    numbersep=3mm,
+                    texcl=true,
+                    #1 % weitere optionen für Minted zulassen
+                },
+            left=7.1mm, % Links Platz lassen
+            enhanced, % Erlaubt uns, den ramen zu zeichnen
+            fonttitle=\sffamily, % Titelschriftart auf 
+            overlay={ % Für Grauen Bereich links
+                    \begin{tcbclipinterior}
+                        \fill[black!70] (frame.south west) rectangle ([xshift=5mm]frame.north west); % Zeilennummernbereich färben
+                    \end{tcbclipinterior}
+                },
+            #2 % Weitere Argumente zulassen
+        }
+    }{
+        \newtcblisting{codeBlock}[2][]{
+            listing engine=minted, % Minted verwenden
+            colback=\IfDarkModeTF{codebg}{black!10!\thepagecolor}, %Hintergrundfarbe
+            colframe=black!70, % Randfarbe
+            coltext=.,
+            listing only,  % Sonst will er den Plain Text nach dem Minted Listing noch anfügen
+            frame hidden,
+            boxrule=0pt,
+            arc=\fopexercise@boxarc,
+            %hbox, % This option could be used to limit the Length of Code Blocks automatically, but does not work with the minted Line Numbers
+            title style=\IfDarkModeTF{accentcolor!60!black}{black!90},
+            minted style=tango, %Sieht actually worse aus imo
+            minted language=java, % Sprache setzen
+            minted options={ %Minted Optionen
+                    linenos=true,
+                    numbersep=3mm,
+                    texcl=true,
+                    #1 % weitere optionen für Minted zulassen
+                },
+            left=7.1mm, % Links Platz lassen
+            enhanced, % Erlaubt uns, den ramen zu zeichnen
+            fonttitle=\sffamily, % Titelschriftart auf 
+            overlay={ % Für Grauen Bereich links
+                    \begin{tcbclipinterior}
+                        \fill[black!70] (frame.south west) rectangle ([xshift=5mm]frame.north west); % Zeilennummernbereich färben
+                    \end{tcbclipinterior}
+                },
+            #2 % Weitere Argumente zulassen
+        }
     }
 
 }{
