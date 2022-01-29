@@ -261,6 +261,8 @@
     #1 % Weitere Argumente zulassen
 }
 
+\RequirePackage{etoolbox}
+\AtEndPreamble{
 % definition Environment Style
 \newtheoremstyle{mydefinition}% Theorem style name
 {0pt}% Space above
@@ -279,9 +281,9 @@
 \theoremstyle{mydefinition}%
 \newtheorem{definitionT}{\textsf{Definition}}%
 \newtheorem{ideaT}{\textsf{Idee}}%
-\newenvironment{definition}{\begin{defBox}\begin{definitionT}}{\end{definitionT}\end{defBox}}%
-\newenvironment{idea}{\begin{defBox}\begin{ideaT}}{\end{ideaT}\end{defBox}}%
-
+\DeclareDocumentEnvironment{definition}{}{\begin{defBox}\begin{definitionT}}{\end{definitionT}\end{defBox}}%
+\DeclareDocumentEnvironment{idea}{}{\begin{defBox}\begin{ideaT}}{\end{ideaT}\end{defBox}}%
+}
 
 \DeclareDocumentEnvironment{hinweis}{O{}m}{
     \begin{infoBox}

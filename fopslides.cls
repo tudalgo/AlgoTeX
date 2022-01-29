@@ -11,12 +11,11 @@
 \ProvidesExplClass{fopslides}{\filedate}
 {\fileversion}{FOP Beamer Presentation Template}
 
-
+\RequirePackage[minted_workaround,caption_workaround]{rubos-common}
 
 % \DeclareGraphicsExtensions{.pdf,.png,.jpg}
 \RequirePackage[table, dvipsnames]{xcolor}
 \RequirePackage{pagecolor} % Used for dark Mode
-\bool_gset_false:N \g_dark_mode_bool
 \bool_gset_false:N \g_is_summary_bool
 \bool_gset_false:N \g_is_main_file_bool
 \bool_gset_false:N \g_ptxcd_ex_load_common_bool
@@ -25,30 +24,16 @@
 \tl_gset:Nn \datename {Datum}
 \tl_gclear_new:N \g_rubos_external_label_prefix_tl
 \tl_gset:Nn \g_rubos_external_label_prefix_tl {ext:}
-\prop_new:N \g_ptxcd_template_opts_prop
-\definecolor{rubos@anthrazitgrau}{HTML}{293133}
-
 
 \tl_gclear_new:N \g_rubos_keys_tl
 \tl_gset:Nn \g_rubos_keys_tl {
-    boxarc .code:n = \prop_gput:Nnn \g_ptxcd_template_opts_prop {boxarc} {#1},
-    boxarc .initial:n = {0pt},
-    boxarc .default:n = {3pt},
-    dark_mode .code:n = {
-            \pagecolor{rubos@anthrazitgrau}
-            \color{white}
-            \selectcolormodel{RGB}
-            \bool_gset_true:N \g_dark_mode_bool
-        },
+    boxarc .code:n = \PassOptionsToPackage{\CurrentOption}{rubos-common},
+    dark_mode .code:n = \PassOptionsToPackage{\CurrentOption}{rubos-common},
     load_common .bool_gset:N = \g_ptxcd_ex_load_common_bool,
     load_common .initial:n = false,
     load_common . default:n = true,
-    default_row_color .bool_gset_inverse:N = \g_ptxcd_ex_fancy_rowcolor_bool,
-    default_row_color .initial:n = false,
-    default_row_color .default:n = true,
-    shell_escape .bool_gset:N = \g_rubos_shell_escape_bool,
-    shell_escape .initial:n = true,
-    shell_escape .default:n = true,
+    fancy_row_color .code:n = \PassOptionsToPackage{\CurrentOption}{rubos-common},
+    shell_escape .code:n = \PassOptionsToPackage{\CurrentOption}{rubos-common},
     main .bool_gset:N = \g_is_main_file_bool,
     main .initial:n = false,
     main .default:n = true,
@@ -88,7 +73,7 @@
 \usetikzlibrary{matrix, calc, positioning, chains, shapes, arrows}
 \ExplSyntaxOn
 
-\def\fopexercise@boxarc{\prop_item:Nn \g_ptxcd_template_opts_prop {boxarc}} % Used for Code Blocks, Info boxes, etc.
+\def\fopexercise@boxarc{\prop_item:Nn \g_rubos_document_opts_prop {boxarc}} % Used for Code Blocks, Info boxes, etc.
 \tl_new:N \l_listings_boxed_options_tl
 \keys_define:nn { listings/boxed }
 {
@@ -127,152 +112,6 @@
 
 \newcommand{\slidehead}{\frametitle{\insertsectionhead} \framesubtitle{\insertsubsectionhead}\vspace{3mm}}
 \newcommand{\tocslide}{\begin{frame}[t]\frametitle{Inhaltsverzeichnis}\vspace{3mm}{\small\tableofcontents[subsectionstyle=shaded]}\end{frame}}
-\prg_new_conditional:Nnn \__ptxcd_if_dark_mode: {T,F,TF} {
-    \bool_if:NTF \g_dark_mode_bool {
-        \prg_return_true:
-    } {
-        \prg_return_false:
-    }
-}
-\cs_set_eq:NN\IfDarkModeT \__ptxcd_if_dark_mode:T
-\cs_set_eq:NN\IfDarkModeF \__ptxcd_if_dark_mode:F
-\cs_set_eq:NN\IfDarkModeTF \__ptxcd_if_dark_mode:TF
-\RequirePackage{tcolorbox}
-
-% Boxes and Environments
-
-\RequirePackage{pdftexcmds}
-% A Gray Info Box (gray bar on the Left+ light gray background)
-\newtcolorbox{grayInfoBox}[1][]{
-    colback=\IfDarkModeTF{white!10!\thepagecolor}{gray!10}, %Hintergrundfarbe
-    % colback=fgcolor!10!\thepagecolor, %Hintergrundfarbe
-    coltext=.,
-    colframe=gray, % Randfarbe
-    frame~hidden,
-    title~style=black!80,
-    arc=\fopexercise@boxarc,
-    boxrule=0pt,
-    left=5pt, % Links Platz lassen
-    enhanced, % Erlaubt uns, den ramen zu zeichnen
-    fonttitle=\sffamily, % Titelschriftart auf 
-    overlay={ % Für Grauen Bereich links
-            \begin{tcbclipinterior}
-                \fill[gray] (frame.south~west) rectangle ([xshift=4pt]frame.north~west); % Zeilennummernbereich färben
-            \end{tcbclipinterior}
-        },
-    #1 % Weitere Argumente zulassen
-}
-
-% A Normal Information Box (Accentcolor bar on the left)
-\newtcolorbox{infoBox}[1][]{
-    colback=\thepagecolor, %Hintergrundfarbe
-    colframe=accentcolor, % Randfarbe
-    coltext=.,
-    frame~hidden,
-    title~style=gray,
-    arc=\fopexercise@boxarc,
-    boxrule=0pt,
-    left=5pt, % Links Platz lassen
-    enhanced, % Erlaubt uns, den ramen zu zeichnen
-    fonttitle=\sffamily, % Titelschriftart auf 
-    overlay={ % Für Grauen Bereich links
-            \begin{tcbclipinterior}
-                \fill[accentcolor] (frame.south~west) rectangle ([xshift=4pt]frame.north~west); % Zeilennummernbereich färben
-            \end{tcbclipinterior}
-        },
-    #1 % Weitere Argumente zulassen
-}
-
-% An Important Information Box (Accentcolor bar on the left+ light Accentcolor BG)
-\newtcolorbox{defBox}[1][]{
-    colback=\IfDarkModeTF{accentcolor!20!\thepagecolor}{accentcolor!10!\thepagecolor}, %Hintergrundfarbe
-    colframe=accentcolor, % Randfarbe
-    coltext=.,
-    frame~hidden,
-    title~style=accentcolor,
-    arc=\fopexercise@boxarc,
-    boxrule=0pt,
-    left=5pt, % Links Platz lassen
-    enhanced, % Erlaubt uns, den ramen zu zeichnen
-    fonttitle=\sffamily, % Titelschriftart auf 
-    overlay={ % Für Grauen Bereich links
-            \begin{tcbclipinterior}
-                \fill[accentcolor] (frame.south~west) rectangle ([xshift=4pt]frame.north~west); % Zeilennummernbereich färben
-            \end{tcbclipinterior}
-        },
-    #1 % Weitere Argumente zulassen
-}
-
-\tcbuselibrary{skins,minted}
-% Minted Line Number Styling
-\renewcommand{\theFancyVerbLine}{\tikz{\coordinate(a);\node[text~width=5mm,inner~sep=0pt,align=center]{\ttfamily\textcolor{white}{\scriptsize\arabic{FancyVerbLine}}};}}
-
-% Environment für meinen Code-Style (Arg 1 = minted Options, Arg 2 = tcolorbox Options)
-\definecolor{codebg}{RGB}{22,43,58}
-\IfDarkModeTF{
-    \newtcblisting{codeBlock}[2][]{
-    listing~engine=minted, % Minted verwenden
-    colback=\IfDarkModeTF{codebg}{black!10!\thepagecolor}, %Hintergrundfarbe
-    colframe=black!70, % Randfarbe
-    coltext=.,
-    listing~only,  % Sonst will er den Plain Text nach dem Minted Listing noch anfügen
-    frame~hidden,
-    boxrule=0pt,
-    arc=\fopexercise@boxarc{},
-    % hbox, % This option could be used to limit the Length of Code Blocks automatically, but does not work with the minted Line Numbers
-    title~style=\IfDarkModeTF{accentcolor}{accentcolor},
-    minted~style=paraiso-dark, %Sieht actually worse aus imo
-    minted~language=java, % Sprache setzen
-    minted~options={ %Minted Optionen
-    linenos=true,
-    numbersep=3mm,
-    texcl=true,
-    #1 % weitere optionen für Minted zulassen
-    },
-    left=7.1mm, % Links Platz lassen
-    enhanced, % Erlaubt uns, den ramen zu zeichnen
-    fonttitle=\sffamily, % Titelschriftart auf 
-    overlay={ % Für Grauen Bereich links
-            \begin{tcbclipinterior}
-                \fill[black!70] (frame.south~west) rectangle ([xshift=5mm]frame.north~west); % Zeilennummernbereich färben
-            \end{tcbclipinterior}
-        },
-    #2 % Weitere Argumente zulassen
-    }
-    }{
-        \newtcblisting{codeBlock}[2][]{
-        listing~engine=minted, % Minted verwenden
-        colback=\IfDarkModeTF{codebg}{black!10!\thepagecolor}, %Hintergrundfarbe
-        colframe=black!70, % Randfarbe
-        coltext=.,
-        listing~only,  % Sonst will er den Plain Text nach dem Minted Listing noch anfügen
-        frame~hidden,
-        boxrule=0pt,
-        arc=\fopexercise@boxarc{},
-        % hbox, % This option could be used to limit the Length of Code Blocks automatically, but does not work with the minted Line Numbers
-        title~style=\IfDarkModeTF{accentcolor}{accentcolor},
-        minted~style=tango, %Sieht actually worse aus imo
-        minted~language=java, % Sprache setzen
-        minted~options={ %Minted Optionen
-        linenos=true,
-        numbersep=3mm,
-        texcl=true,
-        #1 % weitere optionen für Minted zulassen
-        },
-        left=7.1mm, % Links Platz lassen
-        enhanced, % Erlaubt uns, den ramen zu zeichnen
-        fonttitle=\sffamily, % Titelschriftart auf 
-        overlay={ % Für Grauen Bereich links
-                \begin{tcbclipinterior}
-                    \fill[black!70] (frame.south~west) rectangle ([xshift=5mm]frame.north~west); % Zeilennummernbereich färben
-                \end{tcbclipinterior}
-            },
-        #2 % Weitere Argumente zulassen
-        }
-}
-
-\colorlet{fgcolor}{.}
-
 
 \IfDarkModeT{
     \cs_if_exist:NT \setbeamercolor {
