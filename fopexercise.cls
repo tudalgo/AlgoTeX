@@ -1,552 +1,371 @@
 % FOP Exercise template class
-% Author: Kim Berninger
-% Überarbeitet von: Ruben Deisenroth
+% Author: Ruben Deisenroth
+\def\fileversion{2.0}
+\def\filedate{2022/01/28}
+
+% Sets the LaTeX version for the package to work.
 \NeedsTeXFormat{LaTeX2e}
 
-\ProvidesClass{fopexercise}[2021/09/06 Edited Version of 2020/08/08 FOP Exercise template class]
+% LateX 3 Syntax
+\RequirePackage{expl3}
 
-\RequirePackage{kvoptions}
-\RequirePackage[table]{xcolor}
-\PassOptionsToPackage{bookmarksnumbered}{hyperref} % Praktischer
+% Identification of the class and its date and version.
+\ProvidesExplClass{fopexercise}{\filedate}
+{\fileversion}{FOP exercise sheet template class}
+
+\RequirePackage[minted_workaround,caption_workaround]{rubos-common}
+
+% Packages that need to be loaded before TUDA-Exercise Class
+\RequirePackage[table, dvipsnames]{xcolor} % Option has to be set before loading TuDaExercise
 \RequirePackage{pagecolor} % Used for dark Mode
-\DeclareStringOption[3]{maxdifficulty}[3]
-\DeclareStringOption{inlineshortcut}[java]
-\DeclareStringOption[0pt]{boxarc}[3pt]
-\DeclareStringOption[tuda_logo]{logopath}[tuda_logo]
-\DeclareBoolOption[true]{showpoints}
-\DeclareBoolOption[true]{fopdesign}
-\DeclareBoolOption[false]{dark_mode}
-\DeclareBoolOption[true]{shell_escape}
-\DeclareComplementaryOption{hidepoints}{showpoints}
-\DeclareComplementaryOption{corporatedesign}{fopdesign}
-\ProcessKeyvalOptions*
+\PassOptionsToPackage{bookmarksnumbered}{hyperref} % Nummerierte Bookmarks
+
+\prop_new:N \g_fop_ex_opts_prop
+\bool_gset_true:N \g_fop_ex_corporate_design_bool
+
+\tl_gclear_new:N \g_fopexercise_keys_tl
+\tl_gset:Nn \g_fopexercise_keys_tl {
+    boxarc .code:n = \PassOptionsToPackage{\CurrentOption}{rubos-common},
+    dark_mode .code:n = \PassOptionsToPackage{\CurrentOption}{rubos-common},
+    load_common .bool_gset:N = \g_fop_ex_load_common_bool,
+    load_common .initial:n = false,
+    load_common . default:n = true,
+    fancy_row_color .code:n = \PassOptionsToPackage{\CurrentOption}{rubos-common},
+    shell_escape .code:n = \PassOptionsToPackage{\CurrentOption}{rubos-common},
+    manual_term .bool_gset:N = \g_manual_term_bool,
+    manual_term .initial:n = false,
+    manual_term .default:n = true,
+    maxdifficulty .code:n = \prop_gput:Nnn \g_fop_ex_opts_prop {maxdifficulty} {#1},
+    maxdifficulty .initial:n = {3},
+    maxdifficulty .default:n = {3},
+    inlineshortcut .code:n = \prop_gput:Nnn \g_fop_ex_opts_prop {inlineshortcut} {#1},
+    inlineshortcut .initial:n = {java},
+    inlineshortcut .default:n = {java},
+    logopath .code:n = \prop_gput:Nnn \g_fop_ex_opts_prop {logopath} {#1},
+    logopath .initial:n = {tuda_logo},
+    logopath .default:n = {tuda_logo},
+    showpoints .bool_gset:N = \g_fop_ex_show_points_bool,
+    showpoints .initial:n = true,
+    showpoints .default:n = true,
+    % corporatedesign .bool_gset:N = \g_fop_ex_corporate_design_bool,
+    % corporatedesign .initial:n = false,
+    % corporatedesign .default:n = true,
+    hidepoints .bool_gset_inverse:N = \g_fop_ex_show_points_bool,
+    hidepoints .initial:n = false,
+    hidepoints .default:n = true,
+    titleprefix .tl_gset:N = \g_fop_ex_title_prefix_tl,
+    titleprefix .default:n = Funktionale~und~objektorientierte~Programmierkonzepte,
+    titleprefix .initial:n = Funktionale~und~objektorientierte~Programmierkonzepte,
+}
+% Additional Class Options
+\exp_args:Nno \keys_define:nn {ptxcd/exercise} { \g_fopexercise_keys_tl }
+\exp_args:Nno \keys_define:nn {fop/exercise} { \g_fopexercise_keys_tl }
+% Compatibility with older versions (We can't use version check makros before loading the class)
+\exp_args:Nno \keys_define:nn {TUDa/pub} { \g_fopexercise_keys_tl }
+\DeclareOption*{\PassOptionsToClass{\CurrentOption}{tudaexercise}}
+\ProcessOptions\relax
+% \ProcessKeysOptions{fop/exercise}
 
 % Used by CI/CD to inject options
 \IfFileExists{options.cfg}{\input{options.cfg}}{}
 
-\iffopexercise@fopdesign
-    \LoadClass[12pt, a4paper]{article}
-\else
+\bool_if:NTF \g_fop_ex_corporate_design_bool {
     \LoadClass[
-        ngerman,
-        color=7b,
         colorback=false,
         points=true,
-        T1
+        footsepline=.5pt,
+        parskip,
+        color=7b,
+        T1,
     ]{tudaexercise}
-\fi
+}{
+    \DeclareOption*{\PassOptionsToClass{\CurrentOption}{article}}
+    \ProcessOptions\relax
+    \LoadClass[12pt, a4paper]{article}
+}
 
 \RequirePackage{tcolorbox}
 \tcbuselibrary{skins}
-
-\ifPDFTeX
-\RequirePackage[utf8]{inputenc}
-\fi
-\RequirePackage[german, ngerman]{babel}
-
-% \RequirePackage{parskip}
-
-\iffopexercise@fopdesign
-    \RequirePackage[
-        left=2.5cm, right=2.5cm, top=3.5cm, bottom=2cm,
-        headheight=1cm, headsep=1.5cm,
-        footnotesep=0.3cm, footskip=1cm]{geometry}
-\fi
-\RequirePackage{graphicx}
-
-\iffopexercise@fopdesign
-    \RequirePackage{fancyhdr}
-
-    \pagestyle{fancy}
-    \fancyhf{}
-    \fancyhead[L]{Funktionale und objektorientierte Programmierkonzepte}
-    \fancyhead[R]{\@title}
-    \fancyfoot[C]{\thepage}
-\fi
-
-\RequirePackage{pifont}
-
-\newcommand\fopexercise@stars[2]{
-    \newcount\currentstar
-    \currentstar=0
-    \loop \ifnum \currentstar < #2 \ifnum \currentstar < #1 \ding{72} \else \ding{73} \fi
-    \advance \currentstar 1 \repeat}
-
-\iffopexercise@showpoints
-    \newcommand{\fopexercise@points}[1]{#1 Punkt\ifnum #1=\@ne\else{e}\fi}
-\else
-    \newcommand{\fopexercise@points}[1]{? Punkte}
-\fi
-
-\RequirePackage{listings}
-
-\lstloadlanguages{Java}
-
-\lstdefinelanguage{Racket}{%
-    alsoletter=+-*/?\=<>!~\#,%
-    morekeywords={%                                                                                                                                                          
-            empty, true, \#true, \#t, false, \#false, \#f%
-        },%
-    morekeywords={%                                                                                                                                                          
-            lambda, define-datatype, begin, begin0, set!, delay, shared, recur,%
-            case, match, when, unless%
-        },%
-    morekeywords={%                                                                                                                                                          
-            local, letrec, let*, let, time, define, define-struct, cond, else, if,%
-            and, or, check-expect, check-random, check-satisfied, check-within,%
-            check-error, check-member-of, check-range, require%
-        },%
-    morekeywords={%                                                                                                                                                          
-            -, <, <=, =, >, >=, abs, acos, add1, angle, asin, atan, ceiling,%
-            complex?, conjugate, cos, cosh, current-seconds, denominator, e, even?,%
-            exact->inexact, exact?, exp, expt, floor, gcd, imag-part,%
-            inexact->exact, inexact?, integer->char, integer-sqrt, integer?, lcm,%
-            log, magnitude, make-polar, make-rectangular, max, min, modulo,%
-            negative?, number->string, number?, numerator, odd?, pi, positive?,%
-            quotient, random, rational?, real-part, real?, remainder, round, sgn,%
-            sin, sinh, sqr, sqrt, sub1, tan, zero?%
-        },%
-    morekeywords={%                                                                                                                                                          
-            boolean->string, boolean=?, boolean?, false?, not%
-        },%
-    morekeywords={%                                                                                                                                                          
-            symbol->string, symbol=?, symbol%
-        },%
-    morekeywords={%                                                                                                                                                          
-            append, assoc, assq, caaar, caadr, caar, cadar, cadddr, caddr, cadr,%
-            car, cdaar, cdadr, cdar, cddar, cdddr, cddr, cdr, cons, cons?, eighth,%
-            empty?, fifth, first, for-each, fourth, length, list, list*, list-ref,%
-            list?, make-list, member, member?, memq, memq?, memv, null, null?,%
-            range, remove, remove-all, rest, reverse, second, seventh, sixth, third%
-        },%
-    morekeywords={%
-            make-posn, posn-x, posn-y, posn?, set-posn-x!, set-posn-y!%
-        },%
-    morekeywords={%
-            char->integer, char-alphabetic?, char-ci<=?, char-ci<?, char-ci=?,%
-            char-ci>=?, char-ci>?, char-downcase, char-lower-case?, char-numeric?,%
-            char-upcase, char-upper-case?, char-whitespace?, char<=?, char<?,%
-            char=?, char>=?, char>?, char?%
-        },%
-    morekeywords={%
-            explode, format, implode, int->string, list->string, make-string,%
-            replicate, string, string->int, string->list, string->number,%
-            string->symbol, string-alphabetic?, string-contains-ci?,%
-            string-contains?, string-copy, string-downcase, string-ith,%
-            string-length, string-lower-case?, string-numeric?, string-ref,%
-            string-upcase, string-upper-case?, string-whitespace?, string?,%
-            substring%
-        },%
-    morekeywords={%
-            image=?, image?%
-        },%
-    morekeywords={%
-            =~, current-milliseconds, eof, eof-object?, eq?, equal?, equal~?, eqv?,%
-            error, exit, force, gensym, identity, promise?, sleep, struct?, void,%
-            void?%
-        },%
-    morekeywords={%
-            +, *, /
-        },%
-    morekeywords={%
-            string-append, string-ci<=?, string-ci<?, string-ci=?, string-ci>=?,%
-            string-ci>?, string<=?, string<?, string=?, string>=?, string>?%
-        },%
-    morekeywords={%
-            posn%
-        },%
-    morekeywords={%
-            andmap, apply, argmax, argmin, build-list, build-string, compose,%
-            filter, foldl, foldr, map, memf, ormap, procedure?, quicksort, sort%
-        },%
-    morekeywords={%
-            display, newline, pretty-print, print, printf, read,%
-            with-input-from-file, with-input-from-string, with-output-to-file,%
-            with-output-to-string, write%
-        },%
-    morekeywords={%
-            build-vector, list->vector, make-vector, vector, vector->list,%
-            vector-length, vector-ref, vector-set!, vector?%
-        },%
-    morekeywords={%
-            box, box?, set-box!, unbox
-        },%
-    morekeywords={%
-            hash-copy, hash-count, hash-eq?, hash-equal?, hash-eqv?, hash-for-each,%
-            hash-has-key?, hash-map, hash-ref, hash-ref!, hash-remove,%
-            hash-remove!, hash-set, hash-set!, hash-update, hash-update!, hash?,%
-            make-hash, make-hasheq, make-hasheqv, make-immutable-hash,%
-            make-immutable-hasheq, make-immutable-hasheqv
-        },%
-    morecomment=[l]{;},%
-    morecomment=[s]{\#|}{|\#},%
-    morestring=[b]{"}%
-}
-
-\lstalias{Scheme}{Racket}
-
-\RequirePackage{xcolor}
-
-\definecolor{fopexercise@codekeyword}{rgb}{0.13,0.13,1}
-\definecolor{fopexercise@codestring}{rgb}{0.9,0,0}
-\definecolor{fopexercise@codecomment}{rgb}{0,0.5,0}
-\definecolor{fopexercise@codegray}{rgb}{0.46,0.45,0.48}
-\definecolor{fopexercise@codebackground}{rgb}{0.90,0.92,0.95}
-
-\lstset{
-    basicstyle=\footnotesize\ttfamily,
-    keywordstyle=\color{fopexercise@codekeyword},
-    stringstyle=\color{fopexercise@codestring},
-    commentstyle=\color{fopexercise@codecomment},
-    showstringspaces=false,
-    breaklines,
-    breakatwhitespace,
-    keepspaces,
-    numbers=left,
-    numberstyle=\tiny,
-    numbersep=5pt,
-    backgroundcolor=\color{fopexercise@codebackground},
-    frame=single
-}
-
-\lstdefinestyle{racket}{
-    language=Racket,
-    moredelim=[is][\textcolor{fopexercise@codegray}]{/*}{*/},
-    moredelim=[is][\underline]{/*!}{*/},
-    literate={\_}{}{0\discretionary{-}{}{}} {\-}{}{0\discretionary{-}{}{-}}
-}
-
-\lstdefinestyle{java}{
-    language=Java,
-    moredelim=[is][\textcolor{fopexercise@codegray}]{\#|}{|\#},
-    moredelim=[is][\underline]{\#|!}{|\#}
-}
-
-\newcommand{\inlineracket}[1]{\texorpdfstring{\lstinline[style=racket]{#1}}{#1}}
-\newcommand{\inlinejava}[1]{\texorpdfstring{\lstinline[style=java]{#1}}{#1}}
-
-\lstnewenvironment{racket}[1][]{\lstset{style=racket, #1}}{}
-\lstnewenvironment{java}[1][]{\lstset{style=java, #1}}{}
-
-\if\relax\fopexercise@inlineshortcut\relax
-\else
-    \lstMakeShortInline[language=\fopexercise@inlineshortcut]´
-\fi
-
-\RequirePackage[inline]{enumitem}
-
-
-\iffopexercise@fopdesign
-    \renewcommand\and{\item}
-    \renewcommand\author[1]{%
-        \renewcommand\@author{%
-            \begin{itemize*}[label={}, afterlabel={}, itemjoin={,\ }, itemjoin*={\ und\ }]%
-                \and#1%
-            \end{itemize*}}}
-\else
-    % TODO: Figure out how to support \and when the corporate design is used
-    % \renewcommand\author[1]{%
-    %     \renewcommand\@author{
-    %         \textbf{\fopexercise@supervisor} \\
-    %         {\normalfont #1}
-    %     }
-    % }
-
-    \renewcommand\author[1]{%
-        \renewcommand\@author{%
-            \fopexercise@supervisor\\#1
-        }
-    }
-
-    \renewcommand\title[1]{
-        \newcommand{\originalTitle}{#1}
-        \renewcommand{\@title}{%
-            Funktionale und objektorientierte Programmierkonzepte\\
-            #1
-        }
-    }
-\fi
-
-\newcommand\supervisor[1]{\renewcommand\fopexercise@supervisor{#1}}
-\newcommand\fopexercise@supervisor{%
-    \ClassError{fopexercise}
-    {Kein Veranstalter angegeben}
-    {Verwenden Sie den Befehl \@backslashchar supervisor{<veranstalter>} um einen Veranstalter festzulegen.}
-}
-
-\newcommand\semester[1]{\renewcommand\fopexercise@semester{#1}}
-\newcommand\fopexercise@semester{%
-    \ClassError{fopexercise}
-    {Kein Semester angegeben}
-    {Verwenden Sie den Befehl \@backslashchar semester{<semester>} um ein Semester festzulegen.}
-}
-
-\newcommand\version[1]{\renewcommand\fopexercise@version{#1}}
-\newcommand\fopexercise@version{%
-    \ClassError{fopexercise}
-    {Keine Versionsnummer angegeben}
-    {Verwenden Sie den Befehl \@backslashchar version{<versionsnummer>} um eine Versionsnummer festzulegen.}
-}
-
-\newcommand\topics[1]{\renewcommand\fopexercise@topics{#1}}
-\newcommand\fopexercise@topics{%
-    \ClassError{fopexercise}
-    {Keine Themen angegeben}
-    {Verwenden Sie den Befehl \@backslashchar topics{<themen>} um eine Versionsnummer festzulegen.}
-}
-
-\newcommand\slides[1]{\renewcommand\fopexercise@slides{#1}}
-\newcommand\fopexercise@slides{%
-    \ClassError{fopexercise}
-    {Kein Foliensatz angegeben}
-    {Verwenden Sie den Befehl \@backslashchar slides{<foliennummern>} um einen relevanten Foliensatz festzulegen.}
-}
-
-\newcommand\duedate[1]{\renewcommand\fopexercise@duedate{#1}}
-\newcommand\fopexercise@duedate{%
-    \ClassError{fopexercise}
-    {Kein Abgabedatum angegeben}
-    {Verwenden Sie den Befehl \@backslashchar duedate{<datum>} um ein Abgabedatum festzulegen.}
-}
-
-\iffopexercise@fopdesign
-    \renewcommand{\maketitle}{%
-        \vspace*{-7\baselineskip}
-        \begin{center}
-            \begin{minipage}{0.7\textwidth}
-                \begin{flushleft}
-                    \Large\textbf{Funktionale und objektorientierte Programmierkonzepte}
-                \end{flushleft}
-            \end{minipage}%
-            \begin{minipage}{0.3\textwidth}
-                \begin{flushright}
-                    \includegraphics[trim=13 8 20 7, clip, width=\textwidth]{\fopexercise@logopath}\\[7.5mm]
-                \end{flushright}
-            \end{minipage}
-
-            \vspace{2mm}
-
-            \begin{minipage}[t]{0.6\textwidth}
-                \begin{flushleft} \large
-                    \@author\\(Gesamtleitung: \fopexercise@supervisor{})
-                \end{flushleft}
-            \end{minipage}%
-            \begin{minipage}[t]{0.4\textwidth}
-                \begin{flushright}
-                    \large \fopexercise@semester\\v\fopexercise@version
-                \end{flushright}
-            \end{minipage}
-
-            \rule{\linewidth}{0.2mm}\\[4mm]
-            {\LARGE\bfseries\@title}\\
-            \rule{\linewidth}{0.2mm}\\[5mm]
-
-            {\large Themen:\hfill\fopexercise@topics}
-
-            \vspace{3mm}
-
-            {\large Relevante Foliensätze:\hfill\fopexercise@slides}
-
-            \vspace{3mm}
-
-            {\large Abgabe der Hausübung:\hfill\fopexercise@duedate}
-
-            \rule{\linewidth}{0.2mm}\\[4mm]
-        \end{center}
-
-        \thispagestyle{plain}
-
-        \global\let\thanks\relax
-        \global\let\maketitle\relax
-        \global\let\@maketitle\relax
-        \global\let\@thanks\@empty
-        \global\let\@author\@empty
-        \global\let\@date\@empty
-        \global\let\fopexercise@supervisor\relax
-        \global\let\fopexercise@semester\relax
-        \global\let\fopexercise@version\relax
-        \global\let\fopexercise@topics\relax
-        \global\let\fopexercise@slides\relax
-        \global\let\fopexercise@duedate\relax
-        \global\let\title\relax
-        \global\let\author\relax
-        \global\let\date\relax
-        \global\let\and\relax
-        \global\let\supervisor\relax
-        \global\let\semester\relax
-        \global\let\version\relax
-        \global\let\topics\relax
-        \global\let\slides\relax
-        \global\let\duedate\relax
-    }
-\else
-    \let\corporateDesignHeader\maketitle
-    \renewcommand{\maketitle}{%
-    \renewcommand{\@title}{%
-        Funktionale und objektorientierte Programmierkonzepte\\
-\originalTitle
-        % {\large \qquad v\fopexercise@version}
-        % Test {\large \qquad v\fopexercise@version}
-    }
-    % \renewcommand{\@title}{%
-    %     Funktionale und objektorientierte Programmierkonzepte\\
-    %     \originalTitle \hfill {\large v\fopexercise@version}
-    % }
-    \corporateDesignHeader
-    % \vspace*{-4.8\baselineskip}
-    % {\null\hfill v\fopexercise@version}\\ \\
-    \vspace*{-1.8\baselineskip}
-    {\fopexercise@semester \hfill v\fopexercise@version}\\
-    {Themen:\hfill\fopexercise@topics}\\
-    {Relevante Foliensätze:\hfill\fopexercise@slides}\\
-    {Abgabe der Hausübung:\hfill\fopexercise@duedate}\\
-    \rule{\linewidth}{0.2mm}\\[4mm]
-    \vspace*{-2\baselineskip}
-
-    \thispagestyle{plain}
-
-    \global\let\thanks\relax
-    \global\let\maketitle\relax
-    \global\let\@maketitle\relax
-    \global\let\@thanks\@empty
-    \global\let\@author\@empty
-    \global\let\@date\@empty
-    \global\let\fopexercise@supervisor\relax
-    \global\let\fopexercise@semester\relax
-    \global\let\fopexercise@version\relax
-    \global\let\fopexercise@topics\relax
-    \global\let\fopexercise@slides\relax
-    \global\let\fopexercise@duedate\relax
-    \global\let\title\relax
-    \global\let\author\relax
-    \global\let\date\relax
-    \global\let\and\relax
-    \global\let\supervisor\relax
-    \global\let\semester\relax
-    \global\let\version\relax
-    \global\let\topics\relax
-    \global\let\slides\relax
-    \global\let\duedate\relax
-    }
-\fi
-
-\newcounter{vues}
-\newcounter{vue}[vues]
-\newcounter{vueaufgabe}[vue]
-\newcounter{hue}
-\newcounter{hueaufgabe}[hue]
-\newcounter{hueteilaufgabe}[hueaufgabe]
-
-\renewcommand\thevues{V}
-\renewcommand\thevue{V\@arabic\c@vue}
-\renewcommand\thevueaufgabe{V\@arabic\c@vue.\@arabic\c@vueaufgabe}
-\renewcommand\thehue{H}
-\renewcommand\thehueaufgabe{H\@arabic\c@hueaufgabe}
-\renewcommand\thehueteilaufgabe{H\@arabic\c@hueaufgabe.\@arabic\c@hueteilaufgabe}
-
-\newcommand\vues[0]{
-    \@startsection{vues}{1}{\z@}%
-    {-3.5ex \@plus -1ex \@minus -.2ex}%
-    {2.3ex \@plus .2ex}%
-    {\normalfont\Large\bfseries}{Vorbereitende Übungen}}
-
-\newcommand\vue[2]{
-    \@startsection{vue}{2}{\z@}%
-    {-3.25ex \@plus -1ex \@minus -.2ex}%
-    {1.5ex \@plus .2ex}%
-    {\normalfont\large\bfseries}[#1]{#1\hfill\fopexercise@stars{#2}{\fopexercise@maxdifficulty}}}
-
-\newcommand\vueaufgabe{
-    \@startsection{vueaufgabe}{3}{\z@}%
-    {-3.25ex \@plus -1ex \@minus -.2ex}%
-    {1.5ex \@plus .2ex}%
-    {\normalfont\large\bfseries}}
-
-\newcommand\hue[3]{
-    \@startsection{hue}{1}{\z@}%
-    {-3.5ex \@plus -1ex \@minus -.2ex}%
-    {2.3ex \@plus .2ex}%
-    {\normalfont\Large\bfseries}[#1 -- #2]{#1\hfill Gesamt #3 Punkte\\\textit{#2}}}
-
-\newcommand\hueaufgabe[2]{
-    \@startsection{hueaufgabe}{2}{\z@}%
-    {-3.25ex \@plus -1ex \@minus -.2ex}%
-    {1.5ex \@plus .2ex}%
-    {\normalfont\large\bfseries}[#1]{#1\hfill \fopexercise@points{#2}}}
-
-\newcommand\hueteilaufgabe[2]{
-    \@startsection{hueteilaufgabe}{3}{\z@}%
-    {-3.25ex\@plus -1ex \@minus -.2ex}%
-    {1.5ex \@plus .2ex}%
-    {\normalfont\normalfont\bfseries}[#1]{#1\hfill \fopexercise@points{#2}}}
-
-\let\vuesmark\@gobble
-\let\vuemark\@gobble
-\let\vueaufgabemark\@gobble
-\let\huemark\@gobble
-\let\hueaufgabemark\@gobble
-\let\hueteilaufgabemark\@gobble
-
-\providecommand*{\toclevel@vues}{1}
-\providecommand*{\toclevel@vue}{2}
-\providecommand*{\toclevel@vueaufgabe}{3}
-\providecommand*{\toclevel@hue}{1}
-\providecommand*{\toclevel@hueaufgabe}{2}
-\providecommand*{\toclevel@hueteilaufgabe}{3}
-
-\newcommand*\l@vues[2]{%
-    \ifnum \c@tocdepth >\z@
-        \addpenalty\@secpenalty
-        \addvspace{1.0em \@plus\p@}%
-        \setlength\@tempdima{1.5em}%
-        \begingroup
-        \parindent \z@ \rightskip \@pnumwidth
-        \parfillskip -\@pnumwidth
-        \leavevmode \bfseries
-        \advance\leftskip\@tempdima
-        \hskip -\leftskip
-        #1\nobreak\hfil
-        \nobreak\hb@xt@\@pnumwidth{\hss #2%
-            \kern-\p@\kern\p@}\par
-        \endgroup
-    \fi}
-\newcommand*\l@hue[2]{%
-    \ifnum \c@tocdepth >\z@
-        \addpenalty\@secpenalty
-        \addvspace{1.0em \@plus\p@}%
-        \setlength\@tempdima{1.5em}%
-        \begingroup
-        \parindent \z@ \rightskip \@pnumwidth
-        \parfillskip -\@pnumwidth
-        \leavevmode \bfseries
-        \advance\leftskip\@tempdima
-        \hskip -\leftskip
-        #1\nobreak\hfil
-        \nobreak\hb@xt@\@pnumwidth{\hss #2%
-            \kern-\p@\kern\p@}\par
-        \endgroup
-    \fi}
-\newcommand*\l@vue{\@dottedtocline{2}{1.5em}{2.3em}}
-\newcommand*\l@vueaufgabe{\@dottedtocline{3}{3.8em}{3.2em}}
-\newcommand*\l@hueaufgabe{\@dottedtocline{2}{1.5em}{2.3em}}
-\newcommand*\l@hueteilaufgabe{\@dottedtocline{3}{3.8em}{3.2em}}
-
-%-- Rubos Modifications --%
+\RequirePackage{enumitem}
 \RequirePackage{amssymb}
 \RequirePackage{caption}
 \RequirePackage{cprotect}
 \RequirePackage{subcaption}
 
-\usetikzlibrary{3d, angles, animations, arrows, arrows.meta, arrows.spaced, automata, babel, backgrounds, bending, calc, calendar, chains, circuits.ee.IEC, circuits.logic.CDH, circuits.logic.IEC, circuits.logic.US, datavisualization, datavisualization.formats.functions, datavisualization.polar, decorations, decorations.footprints, decorations.fractals, decorations.markings, decorations.pathmorphing, decorations.pathreplacing, decorations.shapes, decorations.text, er, external, fadings, fit, fixedpointarithmetic, folding, fpu, graphs, graphs.standard, intersections, lindenmayersystems, math, matrix, patterns, patterns.meta, perspective, petri, plotmarks, positioning, quotes, rdf, scopes, shadings, shadows, shadows.blur, shapes, shapes.arrows, shapes.callouts, shapes.gates.logic.IEC, shapes.gates.logic.US, shapes.geometric, shapes.misc, shapes.multipart, shapes.symbols, spy, svg.path, through, tikzmark, topaths, trees, turtle, views}
-\@ifundefined{\string\color@accentcolor}{\definecolor{accentcolor}{RGB}{0, 157, 129}}{}
-\ExplSyntaxOn
+\ifPDFTeX
+    \RequirePackage[utf8]{inputenc}
+\fi
+\RequirePackage[german, ngerman]{babel}
+
+% \RequirePackage{parskip}
+
+\bool_if:NF \g_fop_ex_corporate_design_bool  {
+    \RequirePackage[
+        left=2.5cm, right=2.5cm, top=3.5cm, bottom=2cm,
+        headheight=1cm, headsep=1.5cm,
+        footnotesep=0.3cm, footskip=1cm]{geometry}
+}
+\RequirePackage{graphicx}
+
+\bool_if:NF \g_fop_ex_corporate_design_bool  {
+    \RequirePackage{fancyhdr}
+
+    \pagestyle{fancy}
+    \fancyhf{}
+    \fancyhead[L]{Funktionale~und~objektorientierte~Programmierkonzepte}
+    \fancyhead[R]{\@title}
+    \fancyfoot[C]{\thepage}
+}
+
+% \RequirePackage{pifont}
+
+
+%%--Document Properties--%%
+% Sheet number
+\newcommand*{\getSheetnumber}{
+    \IfTudaciVersionAtLeastTF{3.0}{
+        \g_ptxcd_ex_sheetnum_tl
+    }{
+        \g_TUDa_ex_sheetnum_tl
+    }
+}
+\newcommand*{\printSheetNumber}{\tl_if_empty:NF \g_ptxcd_ex_sheetnum_tl {\sffamily\textbf{Übungsblatt\space{}Nummer:}\space\padzeroes{\getSheetnumber}}}
+
+% Sheet Version
+\DeclareDocumentProperty{version}[1.0][v*]
+
+% Semester
+\DeclareDocumentProperty{semester}[][*]
+
+% Fachbereich
+\DeclareDocumentProperty{fachbereich}[][\textsf{\textbf{Fachbereich:~}*}]
+
+% Supervisor (Sheet maintainer)
+\DeclareDocumentProperty{supervisor}[][Übungsblatt-Betreuer:\hfill *]
+
+% Topics
+\DeclareDocumentProperty{topics}[][Themen:\hfill *]
+
+% Slides
+\DeclareDocumentProperty{slides}[][Relevante~Foliensätze:~\hfill *]
+
+% Duedate
+\DeclareDocumentProperty{duedate}[][Abgabe~der~Hausübung:\hfill *]
+
+
+
+\newcommand\fopexercise@stars[2]{
+    \newcount\currentstar
+    \currentstar=0
+    \loop \ifnum \currentstar < #2 \ifnum \currentstar < #1 \ding{72} \else \ding{73} \fi
+    \advance \currentstar 1 \repeat
+}
+
+\clist_new:N \g_rubos_ex_term_order_clist
+\clist_gset:Nn \g_rubos_ex_term_order_clist {printAuthor,printSemester,printContributor,printVersion,quad,quad,printDate,printFachbereich}
+\newcommand*{\termOrder}[1]{\tl_gset:Nn \g_rubos_ex_term_order_clist {#1}}
+
+\tl_gclear_new:N \g_ptxcd_ex_term_style_tl
+\newcommand*{\termStyle}[1]{\tl_gset:Nn \g_ptxcd_ex_term_style_tl {#1}}
+\termStyle{left-right}
+\seq_gclear_new:N \g_ptxcd_term_left_seq
+\seq_gclear_new:N \g_ptxcd_term_right_seq
+\newcommand{\termLeft}[1]{
+    \clist_gclear_new:N \g_ptxcd_temp_clist
+    \tl_gset:Nn \g_ptxcd_temp_clist {#1}
+    \clist_map_inline:Nn \g_ptxcd_temp_clist {
+        \tl_if_empty:cF {##1} {
+            \seq_put_right:Nn \g_ptxcd_term_left_seq {\use:c {##1}}
+        }
+    }
+}
+\newcommand{\termRight}[1]{
+    \clist_gclear_new:N \g_ptxcd_temp_clist
+    \tl_gset:Nn \g_ptxcd_temp_clist {#1}
+    \clist_map_inline:Nn \g_ptxcd_temp_clist {
+        \tl_if_empty:cF {##1} {
+            \seq_put_right:Nn \g_ptxcd_term_right_seq {\use:c {##1}}
+        }
+    }
+}
+
+\termStyle{left-right-manual}
+% \termOrder{printAuthor,printSheetNumber,printGroupNumber,printContributor,printVersion,,printSemester,printDate,printFachbereich}
+\termLeft{}
+\termRight{}
+\term{
+    \printSemester{}\hfill\printVersion{}\\
+    \printTopics{}\\
+    \printSlides{}\\
+    \printDuedate{}
+}
+
+\renewcommand*{\@maketitle}{%
+    % \maketerm{}% Might Move Term Creation here soon
+    \global\@topnum=\z@
+    \setparsizes{\z@}{\z@}{\z@\@plus 1fil}\par@updaterelative
+    \vspace*{-\dim_eval:n {
+            \headheight
+            -\c_ptxcd_largerule_dim -\c_ptxcd_rulesep_dim
+            +\headsep
+            +\ht\strutbox
+            +\p@
+        }}
+    \par
+    \nointerlineskip
+    \begingroup
+    \setlength{\fboxsep}{\z@}
+    \bool_if:NT \g_ptxcd_colorback_bool {\colorbox{accentcolor}}{\parbox[t]{\linewidth}{
+            \rule{0pt}{\bool_if:NTF \g_ptxcd_smalltitle_bool {.25} {.5}\c_ptxcd_logoheight_dim}
+            \par\nointerlineskip
+            \raisebox{-\height}{%
+                \begin{minipage}[t]{\dimexpr\linewidth-2.2\c_ptxcd_logoheight_dim-1ex}
+                    \bool_if:NT \g_ptxcd_colorback_bool  {\begin{addmargin}{3mm}}
+                            \raggedright
+                            \bool_if:NT \g_ptxcd_colorback_bool {\color{textonaccentcolor}}
+                            \tl_if_empty:NF \@titlehead {\usekomafont{titlehead}{\@titlehead\par}}
+                            \leavevmode\usekomafont{title}%
+                            {\usekomafont{title}\bool_if:NTF \g_ptxcd_smalltitle_bool {\LARGE} {\huge} {\tl_if_blank:nF {\g_fop_ex_title_prefix_tl} {\g_fop_ex_title_prefix_tl\par}\@title\par}}%
+                            \vskip 1em
+                            \bool_if:NF \g_ptxcd_ex_compatibility_bool
+                            {
+                                {\ifx\@subtitle\@empty\else\usekomafont{subtitle}\@subtitle\par\fi}%
+                                \gdef\@subtitle{}
+                                \vskip .5em
+                            }
+                            % Standart Author Position
+                            % {
+                            %   \xdef\@author {\@author}
+                            %   \ifx\@author\@empty\else\usekomafont{author}\@author\par\fi
+                            % }
+                            \usekomafont{author}Rückfragen~zu~diesem~Übungsblatt~vorzugsweise~im~\\~moodle-Forum~zu~diesem~Blatt!\par
+                            \vskip .5em
+                            \bool_if:NTF \g_ptxcd_colorback_bool {\end{addmargin}} {\par}
+                \end{minipage}}
+            \tl_if_empty:NF \g_ptxcd_logofile_tl {
+                \hfill\raisebox{\dim_eval:n {
+                        \bool_if:NTF \g_ptxcd_colorback_bool
+                        {-\height}
+                        {-.9\c_ptxcd_logoheight_dim}
+                    }}
+                [0pt]
+                [\dim_eval:n {
+                        \bool_if:NTF \g_ptxcd_smalltitle_bool
+                        {\bool_if:NTF \g_ptxcd_colorback_bool {1.15}{1}}
+                        {\bool_if:NTF \g_ptxcd_colorback_bool {1.5}{1.3}
+                        }\c_ptxcd_logoheight_dim}]
+                {\makebox[2.2\c_ptxcd_logoheight_dim][l]{\includegraphics[height=\c_ptxcd_logoheight_dim]{\g_ptxcd_logofile_tl}}}
+            }
+            \par\medskip
+        }}
+    \par
+    \nointerlineskip
+    \rule{\linewidth}{\g_ptxcd_titlerule_dim}
+    % subtitle fields if not compat
+    \exp_args:Nf \tl_if_empty:nF {\seq_use:Nnnn \g_ptxcd_author_seq {~\authorandname{}~} {,~} {~\&~}\seq_use:Nnnn \g_ptxcd_contributor_seq {~\authorandname{}~} {,~} {~\authorandname{}~}\g_ptxcd_ex_sheetnum_tl\@date\g_ptxcd_ex_term_tl\use:c {@subsubtitle}\@subtitle}{
+        \par\nointerlineskip
+        \bool_if:NT \g_ptxcd_colorback_bool {\colorbox{accentcolor}}{
+            \parbox{\linewidth}{
+                \begin{minipage}{\linewidth}
+                    \bool_if:NT \g_ptxcd_colorback_bool {
+                        \color{textonaccentcolor}
+                        \begin{addmargin}{3mm}
+                            }
+                            \null\par
+                            % Term
+                            \bool_if:NTF \g_manual_term_bool{
+                                \g_ptxcd_ex_term_tl
+                            }
+                            {
+                                \str_case_e:nnF {\g_ptxcd_ex_term_style_tl} {
+                                    {manual} {
+                                            \g_ptxcd_ex_term_tl
+                                        }
+                                }{
+                                    \def\ptxcd_nextsep{}
+                                    \bool_gset_true:N \g_tmpa_left_bool
+                                    \clist_map_inline:Nn \g_rubos_ex_term_order_clist {
+                                        % Process different term Styles
+                                        \str_case_e:nnF {\g_ptxcd_ex_term_style_tl} {
+                                            {left} {
+                                                    \tl_if_empty:cF {##1} {
+                                                        \seq_put_right:cn {\bool_if:nTF \g_tmpa_left_bool {g_ptxcd_term_left_seq} {g_ptxcd_term_right_seq}} {\use:c {##1}}
+                                                    }
+                                                }
+                                                {center} {
+                                                    \tl_if_empty:cF {##1} {
+                                                        \seq_put_right:cn {\bool_if:nTF \g_tmpa_left_bool {g_ptxcd_term_left_seq} {g_ptxcd_term_right_seq}} {\use:c {##1}}
+                                                    }
+                                                }
+                                                {left-right} {
+                                                    \tl_if_empty:cF {##1} {
+                                                        \seq_put_right:cn {\bool_if:nTF \g_tmpa_left_bool {g_ptxcd_term_left_seq} {g_ptxcd_term_right_seq}} {\use:c {##1}}\bool_set:Nn \g_tmpa_left_bool {!\g_tmpa_left_bool}
+                                                    }
+                                                }
+                                                {left-right-manual} {
+                                                    % Do Nothing lol
+                                                }
+                                        }
+                                        {
+                                            \ClassError{rubos_tuda_template}{Unknown Term style Option: \use:c {\g_ptxcd_ex_term_style_tl}}{Available options are: left, center, left-right (default)}
+                                        }
+                                    }
+                                    % Left Side
+                                    \begin{minipage}[t]{\seq_if_empty:NF {\g_ptxcd_term_right_seq}{.6}\linewidth}
+                                        \str_if_eq:eeT{\g_ptxcd_ex_term_style_tl} {center} {\centering}
+                                        \seq_use:Nnnn \g_ptxcd_term_left_seq {\mbox{}\par} {\mbox{}\par} {\mbox{}\par}
+                                        \gdef\ptxcd_nextsep{\par}
+                                    \end{minipage}
+                                    \seq_if_empty:NF {\g_ptxcd_term_right_seq}{
+                                        \begin{minipage}[t]{.4\linewidth}
+                                            \raggedleft
+                                            \begin{flushright}
+                                                \seq_use:Nnnn \g_ptxcd_term_right_seq {\mbox{}\par} {\mbox{}\par} {\mbox{}\par}
+                                            \end{flushright}
+                                            \gdef\ptxcd_nextsep{\par}
+                                        \end{minipage}
+                                    }
+                                    % \vspace{-\abovedisplayskip}
+                                    \bool_if:nT { !\seq_if_empty_p:N \g_ptxcd_term_left_seq || !\seq_if_empty_p:N \g_ptxcd_term_right_seq } {
+                                        \vspace*{\lineskip}
+                                        \par
+                                    }
+                                    \tl_if_empty:NF \g_ptxcd_ex_term_tl {\g_ptxcd_ex_term_tl}
+                                    % \clist_map_inline:nn {@subtitle, @subsubtitle, g_ptxcd_ex_term_tl} {
+                                    %   \tl_if_empty:cF {##1} {\ptxcd_nextsep\use:c {##1}\def\ptxcd_nextsep{\\}}
+                                    % }
+                                    % \tl_if_empty:NF \g_ptxcd_ex_sheetnum_tl {\ptxcd_nextsep\sheetname\sheetsep\g_ptxcd_ex_sheetnum_tl}
+                                }
+                            }
+
+                            \bool_if:NT \g_ptxcd_colorback_bool {\end{addmargin}}
+                \end{minipage}
+                \vspace*{\dp\strutbox}
+            }}\par\nointerlineskip
+        \rule{\linewidth}{\g_ptxcd_titlerule_dim}
+    }
+    \par
+    \bool_if:NT  \g_ptxcd_headontitle_bool {
+        \if@twoside
+            \box_use:N \g_ptxcd_ex_headline_odd_box
+        \else
+            \box_use:N \g_ptxcd_ex_headline_oneside_box
+        \fi
+        \par
+        \rule{\linewidth}{\g_ptxcd_titlerule_dim}
+        \par
+    }
+    \endgroup
+    % \vskip 2em
+    \ConfigureHeadline{}
+}%
 
 \prg_new_conditional:Nnn \__ptxcd_if_corporatedesign: {T,F,TF} {
-    \iffopexercise@fopdesign
-        \prg_return_false:
-    \else
+    \bool_if:NTF \g_fop_ex_corporate_design_bool {
         \prg_return_true:
-    \fi
+    } {
+        \prg_return_false:
+    }
 }
 
 \cs_set_eq:NN\IfCorporateDesignT \__ptxcd_if_corporatedesign:T
@@ -580,37 +399,7 @@
     }{}
 }
 
-\prg_new_conditional:Nnn \__ptxcd_if_dark_mode: {T,F,TF} {
-    \iffopexercise@dark_mode
-    \prg_return_true:
-    \else
-    \prg_return_false:
-    \fi
-}
-
-\prg_new_conditional:Nnn \__rubos_if_shell_escape: {T,F,TF} {
-    \iffopexercise@shell_escape
-    \sys_if_shell_unrestricted:TF
-    {\prg_return_true:}
-    {\prg_return_false:}
-    \else
-    \prg_return_false:
-    \fi
-}
-
-\cs_set_eq:NN\IfShellEscapeT \__rubos_if_shell_escape:T
-\cs_set_eq:NN\IfShellEscapeF \__rubos_if_shell_escape:F
-\cs_set_eq:NN\IfShellEscapeTF \__rubos_if_shell_escape:TF
-
-\cs_set_eq:NN\IfDarkModeT \__ptxcd_if_dark_mode:T
-\cs_set_eq:NN\IfDarkModeF \__ptxcd_if_dark_mode:F
-\cs_set_eq:NN\IfDarkModeTF \__ptxcd_if_dark_mode:TF
-
-\definecolor{fopexercise@anthrazitgrau}{HTML}{293133}
 \IfDarkModeT{
-    \pagecolor{fopexercise@anthrazitgrau}
-    \color{white}
-    \selectcolormodel{RGB}
     \IfTudaciVersionAtLeastTF{3.12}{
         \IfFileExists{tuda_logo_inverted.pdf}{\tl_gset:Nn \g_ptxcd_logofile_tl {tuda_logo_inverted.pdf}}{}
     }{
@@ -668,144 +457,36 @@
     }
 }
 
-
-\ExplSyntaxOff
-
-% Boxes and Environments
-
-\RequirePackage{pdftexcmds}
-% A Gray Info Box (gray bar on the Left+ light gray background)
-\newtcolorbox{grayInfoBox}[1][]{
-    colback=\IfDarkModeTF{white!10!\thepagecolor}{gray!10}, %Hintergrundfarbe
-    % colback=fgcolor!10!\thepagecolor, %Hintergrundfarbe
-    coltext=.,
-    colframe=gray, % Randfarbe
-    frame hidden,
-    title style=black!80,
-    arc=\fopexercise@boxarc,
-    boxrule=0pt,
-    left=5pt, % Links Platz lassen
-    enhanced, % Erlaubt uns, den ramen zu zeichnen
-    fonttitle=\sffamily, % Titelschriftart auf 
-    overlay={ % Für Grauen Bereich links
-            \begin{tcbclipinterior}
-                \fill[gray] (frame.south west) rectangle ([xshift=4pt]frame.north west); % Zeilennummernbereich färben
-            \end{tcbclipinterior}
-        },
-    #1 % Weitere Argumente zulassen
+% Stilistische Anpassungen der Task-Environments
+\renewcommand*{\taskformat}{\rmfamily\bfseries H\thetask{}} % Taskprefix
+\renewcommand*{\subtaskformat}{\thesubtask\enskip} % This looks way cleaner
+\renewcommand*{\thetask}{%
+    \texorpdfstring{}{H}%
+    \arabic{task}%
 }
-
-% A Normal Information Box (Accentcolor bar on the left)
-\newtcolorbox{infoBox}[1][]{
-    colback=\thepagecolor, %Hintergrundfarbe
-    colframe=accentcolor, % Randfarbe
-    coltext=.,
-    frame hidden,
-    title style=gray,
-    arc=\fopexercise@boxarc,
-    boxrule=0pt,
-    left=5pt, % Links Platz lassen
-    enhanced, % Erlaubt uns, den ramen zu zeichnen
-    fonttitle=\sffamily, % Titelschriftart auf 
-    overlay={ % Für Grauen Bereich links
-            \begin{tcbclipinterior}
-                \fill[accentcolor] (frame.south west) rectangle ([xshift=4pt]frame.north west); % Zeilennummernbereich färben
-            \end{tcbclipinterior}
-        },
-    #1 % Weitere Argumente zulassen
+\renewcommand*{\thesubtask}{%
+    \texorpdfstring{}{H\arabic{task}.}%
+    \arabic{subtask}%
 }
+% Point Formating
+\renewcommand*{\creditformat}[1]{\hfill#1}
+\renewcommand*{\subtaskformat}{H\thetask{}.\thesubtask :\enskip}
 
-% An Important Information Box (Accentcolor bar on the left+ light Accentcolor BG)
-\newtcolorbox{defBox}[1][]{
-    colback=\IfDarkModeTF{accentcolor!20!\thepagecolor}{accentcolor!10!\thepagecolor}, %Hintergrundfarbe
-    colframe=accentcolor, % Randfarbe
-    coltext=.,
-    frame hidden,
-    title style=accentcolor,
-    arc=\fopexercise@boxarc,
-    boxrule=0pt,
-    left=5pt, % Links Platz lassen
-    enhanced, % Erlaubt uns, den ramen zu zeichnen
-    fonttitle=\sffamily, % Titelschriftart auf 
-    overlay={ % Für Grauen Bereich links
-            \begin{tcbclipinterior}
-                \fill[accentcolor] (frame.south west) rectangle ([xshift=4pt]frame.north west); % Zeilennummernbereich färben
-            \end{tcbclipinterior}
-        },
-    #1 % Weitere Argumente zulassen
-}
+% Section Fonts
+\setkomafont{section}{\large\bfseries\sffamily}
+\setkomafont{subsection}{\normalsize\bfseries\sffamily}
+\setkomafont{subsubsection}{\normalsize\bfseries\sffamily}
+% Task Fonts
+\setkomafont{task}{\normalfont\large\bfseries}
+\setkomafont{subtask}{\normalfont\bfseries}
 
-\IfShellEscapeTF{
-
-    \tcbuselibrary{minted}
-
-    % Minted Line Number Styling
-    \renewcommand{\theFancyVerbLine}{\tikz{\coordinate(a);\node[text width=5mm,inner sep=0pt,align=center]{\ttfamily\textcolor{white}{\scriptsize\arabic{FancyVerbLine}}};}}
-
-    % Environment für meinen Code-Style (Arg 1 = minted Options, Arg 2 = tcolorbox Options)
-    \definecolor{codebg}{RGB}{22,43,58}
-    \IfDarkModeTF{
-        \newtcblisting{codeBlock}[2][]{
-            listing engine=minted, % Minted verwenden
-            colback=\IfDarkModeTF{codebg}{black!10!\thepagecolor}, %Hintergrundfarbe
-            colframe=black!70, % Randfarbe
-            coltext=.,
-            listing only,  % Sonst will er den Plain Text nach dem Minted Listing noch anfügen
-            frame hidden,
-            boxrule=0pt,
-            arc=\fopexercise@boxarc,
-            %hbox, % This option could be used to limit the Length of Code Blocks automatically, but does not work with the minted Line Numbers
-            title style=\IfDarkModeTF{accentcolor!60!black}{black!90},
-            minted style=paraiso-dark, %Sieht actually worse aus imo
-            minted language=java, % Sprache setzen
-            minted options={ %Minted Optionen
-                    linenos=true,
-                    numbersep=3mm,
-                    texcl=true,
-                    #1 % weitere optionen für Minted zulassen
-                },
-            left=7.1mm, % Links Platz lassen
-            enhanced, % Erlaubt uns, den ramen zu zeichnen
-            fonttitle=\sffamily, % Titelschriftart auf 
-            overlay={ % Für Grauen Bereich links
-                    \begin{tcbclipinterior}
-                        \fill[black!70] (frame.south west) rectangle ([xshift=5mm]frame.north west); % Zeilennummernbereich färben
-                    \end{tcbclipinterior}
-                },
-            #2 % Weitere Argumente zulassen
-        }
-    }{
-        \newtcblisting{codeBlock}[2][]{
-            listing engine=minted, % Minted verwenden
-            colback=\IfDarkModeTF{codebg}{black!10!\thepagecolor}, %Hintergrundfarbe
-            colframe=black!70, % Randfarbe
-            coltext=.,
-            listing only,  % Sonst will er den Plain Text nach dem Minted Listing noch anfügen
-            frame hidden,
-            boxrule=0pt,
-            arc=\fopexercise@boxarc,
-            %hbox, % This option could be used to limit the Length of Code Blocks automatically, but does not work with the minted Line Numbers
-            title style=\IfDarkModeTF{accentcolor!60!black}{black!90},
-            minted style=tango, %Sieht actually worse aus imo
-            minted language=java, % Sprache setzen
-            minted options={ %Minted Optionen
-                    linenos=true,
-                    numbersep=3mm,
-                    texcl=true,
-                    #1 % weitere optionen für Minted zulassen
-                },
-            left=7.1mm, % Links Platz lassen
-            enhanced, % Erlaubt uns, den ramen zu zeichnen
-            fonttitle=\sffamily, % Titelschriftart auf 
-            overlay={ % Für Grauen Bereich links
-                    \begin{tcbclipinterior}
-                        \fill[black!70] (frame.south west) rectangle ([xshift=5mm]frame.north west); % Zeilennummernbereich färben
-                    \end{tcbclipinterior}
-                },
-            #2 % Weitere Argumente zulassen
-        }
-    }
-
-}{
-    \lstnewenvironment{codeBlock}[2][]{}{}%
+\DeclareDocumentCommand{\hue}{mmm}{
+    \unskip\section*{
+      #1\hfill Gesamt:~#3~\fp_compare:nTF {#3=1}{
+          \PointName
+      } {
+          \PointsName
+      }
+      \\\textrm{\textit{#2}}
+     }
 }
