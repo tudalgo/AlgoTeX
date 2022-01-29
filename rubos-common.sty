@@ -298,28 +298,49 @@
 }{
     \end{infoBox}
 }
-\DeclareDocumentEnvironment{vfrage}{O{0 Punkte}m}{
+\DeclareDocumentEnvironment{uvhinweis}{O{}m}{
+    \begin{infoBox}
+    \normalsize\textsf{\textbf{Unverbindlicher~Hinweis\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
+    #2
+}{
+    \end{infoBox}
+}
+\DeclareDocumentEnvironment{uvhinweise}{O{}m}{
+    \begin{infoBox}
+    \normalsize\textsf{\textbf{Unverbindlicher~Hinweise\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
+    #2
+}{
+    \end{infoBox}
+}
+\DeclareDocumentEnvironment{erinnerung}{O{}m}{
+    \begin{infoBox}
+        \normalsize\textsf{\textbf{Erinnerung\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
+        #2
+        }{
+    \end{infoBox}
+}
+\DeclareDocumentEnvironment{vfrage}{O{0~Punkte}m}{
     \begin{grayInfoBox}
     \normalsize\textsf{\textbf{Verständnisfrage\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
     #2
 }{
     \end{grayInfoBox}
 }
-\DeclareDocumentEnvironment{vfragen}{O{0 Punkte}m}{
+\DeclareDocumentEnvironment{vfragen}{O{0~Punkte}m}{
     \begin{grayInfoBox}
     \normalsize\textsf{\textbf{Verständnisfragen\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
     #2
 }{
     \end{grayInfoBox}
 }
-\DeclareDocumentEnvironment{vfrager}{O{0 Punkte}m}{
+\DeclareDocumentEnvironment{vfrager}{O{0~Punkte}m}{
     \begin{grayInfoBox}
     \normalsize\textsf{\textbf{Verständnisfrage~am~Rande\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
     #2
 }{
     \end{grayInfoBox}
 }
-\DeclareDocumentEnvironment{vfragenr}{O{0 Punkte}m}{
+\DeclareDocumentEnvironment{vfragenr}{O{0~Punkte}m}{
     \begin{grayInfoBox}
     \normalsize\textsf{\textbf{Verständnisfragen~am~Rande\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
     #2

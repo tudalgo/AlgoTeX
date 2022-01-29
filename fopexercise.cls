@@ -10,7 +10,7 @@
 \RequirePackage{expl3}
 
 % Identification of the class and its date and version.
-\ProvidesExplClass{fopexercise2}{\filedate}
+\ProvidesExplClass{fopexercise}{\filedate}
 {\fileversion}{FOP exercise sheet template class}
 
 \RequirePackage[minted_workaround,caption_workaround]{rubos-common}
