@@ -58,7 +58,6 @@
 \RequirePackage{animate}
 \RequirePackage[overlay]{textpos}
 \RequirePackage{tuda-pgfplots}
-\RequirePackage[utf8]{inputenc}
 \RequirePackage{graphicx}
 \RequirePackage{subcaption}
 \RequirePackage{listings}
@@ -68,10 +67,20 @@
 \RequirePackage[straightvoltages]{circuitikz}
 \RequirePackage{caption}[2013/01/01] % needs v3.3 or newer
 \RequirePackage{tikz}
+\pgfplotsset{compat=1.18}
 \RequirePackage{tabularx,colortbl}
 \ExplSyntaxOff
 \usetikzlibrary{matrix, calc, positioning, chains, shapes, arrows}
 \ExplSyntaxOn
+
+\usepackage{linguex}
+
+\let\linguex@footnotetext\@footnotetext
+\let\@footnotetext\predefinedfootnotetext
+\AtBeginDocument{%
+    \let\predefinedfootnotetext\@footnotetext
+    \let\@footnotetext\linguex@footnotetext
+}
 
 \def\fopexercise@boxarc{\prop_item:Nn \g_rubos_document_opts_prop {boxarc}} % Used for Code Blocks, Info boxes, etc.
 \tl_new:N \l_listings_boxed_options_tl
@@ -110,7 +119,7 @@
     \leavevmode\box_use:N \l_listings_boxed_box
 }
 
-\newcommand{\slidehead}{\frametitle{\insertsectionhead} \framesubtitle{\insertsubsectionhead}\vspace{3mm}}
+\newcommand{\slidehead}{\frametitle{\insertsectionhead} \framesubtitle{\insertsubsectionhead\tl_if_blank:nF {\insertsubsubsectionhead} {~---~\insertsubsubsectionhead}}\vspace{3mm}}
 \newcommand{\tocslide}{\begin{frame}[t]\frametitle{Inhaltsverzeichnis}\vspace{3mm}{\small\tableofcontents[subsectionstyle=shaded]}\end{frame}}
 
 \IfDarkModeT{
@@ -119,7 +128,7 @@
         \setbeamercolor*{normal~text}{bg=,fg=.}
         \setbeamercolor*{background~canvas}{parent=normal~text}
         \setbeamercolor*{section~in~toc}{parent=normal~text}
-        \setbeamercolor*{subsection~in~toc}{parent=normal~text,fg=\thepagecolor}
+        \setbeamercolor*{subsection~in~toc}{parent=normal~text,fg=.}
         \setbeamercolor*{footline}{parent=normal~text}
         \setbeamercolor{block~title~alerted}{fg=white,bg=white!20!\thepagecolor}
         \setbeamercolor*{block~body}{bg=black!70!gray!98!blue}

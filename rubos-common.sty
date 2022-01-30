@@ -30,7 +30,9 @@
     fancy_row_color .bool_gset:N = \g_ptxcd_ex_fancy_rowcolor_bool,
     fancy_row_color .initial:n = false,
     fancy_row_color .default:n = true,
-    minted_workaround .code:n = \cs_undefine:c {float@listhead},
+    minted_workaround .bool_gset:N = \g_rubos_minted_workaround_bool,
+    minted_workaround .initial:n = false,
+    minted_workaround .default:n = true,
     caption_workaround .code:n = \cs_undefine:c {abovecaptionskip}\cs_undefine:c {belowcaptionskip}\cs_undefine:c {@makecaption},
     shell_escape .bool_gset:N = \g_rubos_shell_escape_bool,
     shell_escape .initial:n = true,
@@ -263,54 +265,54 @@
 
 \RequirePackage{etoolbox}
 \AtEndPreamble{
-% definition Environment Style
-\newtheoremstyle{mydefinition}% Theorem style name
-{0pt}% Space above
-{0pt}% Space below
-{\normalfont}% Body font
-{}% Indent amount
-{\small\bfseries\sffamily\color{accentcolor}}% Theorem head font
-{\;}% Punctuation after theorem head
-{0.25em}% Space after theorem head
-{
-    \small\sffamily\color{accentcolor}\thmname{#1}% Theorem text (e.g. Theorem 2.1)
-    \thmnote{\space\sffamily\bfseries\color{fgcolor}---\space#3}% Optional theorem note
-}
+    % definition Environment Style
+    \newtheoremstyle{mydefinition}% Theorem style name
+    {0pt}% Space above
+    {0pt}% Space below
+    {\normalfont}% Body font
+    {}% Indent amount
+    {\small\bfseries\sffamily\color{accentcolor}}% Theorem head font
+    {\;}% Punctuation after theorem head
+    {0.25em}% Space after theorem head
+    {
+        \small\sffamily\color{accentcolor}\thmname{#1}% Theorem text (e.g. Theorem 2.1)
+        \thmnote{\space\sffamily\bfseries\color{fgcolor}---\space#3}% Optional theorem note
+    }
 
-% Definition Environment
-\theoremstyle{mydefinition}%
-\newtheorem{definitionT}{\textsf{Definition}}%
-\newtheorem{ideaT}{\textsf{Idee}}%
-\DeclareDocumentEnvironment{definition}{}{\begin{defBox}\begin{definitionT}}{\end{definitionT}\end{defBox}}%
-\DeclareDocumentEnvironment{idea}{}{\begin{defBox}\begin{ideaT}}{\end{ideaT}\end{defBox}}%
+    % Definition Environment
+    \theoremstyle{mydefinition}%
+    \newtheorem{definitionT}{\textsf{Definition}}%
+    \newtheorem{ideaT}{\textsf{Idee}}%
+    \DeclareDocumentEnvironment{definition}{}{\begin{defBox}\begin{definitionT}}{\end{definitionT}\end{defBox}}%
+    \DeclareDocumentEnvironment{idea}{}{\begin{defBox}\begin{ideaT}}{\end{ideaT}\end{defBox}}%
 }
 
 \DeclareDocumentEnvironment{hinweis}{O{}m}{
     \begin{infoBox}
-    \normalsize\textsf{\textbf{Hinweis\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
-    #2
-}{
+        \normalsize\textsf{\textbf{Hinweis\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
+        #2
+        }{
     \end{infoBox}
 }
 \DeclareDocumentEnvironment{hinweise}{O{}m}{
     \begin{infoBox}
-    \normalsize\textsf{\textbf{Hinweise\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
-    #2
-}{
+        \normalsize\textsf{\textbf{Hinweise\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
+        #2
+        }{
     \end{infoBox}
 }
 \DeclareDocumentEnvironment{uvhinweis}{O{}m}{
     \begin{infoBox}
-    \normalsize\textsf{\textbf{Unverbindlicher~Hinweis\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
-    #2
-}{
+        \normalsize\textsf{\textbf{Unverbindlicher~Hinweis\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
+        #2
+        }{
     \end{infoBox}
 }
 \DeclareDocumentEnvironment{uvhinweise}{O{}m}{
     \begin{infoBox}
-    \normalsize\textsf{\textbf{Unverbindlicher~Hinweise\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
-    #2
-}{
+        \normalsize\textsf{\textbf{Unverbindlicher~Hinweise\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
+        #2
+        }{
     \end{infoBox}
 }
 \DeclareDocumentEnvironment{erinnerung}{O{}m}{
@@ -322,58 +324,58 @@
 }
 \DeclareDocumentEnvironment{vfrage}{O{0~Punkte}m}{
     \begin{grayInfoBox}
-    \normalsize\textsf{\textbf{Verständnisfrage\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
-    #2
-}{
+        \normalsize\textsf{\textbf{Verständnisfrage\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
+        #2
+        }{
     \end{grayInfoBox}
 }
 \DeclareDocumentEnvironment{vfragen}{O{0~Punkte}m}{
     \begin{grayInfoBox}
-    \normalsize\textsf{\textbf{Verständnisfragen\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
-    #2
-}{
+        \normalsize\textsf{\textbf{Verständnisfragen\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
+        #2
+        }{
     \end{grayInfoBox}
 }
 \DeclareDocumentEnvironment{vfrager}{O{0~Punkte}m}{
     \begin{grayInfoBox}
-    \normalsize\textsf{\textbf{Verständnisfrage~am~Rande\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
-    #2
-}{
+        \normalsize\textsf{\textbf{Verständnisfrage~am~Rande\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
+        #2
+        }{
     \end{grayInfoBox}
 }
 \DeclareDocumentEnvironment{vfragenr}{O{0~Punkte}m}{
     \begin{grayInfoBox}
-    \normalsize\textsf{\textbf{Verständnisfragen~am~Rande\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
-    #2
-}{
+        \normalsize\textsf{\textbf{Verständnisfragen~am~Rande\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
+        #2
+        }{
     \end{grayInfoBox}
 }
 \DeclareDocumentEnvironment{vanforderung}{O{}m}{
     \begin{defBox}
-    \normalsize\textsf{\textbf{Verbindliche~Anforderung\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
-    #2
-}{
+        \normalsize\textsf{\textbf{Verbindliche~Anforderung\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
+        #2
+        }{
     \end{defBox}
 }
 \DeclareDocumentEnvironment{vanforderungen}{O{}m}{
     \begin{defBox}
-    \normalsize\textsf{\textbf{Verbindliche~Anforderungen\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
-    #2
-}{
+        \normalsize\textsf{\textbf{Verbindliche~Anforderungen\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
+        #2
+        }{
     \end{defBox}
 }
 \DeclareDocumentEnvironment{vanforderunghu}{O{}m}{
     \begin{defBox}
-    \normalsize\textsf{\textbf{Verbindliche~Anforderung~für~die~gesamte~Hausübung \tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
-    #2
-}{
+        \normalsize\textsf{\textbf{Verbindliche~Anforderung~für~die~gesamte~Hausübung \tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
+        #2
+        }{
     \end{defBox}
 }
 \DeclareDocumentEnvironment{vanforderungenhu}{O{}m}{
     \begin{defBox}
-    \normalsize\textsf{\textbf{Verbindliche~Anforderungen~für~die~gesamte~Hausübung \tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
-    #2
-}{
+        \normalsize\textsf{\textbf{Verbindliche~Anforderungen~für~die~gesamte~Hausübung \tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
+        #2
+        }{
     \end{defBox}
 }
 % \theoremstyle{fopTheorem}%
@@ -534,6 +536,9 @@
 \IfShellEscapeTF{
 
 \tcbuselibrary{minted}
+\bool_if:NT \g_rubos_minted_workaround_bool {
+    \cs_undefine:c {float@listhead}
+}
 
 % Minted Line Number Styling
 \renewcommand{\theFancyVerbLine}{\tikz{\coordinate(a);\node[text~width=5mm,inner~sep=0pt,align=center]{\ttfamily\textcolor{white}{\scriptsize\arabic{FancyVerbLine}}};}}

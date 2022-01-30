@@ -480,13 +480,23 @@
 \setkomafont{task}{\normalfont\large\bfseries}
 \setkomafont{subtask}{\normalfont\bfseries}
 
-\DeclareDocumentCommand{\hue}{mmm}{
+% #1 Hausübungsnummer
+% #2 Hausübungstitel
+% #3 Gesamtpunktzahl
+% #4 Optional: Punktzahlformat (* wird mit Gesamtpuntzahl replaced)
+\DeclareDocumentCommand{\hue}{mmmO{
+            Gesamt:~*~\fp_compare:nTF {*=1}{
+                \PointName
+            } {
+                \PointsName
+            }
+        }}{
+    \tl_clear_new:N \l_fop_ex_hue_totpoints_fp
+    \tl_set:Nn \l_fop_ex_hue_totpoints_fp {#3}
+    \tl_set:Nn \l_fop_ex_hue_pointformat_tl {#4}
+    \regex_replace_all:nnN {\*} {\u{l_fop_ex_hue_totpoints_fp}} \l_fop_ex_hue_pointformat_tl
     \unskip\section*{
-      #1\hfill Gesamt:~#3~\fp_compare:nTF {#3=1}{
-          \PointName
-      } {
-          \PointsName
-      }
+      #1\hfill \l_fop_ex_hue_pointformat_tl
       \\\textrm{\textit{#2}}
      }
 }
