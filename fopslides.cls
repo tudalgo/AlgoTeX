@@ -52,7 +52,6 @@
 \RequirePackage[ngerman]{babel}
 \RequirePackage{float}
 \RequirePackage{fontawesome}
-\RequirePackage{minted}
 \RequirePackage[babel]{csquotes}
 \RequirePackage{media9}
 \RequirePackage{animate}

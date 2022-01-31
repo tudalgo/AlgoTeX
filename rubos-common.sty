@@ -496,8 +496,8 @@
 \definecolor{rubos@codebackground}{rgb}{0.90,0.92,0.95}
 
 \lstset{
-    basicstyle=\footnotesize\ttfamily,
-    keywordstyle=\color{rubos@codekeyword},
+    basicstyle=\ttfamily,
+    keywordstyle=\color{\IfDarkModeTF{blue!50!cyan}{rubos@codekeyword}},
     stringstyle=\color{rubos@codestring},
     commentstyle=\color{rubos@codecomment},
     showstringspaces=false,
@@ -505,10 +505,10 @@
     breakatwhitespace,
     keepspaces,
     numbers=left,
-    numberstyle=\tiny,
-    numbersep=5pt,
-    backgroundcolor=\color{rubos@codebackground},
-    frame=single
+    numberstyle=\ttfamily\scriptsize,
+    numbersep=14pt,
+    backgroundcolor=\color{\IfDarkModeTF{codebg}{black!10!\thepagecolor}},
+    % frame=single,
 }
 
 \lstdefinestyle{racket}{
@@ -534,7 +534,6 @@
 
 
 \IfShellEscapeTF{
-
 \tcbuselibrary{minted}
 \bool_if:NT \g_rubos_minted_workaround_bool {
     \cs_undefine:c {float@listhead}
@@ -544,8 +543,6 @@
 \renewcommand{\theFancyVerbLine}{\tikz{\coordinate(a);\node[text~width=5mm,inner~sep=0pt,align=center]{\ttfamily\textcolor{white}{\scriptsize\arabic{FancyVerbLine}}};}}
 
 % Environment für meinen Code-Style (Arg 1 = minted Options, Arg 2 = tcolorbox Options)
-\definecolor{codebg}{RGB}{22,43,58}
-\IfDarkModeTF{
 \newtcblisting{codeBlock}[2][]{
 listing~engine=minted, % Minted verwenden
 colback=\IfDarkModeTF{codebg}{black!10!\thepagecolor}, %Hintergrundfarbe
@@ -557,12 +554,48 @@ boxrule=0pt,
 arc=\rubos@boxarc,
 %hbox, % This option could be used to limit the Length of Code Blocks automatically, but does not work with the minted Line Numbers
 title~style=\IfDarkModeTF{accentcolor!60!black}{black!90},
-minted~style=paraiso-dark, %Sieht actually worse aus imo
+minted~style/.expanded=\IfDarkModeTF{paraiso-dark}{tango}, % Highlighting Style anpassen
 minted~language=java, % Sprache setzen
 minted~options={ %Minted Optionen
 linenos=true,
 numbersep=3mm,
 texcl=true,
+autogobble,
+escapeinside=||,
+breaklines,
+#1 % weitere optionen für Minted zulassen
+},
+left=7.1mm, % Links Platz lassen
+enhanced, % Erlaubt uns, den ramen zu zeichnen
+fonttitle=\sffamily, % Titelschriftart auf 
+overlay={ % Für Grauen Bereich links
+        \begin{tcbclipinterior}
+            \fill[black!70] (frame.south~west) rectangle ([xshift=5mm]frame.north~west); % Zeilennummernbereich färben
+        \end{tcbclipinterior}
+    },
+#2 % Weitere Argumente zulassen
+}
+\newtcbinputlisting{\inputCode}[3][]{
+listing~engine=minted, % Minted verwenden
+listing~file={#3},
+colback=\IfDarkModeTF{codebg}{black!10!\thepagecolor}, %Hintergrundfarbe
+colframe=black!70, % Randfarbe
+coltext=.,
+listing~only,  % Sonst will er den Plain Text nach dem Minted Listing noch anfügen
+frame~hidden,
+boxrule=0pt,
+arc=\rubos@boxarc,
+%hbox, % This option could be used to limit the Length of Code Blocks automatically, but does not work with the minted Line Numbers
+title~style=\IfDarkModeTF{accentcolor!60!black}{black!90},
+minted~language=java, % Sprache setzen
+minted~style/.expanded=\IfDarkModeTF{paraiso-dark}{tango}, % Highlighting Style anpassen
+minted~options={ %Minted Optionen
+linenos=true,
+numbersep=3mm,
+texcl=true,
+autogobble,
+escapeinside=||,
+breaklines,
 #1 % weitere optionen für Minted zulassen
 },
 left=7.1mm, % Links Platz lassen
@@ -576,8 +609,10 @@ overlay={ % Für Grauen Bereich links
 #2 % Weitere Argumente zulassen
 }
 }{
+\tcbuselibrary{listingsutf8}
+% Environment für meinen Code-Style (Arg 1 = minted Options, Arg 2 = tcolorbox Options)
 \newtcblisting{codeBlock}[2][]{
-listing~engine=minted, % Minted verwenden
+listing~engine=listings, % Minted verwenden
 colback=\IfDarkModeTF{codebg}{black!10!\thepagecolor}, %Hintergrundfarbe
 colframe=black!70, % Randfarbe
 coltext=.,
@@ -587,13 +622,8 @@ boxrule=0pt,
 arc=\rubos@boxarc,
 %hbox, % This option could be used to limit the Length of Code Blocks automatically, but does not work with the minted Line Numbers
 title~style=\IfDarkModeTF{accentcolor!60!black}{black!90},
-minted~style=tango, %Sieht actually worse aus imo
-minted~language=java, % Sprache setzen
-minted~options={ %Minted Optionen
-linenos=true,
-numbersep=3mm,
-texcl=true,
-#1 % weitere optionen für Minted zulassen
+listing~options={ %Minted Optionen
+style=java,
 },
 left=7.1mm, % Links Platz lassen
 enhanced, % Erlaubt uns, den ramen zu zeichnen
@@ -605,9 +635,31 @@ overlay={ % Für Grauen Bereich links
     },
 #2 % Weitere Argumente zulassen
 }
+\newtcbinputlisting{\inputCode}[3][]{
+listing~engine=listings, % Minted verwenden
+listing~file={#3},
+colback=\IfDarkModeTF{codebg}{black!10!\thepagecolor}, %Hintergrundfarbe
+colframe=black!70, % Randfarbe
+coltext=.,
+listing~only,  % Sonst will er den Plain Text nach dem Minted Listing noch anfügen
+frame~hidden,
+boxrule=0pt,
+arc=\rubos@boxarc,
+%hbox, % This option could be used to limit the Length of Code Blocks automatically, but does not work with the minted Line Numbers
+title~style=\IfDarkModeTF{accentcolor!60!black}{black!90},
+listing~options={ %Minted Optionen
+style=java,
+},
+left=7.1mm, % Links Platz lassen
+enhanced, % Erlaubt uns, den ramen zu zeichnen
+fonttitle=\sffamily, % Titelschriftart auf 
+overlay={ % Für Grauen Bereich links
+        \begin{tcbclipinterior}
+            \fill[black!70] (frame.south~west) rectangle ([xshift=5mm]frame.north~west); % Zeilennummernbereich färben
+        \end{tcbclipinterior}
+    },
+#2 % Weitere Argumente zulassen
 }
-}{
-\lstnewenvironment{codeBlock}[2][]{}{}%
 }
 
 
