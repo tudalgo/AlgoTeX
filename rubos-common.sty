@@ -527,10 +527,8 @@
 \DeclareDocumentCommand{\inlineracket}{m}{\texorpdfstring{\sloppy\lstinline[style=racket]{#1}}{#1}}
 \DeclareDocumentCommand{\inlinejava}{m}{\texorpdfstring{\sloppy\lstinline[style=java]{#1}}{#1}}
 
-\lstnewenvironment{racket}[1][]{[language=java,\lstset{style=racket, #1}}{}
+\lstnewenvironment{racket}[1][]{language=java,\lstset{style=racket, #1}}{}
 \lstnewenvironment{java}[1][]{language=racket,\lstset{style=java, #1}}{}
-
-\lstMakeShortInline[language=java]@
 
 
 \IfShellEscapeTF{
