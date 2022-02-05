@@ -9,6 +9,8 @@ pip install pygments
 ```
 
 Um die volle Funktionalität zu erreichen (z.B. für Code-Blöcke) muss mit dem `--shell-escape`-Flag kompilliert werden. (Ansonsten wird der Kompatibillitätsmodus geladen)
+
+Die Vorlage wurde für LuaLaTeX geschrieben, ist aber auch mit PDFLaTeX und XELaTeX
 ## Installation
 Das Repo muss in den TeX-Path geklont werden.
 Diesen findet man mit dem Befehl:
