@@ -1,7 +1,7 @@
 % FOP Exercise template class
 % Author: Ruben Deisenroth
-\def\fileversion{2.0}
-\def\filedate{2022/01/28}
+\def\fileversion{2.1}
+\def\filedate{2022/02/05}
 
 % Sets the LaTeX version for the package to work.
 \NeedsTeXFormat{LaTeX2e}
