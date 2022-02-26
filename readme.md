@@ -33,11 +33,15 @@ oder alternativ kann man den Ordner auch verlinken:
 git clone https://github.com/FOP-2022/FOPTeX.git
 ln -s FOPTeX path/to/texmf/tex/latex/FOPTeX 
 ```
-```sh
-# Windows
+```batch
+REM Windows CMD
 git clone https://github.com/FOP-2022/FOPTeX.git
-cd FOPTeX
-mklink path/to/texmf/tex/latex/FOPTeX 
+mklink /J path\to\texmf\tex\latex\FOPTeX FOPTeX
+```
+```pwsh
+# Windows PowerShell
+git clone https://github.com/FOP-2022/FOPTeX.git
+New-Item -ItemType Junction -Path path\to\texmf\tex\latex\FOPTeX -Value .\FOPTeX
 ```
 
-> Wichtig: bei Dateiänderungen in TeX-Path muss nochmal der Command `texhash` (unter linux mit sudo) ausgeführt werden, bevor die Dateien erkannt werden.
+> Wichtig: bei Dateiänderungen in TeX-Path muss nochmal der Command `texhash` (unter linux mit sudo) ausgeführt werden, bevor die Dateien erkannt werden. Unter MiKTeX unter Windows kann man die MiKTeX Console öffnen und dort unter "Tasks" den Befehl "Refresh file name database" wählen.
