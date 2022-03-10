@@ -119,7 +119,6 @@
 
 % \RequirePackage{pifont}
 
-
 %%--Document Properties--%%
 \renewcommand*{\sheetnumber}[1]{\tl_gset:Nx \g_ptxcd_ex_sheetnum_tl {#1}}
 % Sheet number
@@ -155,12 +154,15 @@
 % Duedate
 \DeclareDocumentProperty{duedate}[][Abgabe~der~Hausübung:\hfill *]
 
-
-
 \newcommand\fopexercise@stars[2]{
     \newcount\currentstar
     \currentstar=0
-    \loop \ifnum \currentstar < #2 \ifnum \currentstar < #1 \ding{72} \else \ding{73} \fi
+    \loop \ifnum \currentstar < #2
+    \ifnum
+        \currentstar < #1 \ding{72}
+    \else
+        \ding{73}
+    \fi
     \advance \currentstar 1 \repeat
 }
 
@@ -223,7 +225,8 @@
             \par\nointerlineskip
             \raisebox{-\height}{%
                 \begin{minipage}[t]{\dimexpr\linewidth-2.2\c_ptxcd_logoheight_dim-1ex}
-                    \bool_if:NT \g_ptxcd_colorback_bool  {\begin{addmargin}{3mm}}
+                    \bool_if:NT \g_ptxcd_colorback_bool  {
+                        \begin{addmargin}{3mm}}
                             \raggedright
                             \bool_if:NT \g_ptxcd_colorback_bool {\color{textonaccentcolor}}
                             \tl_if_empty:NF \@titlehead {\usekomafont{titlehead}{\@titlehead\par}}
@@ -232,7 +235,12 @@
                             \vskip 1em
                             \bool_if:NF \g_ptxcd_ex_compatibility_bool
                             {
-                                {\ifx\@subtitle\@empty\else\usekomafont{subtitle}\@subtitle\par\fi}%
+                                {\ifx
+                                        \@subtitle\@empty
+                                    \else
+                                        \usekomafont{subtitle}\@subtitle\par
+                                    \fi
+                                }%
                                 \gdef\@subtitle{}
                                 \vskip .5em
                             }
@@ -243,8 +251,11 @@
                             % }
                             \usekomafont{author}Rückfragen~zu~diesem~Übungsblatt~vorzugsweise~im~\\~moodle-Forum~zu~diesem~Blatt!\par
                             \vskip .5em
-                            \bool_if:NTF \g_ptxcd_colorback_bool {\end{addmargin}} {\par}
-                \end{minipage}}
+                            \bool_if:NTF \g_ptxcd_colorback_bool {
+                        \end{addmargin}
+                    } {\par}
+                \end{minipage}
+            }
             \tl_if_empty:NF \g_ptxcd_logofile_tl {
                 \hfill\raisebox{\dim_eval:n {
                         \bool_if:NTF \g_ptxcd_colorback_bool
@@ -282,8 +293,8 @@
                             {
                                 \str_case_e:nnF {\g_ptxcd_ex_term_style_tl} {
                                     {manual} {
-                                            \g_ptxcd_ex_term_tl
-                                        }
+                                        \g_ptxcd_ex_term_tl
+                                    }
                                 }{
                                     \def\ptxcd_nextsep{}
                                     \bool_gset_true:N \g_tmpa_left_bool
@@ -291,23 +302,23 @@
                                         % Process different term Styles
                                         \str_case_e:nnF {\g_ptxcd_ex_term_style_tl} {
                                             {left} {
-                                                    \tl_if_empty:cF {##1} {
-                                                        \seq_put_right:cn {\bool_if:nTF \g_tmpa_left_bool {g_ptxcd_term_left_seq} {g_ptxcd_term_right_seq}} {\use:c {##1}}
-                                                    }
+                                                \tl_if_empty:cF {##1} {
+                                                    \seq_put_right:cn {\bool_if:nTF \g_tmpa_left_bool {g_ptxcd_term_left_seq} {g_ptxcd_term_right_seq}} {\use:c {##1}}
                                                 }
-                                                {center} {
-                                                    \tl_if_empty:cF {##1} {
-                                                        \seq_put_right:cn {\bool_if:nTF \g_tmpa_left_bool {g_ptxcd_term_left_seq} {g_ptxcd_term_right_seq}} {\use:c {##1}}
-                                                    }
+                                            }
+                                            {center} {
+                                                \tl_if_empty:cF {##1} {
+                                                    \seq_put_right:cn {\bool_if:nTF \g_tmpa_left_bool {g_ptxcd_term_left_seq} {g_ptxcd_term_right_seq}} {\use:c {##1}}
                                                 }
-                                                {left-right} {
-                                                    \tl_if_empty:cF {##1} {
-                                                        \seq_put_right:cn {\bool_if:nTF \g_tmpa_left_bool {g_ptxcd_term_left_seq} {g_ptxcd_term_right_seq}} {\use:c {##1}}\bool_set:Nn \g_tmpa_left_bool {!\g_tmpa_left_bool}
-                                                    }
+                                            }
+                                            {left-right} {
+                                                \tl_if_empty:cF {##1} {
+                                                    \seq_put_right:cn {\bool_if:nTF \g_tmpa_left_bool {g_ptxcd_term_left_seq} {g_ptxcd_term_right_seq}} {\use:c {##1}}\bool_set:Nn \g_tmpa_left_bool {!\g_tmpa_left_bool}
                                                 }
-                                                {left-right-manual} {
-                                                    % Do Nothing lol
-                                                }
+                                            }
+                                            {left-right-manual} {
+                                                % Do Nothing lol
+                                            }
                                         }
                                         {
                                             \ClassError{rubos_tuda_template}{Unknown Term style Option: \use:c {\g_ptxcd_ex_term_style_tl}}{Available options are: left, center, left-right (default)}
@@ -341,7 +352,9 @@
                                 }
                             }
 
-                            \bool_if:NT \g_ptxcd_colorback_bool {\end{addmargin}}
+                            \bool_if:NT \g_ptxcd_colorback_bool {
+                        \end{addmargin}
+                    }
                 \end{minipage}
                 \vspace*{\dp\strutbox}
             }}\par\nointerlineskip
@@ -374,7 +387,6 @@
 \cs_set_eq:NN\IfCorporateDesignT \__ptxcd_if_corporatedesign:T
 \cs_set_eq:NN\IfCorporateDesignF \__ptxcd_if_corporatedesign:F
 \cs_set_eq:NN\IfCorporateDesignTF \__ptxcd_if_corporatedesign:TF
-
 
 \IfCorporateDesignT{
     % Discover tudaci-Version
@@ -488,20 +500,20 @@
 % #3 Gesamtpunktzahl
 % #4 Optional: Punktzahlformat (* wird mit Gesamtpuntzahl replaced)
 \DeclareDocumentCommand{\hue}{mmmO{
-            Gesamt:~*~\fp_compare:nTF {*=1}{
-                \PointName
-            } {
-                \PointsName
-            }
-        }}{
+        Gesamt:~*~\fp_compare:nTF {*=1}{
+            \PointName
+        } {
+            \PointsName
+        }
+    }}{
     \tl_clear_new:N \l_fop_ex_hue_totpoints_fp
     \tl_set:Nn \l_fop_ex_hue_totpoints_fp {#3}
     \tl_set:Nn \l_fop_ex_hue_pointformat_tl {#4}
     \regex_replace_all:nnN {\*} {\u{l_fop_ex_hue_totpoints_fp}} \l_fop_ex_hue_pointformat_tl
     \unskip\section*{
-      #1\hfill \l_fop_ex_hue_pointformat_tl
-      \\\textrm{\textit{#2}}
-     }
+		    #1\hfill \l_fop_ex_hue_pointformat_tl
+		    \\\textrm{\textit{#2}}
+	    }
 }
 
 % Compatibility with old Sheets
