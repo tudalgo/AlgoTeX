@@ -8,8 +8,8 @@
 \RequirePackage{expl3}
 
 % Identification of the class and its date and version.
-\ProvidesExplClass{fopslides}{\filedate}
-{\fileversion}{FOP Beamer Presentation Template}
+\ProvidesExplClass{algoslides}{\filedate}
+{\fileversion}{FoP and AuD Beamer Presentation Template}
 
 \RequirePackage[minted_workaround,caption_workaround]{rubos-common}
 
@@ -81,7 +81,7 @@
     \let\@footnotetext\linguex@footnotetext
 }
 
-\def\fopexercise@boxarc{\prop_item:Nn \g_rubos_document_opts_prop {boxarc}} % Used for Code Blocks, Info boxes, etc.
+\def\algoxercise@boxarc{\prop_item:Nn \g_rubos_document_opts_prop {boxarc}} % Used for Code Blocks, Info boxes, etc.
 \tl_new:N \l_listings_boxed_options_tl
 \keys_define:nn { listings/boxed }
 {

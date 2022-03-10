@@ -1,6 +1,6 @@
-% FOP Exercise template class
+% FoP and AuD Exercise template class
 % Author: Ruben Deisenroth
-\def\fileversion{2.1}
+\def\fileversion{2.2}
 \def\filedate{2022/02/05}
 
 % Sets the LaTeX version for the package to work.
@@ -10,8 +10,8 @@
 \RequirePackage{expl3}
 
 % Identification of the class and its date and version.
-\ProvidesExplClass{fopexercise}{\filedate}
-{\fileversion}{FOP exercise sheet template class}
+\ProvidesExplClass{algoexercise}{\filedate}
+{\fileversion}{Exercise sheet template class for FoP and AuD}
 
 \RequirePackage[minted_workaround,caption_workaround]{rubos-common}
 
@@ -20,14 +20,14 @@
 \RequirePackage{pagecolor} % Used for dark Mode
 \PassOptionsToPackage{bookmarksnumbered}{hyperref} % Nummerierte Bookmarks
 
-\prop_new:N \g_fop_ex_opts_prop
-\bool_gset_true:N \g_fop_ex_corporate_design_bool
+\prop_new:N \g_algo_ex_opts_prop
+\bool_gset_true:N \g_algo_ex_corporate_design_bool
 
-\tl_gclear_new:N \g_fopexercise_keys_tl
-\tl_gset:Nn \g_fopexercise_keys_tl {
+\tl_gclear_new:N \g_algoexercise_keys_tl
+\tl_gset:Nn \g_algoexercise_keys_tl {
     boxarc .code:n = \PassOptionsToPackage{\CurrentOption}{rubos-common},
     dark_mode .code:n = \PassOptionsToPackage{\CurrentOption}{rubos-common},
-    load_common .bool_gset:N = \g_fop_ex_load_common_bool,
+    load_common .bool_gset:N = \g_algo_ex_load_common_bool,
     load_common .initial:n = false,
     load_common . default:n = true,
     fancy_row_color .code:n = \PassOptionsToPackage{\CurrentOption}{rubos-common},
@@ -35,41 +35,41 @@
     manual_term .bool_gset:N = \g_manual_term_bool,
     manual_term .initial:n = false,
     manual_term .default:n = true,
-    maxdifficulty .code:n = \prop_gput:Nnn \g_fop_ex_opts_prop {maxdifficulty} {#1},
+    maxdifficulty .code:n = \prop_gput:Nnn \g_algo_ex_opts_prop {maxdifficulty} {#1},
     maxdifficulty .initial:n = {3},
     maxdifficulty .default:n = {3},
-    inlineshortcut .code:n = \prop_gput:Nnn \g_fop_ex_opts_prop {inlineshortcut} {#1},
+    inlineshortcut .code:n = \prop_gput:Nnn \g_algo_ex_opts_prop {inlineshortcut} {#1},
     inlineshortcut .initial:n = {java},
     inlineshortcut .default:n = {java},
-    logopath .code:n = \prop_gput:Nnn \g_fop_ex_opts_prop {logopath} {#1},
+    logopath .code:n = \prop_gput:Nnn \g_algo_ex_opts_prop {logopath} {#1},
     logopath .initial:n = {tuda_logo},
     logopath .default:n = {tuda_logo},
-    showpoints .bool_gset:N = \g_fop_ex_show_points_bool,
+    showpoints .bool_gset:N = \g_algo_ex_show_points_bool,
     showpoints .initial:n = true,
     showpoints .default:n = true,
-    % corporatedesign .bool_gset:N = \g_fop_ex_corporate_design_bool,
+    % corporatedesign .bool_gset:N = \g_algo_ex_corporate_design_bool,
     % corporatedesign .initial:n = false,
     % corporatedesign .default:n = true,
-    hidepoints .bool_gset_inverse:N = \g_fop_ex_show_points_bool,
+    hidepoints .bool_gset_inverse:N = \g_algo_ex_show_points_bool,
     hidepoints .initial:n = false,
     hidepoints .default:n = true,
-    titleprefix .tl_gset:N = \g_fop_ex_title_prefix_tl,
+    titleprefix .tl_gset:N = \g_algo_ex_title_prefix_tl,
     titleprefix .default:n = Funktionale~und~objektorientierte~Programmierkonzepte,
     titleprefix .initial:n = Funktionale~und~objektorientierte~Programmierkonzepte,
 }
 % Additional Class Options
-\exp_args:Nno \keys_define:nn {ptxcd/exercise} { \g_fopexercise_keys_tl }
-\exp_args:Nno \keys_define:nn {fop/exercise} { \g_fopexercise_keys_tl }
+\exp_args:Nno \keys_define:nn {ptxcd/exercise} { \g_algoexercise_keys_tl }
+\exp_args:Nno \keys_define:nn {algo/exercise} { \g_algoexercise_keys_tl }
 % Compatibility with older versions (We can't use version check makros before loading the class)
-\exp_args:Nno \keys_define:nn {TUDa/pub} { \g_fopexercise_keys_tl }
+\exp_args:Nno \keys_define:nn {TUDa/pub} { \g_algoexercise_keys_tl }
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{tudaexercise}}
 \ProcessOptions\relax
-% \ProcessKeysOptions{fop/exercise}
+% \ProcessKeysOptions{algo/exercise}
 
 % Used by CI/CD to inject options
 \IfFileExists{options.cfg}{\input{options.cfg}}{}
 
-\bool_if:NTF \g_fop_ex_corporate_design_bool {
+\bool_if:NTF \g_algo_ex_corporate_design_bool {
     \LoadClass[
         colorback=false,
         points=true,
@@ -99,7 +99,7 @@
 
 % \RequirePackage{parskip}
 
-\bool_if:NF \g_fop_ex_corporate_design_bool  {
+\bool_if:NF \g_algo_ex_corporate_design_bool  {
     \RequirePackage[
         left=2.5cm, right=2.5cm, top=3.5cm, bottom=2cm,
         headheight=1cm, headsep=1.5cm,
@@ -107,7 +107,7 @@
 }
 \RequirePackage{graphicx}
 
-\bool_if:NF \g_fop_ex_corporate_design_bool  {
+\bool_if:NF \g_algo_ex_corporate_design_bool  {
     \RequirePackage{fancyhdr}
 
     \pagestyle{fancy}
@@ -173,7 +173,7 @@
 % Dozent
 \DeclareDocumentProperty{dozent}[][\textsf{\textbf{Dozent:~}*}]
 
-\newcommand\fopexercise@stars[2]{
+\newcommand\algoexercise@stars[2]{
     \newcount\currentstar
     \currentstar=0
     \loop \ifnum \currentstar < #2
@@ -251,7 +251,7 @@
                             \bool_if:NT \g_ptxcd_colorback_bool {\color{textonaccentcolor}}
                             \tl_if_empty:NF \@titlehead {\usekomafont{titlehead}{\@titlehead\par}}
                             \leavevmode\usekomafont{title}%
-                            {\usekomafont{title}\bool_if:NTF \g_ptxcd_smalltitle_bool {\LARGE} {\huge} {\tl_if_blank:nF {\g_fop_ex_title_prefix_tl} {\g_fop_ex_title_prefix_tl\par}\@title\par}}%
+                            {\usekomafont{title}\bool_if:NTF \g_ptxcd_smalltitle_bool {\LARGE} {\huge} {\tl_if_blank:nF {\g_algo_ex_title_prefix_tl} {\g_algo_ex_title_prefix_tl\par}\@title\par}}%
                             \vskip 1em
                             \bool_if:NF \g_ptxcd_ex_compatibility_bool
                             {
@@ -397,7 +397,7 @@
 }%
 
 \prg_new_conditional:Nnn \__ptxcd_if_corporatedesign: {T,F,TF} {
-    \bool_if:NTF \g_fop_ex_corporate_design_bool {
+    \bool_if:NTF \g_algo_ex_corporate_design_bool {
         \prg_return_true:
     } {
         \prg_return_false:
@@ -531,12 +531,12 @@
             \PointsName
         }
     }}{
-    \tl_clear_new:N \l_fop_ex_hue_totpoints_fp
-    \tl_set:Nn \l_fop_ex_hue_totpoints_fp {#3}
-    \tl_set:Nn \l_fop_ex_hue_pointformat_tl {#4}
-    \regex_replace_all:nnN {\*} {\u{l_fop_ex_hue_totpoints_fp}} \l_fop_ex_hue_pointformat_tl
+    \tl_clear_new:N \l_algo_ex_hue_totpoints_fp
+    \tl_set:Nn \l_algo_ex_hue_totpoints_fp {#3}
+    \tl_set:Nn \l_algo_ex_hue_pointformat_tl {#4}
+    \regex_replace_all:nnN {\*} {\u{l_algo_ex_hue_totpoints_fp}} \l_algo_ex_hue_pointformat_tl
     \unskip\section*{
-		    #1\hfill \l_fop_ex_hue_pointformat_tl
+		    #1\hfill \l_algo_ex_hue_pointformat_tl
 		    \\\textrm{\textit{#2}}
 	    }
 }

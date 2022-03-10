@@ -1,4 +1,4 @@
-# FOPTeX - Die LaTeX-Vorlage der FOP und AUD
+# AlgoTeX - Die LaTeX-Vorlage der FOP und AUD
 
 ## Voraussetzungen
 - Latex-Installation (z.B. MikTex oder TexLive)
@@ -23,25 +23,26 @@ Beispiel:
 
 ```sh
 cd path/to/texmf/tex/latex/
-git clone https://github.com/FOP-2022/FOPTeX.git
+git clone https://github.com/TUDalgo/AlgoTeX.git
 ```
 
 oder alternativ kann man den Ordner auch verlinken:
 
 ```sh
 # Linux/Mac
-git clone https://github.com/FOP-2022/FOPTeX.git
-ln -s FOPTeX path/to/texmf/tex/latex/FOPTeX 
+git clone https://github.com/TUDalgo/AlgoTeX.git
+ln -s AlgoTeX path/to/texmf/tex/latex/AlgoTeX 
 ```
 ```batch
 REM Windows CMD
-git clone https://github.com/FOP-2022/FOPTeX.git
-mklink /J path\to\texmf\tex\latex\FOPTeX FOPTeX
+git clone https://github.com/TUDalgo/AlgoTeX.git
+mklink /J path\to\texmf\tex\latex\AlgoTeX AlgoTeX
 ```
 ```pwsh
 # Windows PowerShell
-git clone https://github.com/FOP-2022/FOPTeX.git
-New-Item -ItemType Junction -Path path\to\texmf\tex\latex\FOPTeX -Value .\FOPTeX
+git clone https://github.com/TUDalgo/AlgoTeX.git
+New-Item -ItemType Junction -Path path\to\texmf\tex\latex\AlgoTeX -Value .\AlgoTeX
 ```
 
-> Wichtig: bei Dateiänderungen in TeX-Path muss nochmal der Command `texhash` (unter linux mit sudo) ausgeführt werden, bevor die Dateien erkannt werden. Unter MiKTeX unter Windows kann man die MiKTeX Console öffnen und dort unter "Tasks" den Befehl "Refresh file name database" wählen.
+> Wichtig: bei Dateiänderungen in TeX-Path muss nochmal der Command `texhash` (unter linux mit sudo) ausgeführt werden, bevor die Dateien erkannt werden.  
+Unter MiKTeX unter Windows kann man die MiKTeX Console öffnen und dort unter "Tasks" den Befehl "Refresh file name database" wählen.
