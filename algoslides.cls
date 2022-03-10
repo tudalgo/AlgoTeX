@@ -1,5 +1,5 @@
-\def\fileversion{1.3.5}
-\def\filedate{2021/11/18}
+\def\fileversion{1.3.6}
+\def\filedate{2022/03/10}
 
 % Sets the LaTeX version for the package to work.
 \NeedsTeXFormat{LaTeX2e}
