@@ -123,8 +123,8 @@
 % Author
 \tl_gclear_new:N \printAuthor
 \renewcommand*{\author}[1]{
-  \seq_gset_split:Nnn \g_ptxcd_author_seq {\and} {#1}
-  \seq_if_empty:NF \g_ptxcd_author_seq {\tl_gset:Nn \printAuthor {\int_compare:nTF{\seq_count:N \g_ptxcd_author_seq > 1}{Übungsblattbetreuer}{Übungsblattbetreuer}:~\hfill\seq_use:Nnnn \g_ptxcd_author_seq {~\authorandname{}~} {,~} {~\authorandname{}~}\par}}
+    \seq_gset_split:Nnn \g_ptxcd_author_seq {\and} {#1}
+    \seq_if_empty:NF \g_ptxcd_author_seq {\tl_gset:Nn \printAuthor {\int_compare:nTF{\seq_count:N \g_ptxcd_author_seq > 1}{Übungsblattbetreuer}{Übungsblattbetreuer}:~\hfill\seq_use:Nnnn \g_ptxcd_author_seq {~\authorandname{}~} {,~} {~\authorandname{}~}\par}}
 }
 
 \renewcommand*{\sheetnumber}[1]{\tl_gset:Nx \g_ptxcd_ex_sheetnum_tl {#1}}
