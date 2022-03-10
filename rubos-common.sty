@@ -1,13 +1,13 @@
 \NeedsTeXFormat{LaTeX2e}
 \RequirePackage{expl3}
-\ProvidesExplPackage{rubos-common}{2022/01/31}{1.0.1-snapshot}{Common Definitions for all Rubos templates}
+\ProvidesExplPackage{rubos-common}{2022/03/10}{1.0.1-snapshot}{Common Definitions for all Rubos templates}
 % Package Made by Ruben Deisenroth, 2022
 % Available at https://github.com/Rdeisenroth/Rubos-TUDA-Template/blob/main/tex/rubos-common.sty
 
 \RequirePackage{l3keys2e}
 \RequirePackage{amsthm}
 \PassOptionsToPackage{table, dvipsnames}{xcolor} % Option has to be set before loading TuDaExercise
-\RequirePackage{xcolor} 
+\RequirePackage{xcolor}
 \RequirePackage{pagecolor} % Used for dark Mode
 \RequirePackage{tcolorbox}
 \tcbuselibrary{skins}
@@ -17,7 +17,6 @@
 \RequirePackage{listings}
 
 \ExplSyntaxOn
-
 
 % Package Options
 \prop_gclear_new:N \g_rubos_document_opts_prop
@@ -87,24 +86,12 @@
 \cs_set_eq:NN\IfShellEscapeF \__rubos_if_shell_escape:F
 \cs_set_eq:NN\IfShellEscapeTF \__rubos_if_shell_escape:TF
 
-
 % Zero Padding (Pads Number with the wanted amount of zeros)
-\int_gzero_new:N \l_rubos_limit_var_int
-\int_gzero_new:N \l_rubos_amount_var_int
 \DeclareDocumentCommand{\padzeroes}{O{2}m}{
-    \int_set:Nn \l_rubos_limit_var_int {1}
-    \int_set:Nn \l_rubos_amount_var_int {#1}
-    \bool_set_true:N \l_tmpa_bool
-    \bool_while_do:Nn \l_tmpa_bool
-    {
-        \int_compare:nTF {\l_rubos_amount_var_int > 0} {
-            \int_compare:nT {#2 < \l_rubos_limit_var_int} {
-                0
-            }
-            \int_set:Nn \l_rubos_limit_var_int {\int_eval:n {\l_rubos_limit_var_int * 10}}
-            \int_set:Nn \l_rubos_amount_var_int {\int_eval:n {\l_rubos_amount_var_int -1}}
+    \int_step_inline:nnnn {1} {1} {\int_eval:n {#1 - 1}} {
+        \int_compare:nT { #2 < \int_eval:n {##1 * 10}} {
+            0
         }
-        {\bool_set_false:N \l_tmpa_bool}
     }
     #2
 }
@@ -171,7 +158,6 @@
     \csname#1\endcsname{#2}
 }
 }
-
 
 % Document Version
 \DeclareDocumentProperty{version}[1.0][\textsf{\textbf{Version:}}~v*]
@@ -531,7 +517,6 @@
 \lstnewenvironment{racket}[1][]{language=java,\lstset{style=racket, #1}}{}
 \lstnewenvironment{java}[1][]{language=racket,\lstset{style=java, #1}}{}
 
-
 \IfShellEscapeTF{
 \tcbuselibrary{minted}
 \bool_if:NT \g_rubos_minted_workaround_bool {
@@ -660,7 +645,6 @@ overlay={ % Für Grauen Bereich links
 #2 % Weitere Argumente zulassen
 }
 }
-
 
 %%--Makros--%%
 \DeclareDocumentEnvironment{cpenumerate}{O{}}{\begin{enumerate}[nosep, #1]}{\end{enumerate}}

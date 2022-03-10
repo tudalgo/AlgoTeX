@@ -121,12 +121,15 @@
 
 
 %%--Document Properties--%%
+\renewcommand*{\sheetnumber}[1]{\tl_gset:Nx \g_ptxcd_ex_sheetnum_tl {#1}}
 % Sheet number
 \newcommand*{\getSheetnumber}{
-    \IfTudaciVersionAtLeastTF{3.0}{
-        \g_ptxcd_ex_sheetnum_tl
-    }{
-        \g_TUDa_ex_sheetnum_tl
+    \padzeroes{
+        \IfTudaciVersionAtLeastTF{3.0}{
+            \g_ptxcd_ex_sheetnum_tl
+        }{
+            \g_TUDa_ex_sheetnum_tl
+        }
     }
 }
 \newcommand*{\printSheetNumber}{\tl_if_empty:NF \g_ptxcd_ex_sheetnum_tl {\sffamily\textbf{Übungsblatt\space{}Nummer:}\space\padzeroes{\getSheetnumber}}}
