@@ -1,6 +1,6 @@
 % FoP and AuD Exercise template class
 % Author: Ruben Deisenroth
-\def\fileversion{2.2}
+\def\fileversion{2.2.1}
 \def\filedate{2022/03/10}
 
 % Sets the LaTeX version for the package to work.
@@ -54,8 +54,8 @@
     hidepoints .initial:n = false,
     hidepoints .default:n = true,
     titleprefix .tl_gset:N = \g_algo_ex_title_prefix_tl,
-    titleprefix .default:n = Funktionale~und~objektorientierte~Programmierkonzepte,
-    titleprefix .initial:n = Funktionale~und~objektorientierte~Programmierkonzepte,
+    titleprefix .default:n = {},
+    titleprefix .initial:n = {},
 }
 % Additional Class Options
 \exp_args:Nno \keys_define:nn {ptxcd/exercise} { \g_algoexercise_keys_tl }
