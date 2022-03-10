@@ -120,6 +120,13 @@
 % \RequirePackage{pifont}
 
 %%--Document Properties--%%
+% Author
+\tl_gclear_new:N \printAuthor
+\renewcommand*{\author}[1]{
+  \seq_gset_split:Nnn \g_ptxcd_author_seq {\and} {#1}
+  \seq_if_empty:NF \g_ptxcd_author_seq {\tl_gset:Nn \printAuthor {\int_compare:nTF{\seq_count:N \g_ptxcd_author_seq > 1}{Übungsblattbetreuer}{Übungsblattbetreuer}:~\hfill\seq_use:Nnnn \g_ptxcd_author_seq {~\authorandname{}~} {,~} {~\authorandname{}~}\par}}
+}
+
 \renewcommand*{\sheetnumber}[1]{\tl_gset:Nx \g_ptxcd_ex_sheetnum_tl {#1}}
 % Sheet number
 \newcommand*{\getSheetnumber}{
@@ -135,6 +142,15 @@
 
 % Sheet Version
 \DeclareDocumentProperty{version}[1.0][v*]
+
+% Short title
+\newcommand*{\getShorttitle}{
+    \IfTudaciVersionAtLeastTF{3.0}{
+        \g_ptxcd_shorttitle_tl
+    }{
+        \g_TUDa_shorttitle_tl
+    }
+}
 
 % Semester
 \DeclareDocumentProperty{semester}[][*]
@@ -154,6 +170,9 @@
 % Duedate
 \DeclareDocumentProperty{duedate}[][Abgabe~der~Hausübung:\hfill *]
 
+% Dozent
+\DeclareDocumentProperty{dozent}[][\textsf{\textbf{Dozent:~}*}]
+
 \newcommand\fopexercise@stars[2]{
     \newcount\currentstar
     \currentstar=0
@@ -167,7 +186,7 @@
 }
 
 \clist_new:N \g_rubos_ex_term_order_clist
-\clist_gset:Nn \g_rubos_ex_term_order_clist {printAuthor,printSemester,printContributor,printVersion,quad,quad,printDate,printFachbereich}
+\clist_gset:Nn \g_rubos_ex_term_order_clist {printSemester,printContributor,printVersion,quad,quad,printDate,printFachbereich}
 \newcommand*{\termOrder}[1]{\tl_gset:Nn \g_rubos_ex_term_order_clist {#1}}
 
 \tl_gclear_new:N \g_ptxcd_ex_term_style_tl
@@ -199,6 +218,7 @@
 \termLeft{}
 \termRight{}
 \term{
+    \printAuthor{}
     \printSemester{}\hfill\printVersion{}\\
     \printTopics{}\\
     \printSlides{}\\
@@ -249,7 +269,7 @@
                             %   \xdef\@author {\@author}
                             %   \ifx\@author\@empty\else\usekomafont{author}\@author\par\fi
                             % }
-                            \usekomafont{author}Rückfragen~zu~diesem~Übungsblatt~vorzugsweise~im~\\~moodle-Forum~zu~diesem~Blatt!\par
+                            % \usekomafont{author}Rückfragen~zu~diesem~Übungsblatt~vorzugsweise~im~\\~moodle-Forum~zu~diesem~Blatt!\par
                             \vskip .5em
                             \bool_if:NTF \g_ptxcd_colorback_bool {
                         \end{addmargin}
@@ -443,8 +463,10 @@
                 #1 / name-id .code:n = \tl_gset:cn {g_ptxcd_ex_headline_#1_tl} {\StudentName\StudentID},
                 #1 / name .code:n = \tl_gset:cn {g_ptxcd_ex_headline_#1_tl} {\StudentName},
                 #1 / aud .code:n = \tl_gset:cn {g_ptxcd_ex_headline_#1_tl} {
-                    \textbf{AuD\space{}}im\space\textbf{\fopexercise@semester}\space{}bei\space\textbf{Prof.~Dr.~rer.~nat.~Karsten~Weihe}\hfill \originalTitle\par
+                    \textbf{AuD\space{}}im\space\fatsf{\getSemester{}}\space{}bei\space\fatsf{Prof.~Dr.~rer.~nat.~Karsten~Weihe}\hfill\fatsf{\@title} - \g_ptxcd_shorttitle_tl\par
                     \StudentName\StudentID},
+                #1 / aud-min .code:n = \tl_gset:cn {g_ptxcd_ex_headline_#1_tl} {
+                    \textbf{AuD\space{}}im\space\fatsf{\getSemester{}}\space{}bei\space\fatsf{Prof.~Dr.~rer.~nat.~Karsten~Weihe}\hfill\fatsf{\@title} - \g_ptxcd_shorttitle_tl},
             }
         }
     }{
@@ -463,8 +485,11 @@
                 #1 / name-id .code:n = \tl_gset:cn {g_TUDa_ex_headline_#1_tl} {\StudentName\StudentID},
                 #1 / name .code:n = \tl_gset:cn {g_TUDa_ex_headline_#1_tl} {\StudentName},
                 #1 / aud .code:n= \tl_gset:cn {g_TUDa_ex_headline_#1_tl} {
-                    \textbf{AuD\space{}}im\space\textbf{\fopexercise@semester}\space{}bei\space\textbf{Prof.~Dr.~rer.~nat.~Karsten~Weihe}\hfill \originalTitle\par
+                    \textbf{AuD\space{}}im\space\fatsf{\getSemester{}}\space{}bei\space\fatsf{\getDozent}\hfill \@title - \g_TUDa_shorttitle_tl\par
                     \StudentName\StudentID
+                },
+                #1 / aud-min .code:n= \tl_gset:cn {g_TUDa_ex_headline_#1_tl} {
+                    \textbf{AuD\space{}}im\space\fatsf{\getSemester{}}\space{}bei\space\fatsf{\getDozent}\hfill \@title - \g_TUDa_shorttitle_tl
                 },
                 #1 / unknown .code:n = \tl_gset:cn {g_TUDa_ex_headline_#1_tl} {##1}
             }
@@ -522,8 +547,10 @@
 \DeclareDocumentCommand{\hueaufgabe}{mm}{
     \task[points=#2]{#1}
 }
+
+% Compatibility with old Sheets
 % #1 - Title
 % #2 - Points
-\DeclareDocumentCommand{\hueteilaufgabe}{mm}{
-    \subtask[points=#2,title=#1]{}
+\DeclareDocumentCommand{\hueaufgabe}{mm}{
+    \task[points=#2]{#1}
 }
