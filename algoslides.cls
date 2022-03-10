@@ -11,7 +11,7 @@
 \ProvidesExplClass{algoslides}{\filedate}
 {\fileversion}{FoP and AuD Beamer Presentation Template}
 
-\RequirePackage[minted_workaround,caption_workaround]{rubos-common}
+\RequirePackage[minted_workaround,caption_workaround]{algo-common}
 
 % \DeclareGraphicsExtensions{.pdf,.png,.jpg}
 \RequirePackage[table, dvipsnames]{xcolor}

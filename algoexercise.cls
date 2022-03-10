@@ -13,7 +13,7 @@
 \ProvidesExplClass{algoexercise}{\filedate}
 {\fileversion}{Exercise sheet template class for FoP and AuD}
 
-\RequirePackage[minted_workaround,caption_workaround]{rubos-common}
+\RequirePackage[minted_workaround,caption_workaround]{algo-common}
 
 % Packages that need to be loaded before TUDA-Exercise Class
 \RequirePackage[table, dvipsnames]{xcolor} % Option has to be set before loading TuDaExercise
