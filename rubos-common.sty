@@ -1,12 +1,13 @@
 \NeedsTeXFormat{LaTeX2e}
 \RequirePackage{expl3}
 \ProvidesExplPackage{rubos-common}{2022/01/31}{1.0.1-snapshot}{Common Definitions for all Rubos templates}
-% Made by Ruben Deisenroth, 2022
-% Available at https://github.com/Rdeisenroth/TUDA-Hausuebungstemplate/blob/main/rubos-common.sty
+% Package Made by Ruben Deisenroth, 2022
+% Available at https://github.com/Rdeisenroth/Rubos-TUDA-Template/blob/main/tex/rubos-common.sty
 
 \RequirePackage{l3keys2e}
 \RequirePackage{amsthm}
-\RequirePackage[table, dvipsnames]{xcolor} % Option has to be set before loading TuDaExercise
+\PassOptionsToPackage{table, dvipsnames}{xcolor} % Option has to be set before loading TuDaExercise
+\RequirePackage{xcolor} 
 \RequirePackage{pagecolor} % Used for dark Mode
 \RequirePackage{tcolorbox}
 \tcbuselibrary{skins}
