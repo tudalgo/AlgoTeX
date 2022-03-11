@@ -91,6 +91,7 @@
 \RequirePackage{caption}
 \RequirePackage{cprotect}
 \RequirePackage{subcaption}
+\RequirePackage{csquotes}
 
 \ifPDFTeX
     \RequirePackage[utf8]{inputenc}
