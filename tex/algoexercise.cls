@@ -75,7 +75,7 @@
         points=true,
         footsepline=.5pt,
         parskip,
-        color=7b,
+        color=3b,
         T1,
     ]{tudaexercise}
 }{
