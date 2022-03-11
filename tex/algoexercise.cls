@@ -297,7 +297,7 @@
     \nointerlineskip
     \rule{\linewidth}{\g_ptxcd_titlerule_dim}
     % subtitle fields if not compat
-    \exp_args:Nf \tl_if_empty:nF {\seq_use:Nnnn \g_ptxcd_author_seq {~\authorandname{}~} {,~} {~\&~}\seq_use:Nnnn \g_ptxcd_contributor_seq {~\authorandname{}~} {,~} {~\authorandname{}~}\g_ptxcd_ex_sheetnum_tl\@date\g_ptxcd_ex_term_tl\use:c {@subsubtitle}\@subtitle}{
+    \exp_args:Nf \tl_if_empty:nF {\seq_use:Nnnn \g_ptxcd_author_seq {~\authorandname{}~} {,~} {~\authorandname{}~}\seq_use:Nnnn \g_ptxcd_ex_sheetnum_tl\@date\g_ptxcd_ex_term_tl\use:c {@subsubtitle}\@subtitle}{
         \par\nointerlineskip
         \bool_if:NT \g_ptxcd_colorback_bool {\colorbox{accentcolor}}{
             \parbox{\linewidth}{
