@@ -5,6 +5,7 @@
 % Available at https://github.com/Rdeisenroth/Rubos-TUDA-Template/blob/main/tex/rubos-common.sty
 
 \RequirePackage{l3keys2e}
+\RequirePackage{amsmath}
 \RequirePackage{amsthm}
 \PassOptionsToPackage{table, dvipsnames}{xcolor} % Option has to be set before loading TuDaExercise
 \RequirePackage{xcolor}
@@ -321,6 +322,34 @@
         }{
     \end{infoBox}
 }
+\DeclareDocumentEnvironment{anmerkung}{O{}m}{
+    \begin{infoBox}
+        \normalsize\textsf{\textbf{Anmerkung\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
+        #2
+        }{
+    \end{infoBox}
+}
+\DeclareDocumentEnvironment{anmerkungr}{O{}m}{
+    \begin{infoBox}
+        \normalsize\textsf{\textbf{Anmerkung~am~Rande\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
+        #2
+        }{
+    \end{infoBox}
+}
+\DeclareDocumentEnvironment{bemerkung}{O{}m}{
+    \begin{infoBox}
+        \normalsize\textsf{\textbf{Bemerkung\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
+        #2
+        }{
+    \end{infoBox}
+}
+\DeclareDocumentEnvironment{bemerkungr}{O{}m}{
+    \begin{infoBox}
+        \normalsize\textsf{\textbf{Bemerkung~am~Rande\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
+        #2
+        }{
+    \end{infoBox}
+}
 \DeclareDocumentEnvironment{vfrage}{O{0~Punkte}m}{
     \begin{grayInfoBox}
         \normalsize\textsf{\textbf{Verständnisfrage\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
@@ -496,9 +525,9 @@
 
 \lstset{
     basicstyle=\ttfamily,
-    keywordstyle=\color{\IfDarkModeTF{blue!50!cyan}{rubos@codekeyword}},
-    stringstyle=\color{rubos@codestring},
-    commentstyle=\color{rubos@codecomment},
+    keywordstyle=\color{\IfDarkModeTF{cyan!70!blue}{rubos@codekeyword}},
+    stringstyle=\color{\IfDarkModeTF{orange!70!yellow}{rubos@codestring}},
+    commentstyle=\color{\IfDarkModeTF{green}{rubos@codecomment}},
     showstringspaces=false,
     breaklines,
     breakatwhitespace,

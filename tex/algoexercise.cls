@@ -441,10 +441,6 @@
     }{
         \IfFileExists{tuda_logo_inverted.pdf}{\tl_gset:Nn \g_TUDa_logofile_tl {tuda_logo_inverted.pdf}}{}
     }
-    \lstset{
-        keywordstyle=\color{cyan!70!blue},
-        commentstyle=\color{green},
-    }
 }
 
 \IfCorporateDesignT{
