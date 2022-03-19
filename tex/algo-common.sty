@@ -350,6 +350,20 @@
         }{
     \end{infoBox}
 }
+\DeclareDocumentEnvironment{beispiel}{O{}m}{
+    \begin{infoBox}
+        \normalsize\textsf{\textbf{Beispiel\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
+        #2
+        }{
+    \end{infoBox}
+}
+\DeclareDocumentEnvironment{example}{O{}m}{
+    \begin{infoBox}
+        \normalsize\textsf{\textbf{Beispiel\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
+        #2
+        }{
+    \end{infoBox}
+}
 \DeclareDocumentEnvironment{vfrage}{O{0~Punkte}m}{
     \begin{grayInfoBox}
         \normalsize\textsf{\textbf{Verständnisfrage\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
