@@ -121,6 +121,15 @@
 % \RequirePackage{pifont}
 
 %%--Document Properties--%%
+% Date
+\tl_gclear_new:N \datename
+\tl_gset:Nn \datename {Datum}
+\tl_gclear_new:N \printDate
+\renewcommand*{\date}[1]{
+  \tl_gset:Nn \@date {#1}
+  \tl_if_empty:NF \@date {\tl_gset:Nn \printDate {\textsf{\textbf{\datename{}:~}}\@date}}
+}
+
 % Author
 \tl_gclear_new:N \printAuthor
 \renewcommand*{\author}[1]{
@@ -460,10 +469,10 @@
                 #1 / name-id .code:n = \tl_gset:cn {g_ptxcd_ex_headline_#1_tl} {\StudentName\StudentID},
                 #1 / name .code:n = \tl_gset:cn {g_ptxcd_ex_headline_#1_tl} {\StudentName},
                 #1 / aud .code:n = \tl_gset:cn {g_ptxcd_ex_headline_#1_tl} {
-                    \textbf{AuD\space{}}im\space\fatsf{\getSemester{}}\space{}bei\space\fatsf{Prof.~Dr.~rer.~nat.~Karsten~Weihe}\hfill\fatsf{\@title} - \g_ptxcd_shorttitle_tl\par
+                    \textbf{AuD\space{}}im\space\fatsf{\getSemester{}}\space{}bei\space\fatsf{Prof.~Dr.~rer.~nat.~Karsten~Weihe}\hfill\fatsf{\@title}~--~\g_ptxcd_shorttitle_tl\par
                     \StudentName\StudentID},
                 #1 / aud-min .code:n = \tl_gset:cn {g_ptxcd_ex_headline_#1_tl} {
-                    \textbf{AuD\space{}}im\space\fatsf{\getSemester{}}\space{}bei\space\fatsf{Prof.~Dr.~rer.~nat.~Karsten~Weihe}\hfill\fatsf{\@title} - \g_ptxcd_shorttitle_tl},
+                    \textbf{AuD\space{}}im\space\fatsf{\getSemester{}}\space{}bei\space\fatsf{Prof.~Dr.~rer.~nat.~Karsten~Weihe}\hfill\fatsf{\@title}~--~\g_ptxcd_shorttitle_tl},
             }
         }
     }{
@@ -551,3 +560,7 @@
 \DeclareDocumentCommand{\hueaufgabe}{mm}{
     \task[points=#2]{#1}
 }
+
+% Description-list styling.
+\SetLabelAlign{parright}{\parbox[t]{\labelwidth}{\raggedleft#1}}
+\setlist[description]{style = multiline, leftmargin = 4cm, align = parright,font=\mdseries}
