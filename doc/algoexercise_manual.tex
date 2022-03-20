@@ -1,0 +1,121 @@
+\documentclass[
+    titleprefix=AlgoTeX,
+    inlineshortcut=java,
+    corporatedesign,
+    boxarc,
+    % dark_mode,
+]{algoexercise}
+
+%%------------%%
+%%--Packages--%%
+%%------------%%
+
+% \usepackage{audutils}
+% \usepackage{fopbot}
+
+%%----------------------------%%
+%%--Stilistische Anpassungen--%%
+%%----------------------------%%
+
+\ExplSyntaxOn
+% Author
+\renewcommand*{\author}[1]{
+    \seq_gset_split:Nnn \g_ptxcd_author_seq {\and} {#1}
+    \seq_if_empty:NF \g_ptxcd_author_seq {\tl_gset:Nn \printAuthor {\int_compare:nTF{\seq_count:N \g_ptxcd_author_seq > 1}{Autoren}{Autor}:~\hfill\seq_use:Nnnn \g_ptxcd_author_seq {~\authorandname{}~} {,~} {~\authorandname{}~}\par}}
+}
+\termLeft{}
+\termRight{}
+\term{
+    \printDate{}\hfill\printVersion{}\\
+    \printAuthor{}
+    \printTopics{}
+    % \printSlides{}\\
+    % \printDuedate{}
+}
+\ExplSyntaxOff
+\ConfigureHeadline{
+    headline={aud-min}
+}
+
+%%---------------------------%%
+%%--Dokumenteneinstellungen--%%
+%%---------------------------%%
+
+\date{\today}
+\author{Ruben Deisenroth}
+\subtitle{Rückfragen zu diesem Handbuch vorzugsweise in Discord an Rubosplay\#0815!}
+\dozent{Prof. Dr. rer. nat. Karsten Weihe} % chktex 12
+\fachbereich{Informatik}
+\semester{SoSe 2022}
+\sheetnumber{1}
+% \slides{<1>}
+\supervisor{\mbox{ }}
+\topics{Funktionalitäten der Vorlage, Richtlinien für das Erstellen v. Übungsblättern}
+\title[Handbuch]{Handbuch zur algoexercise-Klasse}
+\version{1.0-SNAPSHOT}
+\graphicspath{{./pictures/}}
+
+%%-------------------------%%
+%%--Beginn des Dokumentes--%%
+%%-------------------------%%
+
+\begin{document}
+    %
+
+    %%-----------%%
+    %%--Titelei--%%
+    %%-----------%%
+
+    \maketitle{}
+    % \hue{Hausübung \getSheetnumber{}}{\getShorttitle{}}{\getPointsTotal{}}
+
+    \tableofcontents{}
+
+    %%--------------%%
+    %%--Einleitung--%%
+    %%--------------%%
+
+    \section{Einleitung}
+    Die LaTeX-Vorlage dient der Erstellung der Übungsblätter in der FOP und der AuD. In diesem Handbuch wird die Funktions- und Arbeitsweise mit AlgoTeX erklärt.
+
+    Da AlgoTeX auf der Tu-Vorlage basiert, lassen sich alle bekannten Einstellungen der TU-Template auch auf diese Vorlage anwenden. Der Vollständigkeit halber werden hier aber auch nochmal die relevanten Einstellungen beschrieben.
+    \section{Funktionsweise der LaTeX-Vorlage}
+    \subsection{Klasseneinstellungen}\label{Klasseneinstellungen}
+    Die Klasseneinstellungen sind Einstellungen, die für das ganze Dokument gelten und werden in dem optionalen ersten Argument von \verb+\documentclass[]{}+ festgelegt. Zusätzlich zu den Einstellungen der TU-Template (z.B. \verb+ngerman+, \verb+T1+, \verb+fontsize+,$\ldots$) gibt es die folgenden Einstellungen:
+    \begin{description}[leftmargin = 3cm]
+        \item[titleprefix] ein Prefix, der vorne an den Titel angehängt werden soll (z.B. Algorithmen und Datenstrukturen)
+        \item[boxarc] Abgerundete Ecken für die Kästen (siehe \ref{boxes})
+        \item[dark\_mode] Stellt den Dunklen Modus für das Übungsblatt ein, (das ist besonders Abends sehr Angenehm zum Schreiben)
+        \item[load\_common] Läd eine Liste an oft benutzten \LaTeX{}-Paketen (das ist sehr ineffizient, stattdessen sollten die benötigten Pakete direkt in der Präambel geladen werden)
+        \item[fancy\_row\_color] Ändert die Spaltenfarbe in Tabellen auf ein alternierendes Muster (im Mathemodus kann das unerwünschte Nebeneffekte haben, und kann z.B. bei einer matrix mit \verb+\hiderowcolors{}+ pro Element deaktiviert werden)
+        \item[inlineshortcut] Legt die Programmiersprache für den Inlineshortcut fest (entweder java oder Racket). Damit funktioniert dann z.B. das Makro \verb+\inlinejava{<java-code>}+, um bequem Java-Codeschnipsel zu tippen (sowas wie \inlinejava{public}-Klasse)
+        \item[manual\_term] Stellt die Standartfunktionalität der TU-Vorlage bei der generierung des Terms (= Box unter dem Titel) wieder her
+        \item[maxdifficulty] Die Maximale Anzahl an Sternen, die die Schwierigkeitsskala von Vorübungen anzeigen soll (default: 3)
+        \item[showpoints] wenn \verb+showpoints=false+ gesetzt wird, werden alle Punktzahlen auf 1 gesetzt. Das ist besonders dann hilfreich, wenn das Blatt im Vorhinein an Tester gegeben werden soll, die die Punktzahl nicht sehen dürfen.
+        \item[hidepoints] die Gegenteilige Option zu \verb+showpoints+
+        \item[shell\_escape] Ein manuelles Überschreiben der Shell-Escape-Flag-Erkennung (das ist nur zum Testen des Kompatibilitätsmodus der Code-Blöcke Notwendig und sollte nicht in Übungsblättern verwendet werden)
+        \item[logopath] Überschreiben des TU-Datmstadt Logos (dient nur zu Testzwecken und sollte nicht in Übungsblättern verwendet werden)
+        \item[corporatedesign] \textbf{deprecated}!! Nutzt das TU-Design statt dem alten FOP-Design
+    \end{description}
+    \subsection{Titelei}
+    \sloppy
+    Wie bei der TU-Vorlage wird der Titel mittels \verb+\maketitle{}+ generiert.
+    Dazu müssen \textbf{vorher} die entsprechenden Dokumenteneinstellungen festgelegt werden. Am besten macht man das bereits in der Präambel (also vor \verb+\begin{document}+).
+    Zusätzlich zu den Optionen der TU-Vorlage gibt es allerdings noch einige Erweiterungen:
+    \begin{itemize}
+        \item Klasseneinstellung \verb+titleprefix+ (siehe~\ref{Klasseneinstellungen})
+        \item neben dem normalen \verb+\term{}+-Command, gibt es noch weitere Optionen, den Term (also den Kasten direkt unter dem Titel mit den Blatteigenschaften) zu verändern:\begin{itemize}
+            \item der Command \verb+\termStyle{<style>}+ erlaubt eine einfachere Titelgestaltung. Dabei gibt es dann zusätzlich zu der Standartoption (\verb+manual+) noch folgende Stile:\begin{description}
+                \item[center] Zentriert den inhalt von \verb+\term{}+
+                \item[left-right] definiert die Commands \verb+\termLeft{}+ und \verb+\termRight{}+. Alles in \verb+\termLeft{}+ wird links ausgerichtet, alles in \verb+\termRight{}+ wird rechts ausgerichtet. Die beiden Terms werden nebeneinander geschrieben. 
+                \item[left-right-manual] wie left-right, nur ist der \verb+\term{}+-Command wieder Erlaubt, und sein Inhalt wird darunter gepackt.
+            \end{description}
+        \end{itemize}
+        \item einige der Dokumenteneigenschaften haben Auswirkungen auf die Titelei (siehe~\ref{sheet-properties}).
+    \end{itemize}
+    \subsection{Blatt-Eigenschaften}\label{sheet-properties}
+    a
+    \subsection{Kästen und Boxen}\label{boxes}
+    a
+    \clearpage{}
+\end{document}
