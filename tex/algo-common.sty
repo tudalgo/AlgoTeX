@@ -287,6 +287,14 @@
     }%
 }
 
+\DeclareDocumentEnvironment{tipp}{O{}m}{
+    \begin{infoBox}
+        \normalsize\textsf{\textbf{Tipp\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
+        #2
+        }{
+    \end{infoBox}
+}
+
 \DeclareDocumentEnvironment{hinweis}{O{}m}{
     \begin{infoBox}
         \normalsize\textsf{\textbf{Hinweis\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
@@ -294,6 +302,7 @@
         }{
     \end{infoBox}
 }
+
 \DeclareDocumentEnvironment{hinweise}{O{}m}{
     \begin{infoBox}
         \normalsize\textsf{\textbf{Hinweise\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
