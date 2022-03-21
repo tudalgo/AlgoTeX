@@ -66,6 +66,9 @@ New-Item -ItemType Junction -Path path\to\texmf\tex\latex\AlgoTeX -Value .\AlgoT
 > Wichtig: bei Dateiänderungen in TeX-Path muss nochmal der Command `texhash` (unter linux mit sudo) ausgeführt werden, bevor die Dateien erkannt werden.  
 Unter MiKTeX unter Windows kann man die MiKTeX Console öffnen und dort unter "Tasks" den Befehl "Refresh file name database" wählen.
 
+## Verwendung
+Eine Anleitung der `algoexercise` findet sich im Ordner `doc`. Anleitung zu den anderen Klassen und Paketen werden in den nächsten Wochen folgen (kein ETA).
+
 ## Was ist geplant?
 - Dokumentation
 - Style-Guide
