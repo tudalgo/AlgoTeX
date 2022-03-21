@@ -1,7 +1,7 @@
 % FoP and AuD Exercise template class
 % Author: Ruben Deisenroth
-\def\fileversion{2.2.1}
-\def\filedate{2022/03/10}
+\def\fileversion{2.2.2}
+\def\filedate{2022/03/22}
 
 % Sets the LaTeX version for the package to work.
 \NeedsTeXFormat{LaTeX2e}

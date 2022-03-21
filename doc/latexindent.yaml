@@ -156,12 +156,24 @@ lookForAlignDelims:
       spacesAfterAmpersand: 1
       justification: left
       alignFinalDoubleBackSlash: 1
-      dontMeasure: 0
+      dontMeasure: 1
       delimiterRegEx: '(?<!\\)(&)'
       delimiterJustification: left
       lookForChildCodeBlocks: 1
    tabularx:
       delims: 1
+      alignDoubleBackSlash: 1
+      spacesBeforeDoubleBackSlash: 1
+      multiColumnGrouping: 1
+      alignRowsWithoutMaxDelims: 1
+      spacesBeforeAmpersand: 1
+      spacesAfterAmpersand: 1
+      justification: left
+      alignFinalDoubleBackSlash: 1
+      dontMeasure: 1
+      delimiterRegEx: '(?<!\\)(&)'
+      delimiterJustification: left
+      lookForChildCodeBlocks: 1
    longtable: 1
    tabu: 1
    array: 1

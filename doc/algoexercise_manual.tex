@@ -12,6 +12,8 @@
 
 % \usepackage{audutils}
 % \usepackage{fopbot}
+\usepackage{tabularx}
+\usepackage{booktabs}
 
 %%----------------------------%%
 %%--Stilistische Anpassungen--%%
@@ -51,9 +53,9 @@
 \sheetnumber{1}
 % \slides{<1>}
 \supervisor{\mbox{ }}
-\topics{Funktionalitäten der Vorlage, Richtlinien für das Erstellen v. Übungsblättern}
+\topics{Funktionalitäten der Vorlage, \LaTeX-Konventionen für das Erstellen v. Übungsblättern}
 \title[Handbuch]{Handbuch zur algoexercise-Klasse}
-\version{1.0-SNAPSHOT}
+\version{2.2.2}
 \graphicspath{{./pictures/}}
 
 %%-------------------------%%
@@ -250,27 +252,179 @@
                 <Aufgabenstellung Teilaufgabe 1>
             \end{subtask*}
         \end{task}
-    \end{codeBlock}
+    \end{codeBlock} 
 
-    Wie man in dem Schema erkennen kann, sollte jede Aufgabe, die keine Teilaufgaben besitzt, eine Festgelegte Punktzahl haben. Sobald ein Task mindestens einen Subtask besitzt, wird die Punktzahl des Tasks (n) mit \verb+auto+ automatisch aufsummiert und sollte nicht manuell gesetzt werden (verringert Fehleranfälligkeit). Außerdem ist es sinnvoll, die einzelnen Aufgaben mit Kommentaren zu versehen, sodass auch im \LaTeX-Code die Aufgabennummer schnell ersichtlich ist. Sollte die Aufgabe referenziert werden, ist es sinnvoll diese mit einem entsprechenden Label zu markieren (automatische Labels für Tasks und Subtasks sind aber bald für die Vorlage geplant).
+    Wie man in dem Schema erkennen kann, sollte jede Aufgabe, die keine Teilaufgaben besitzt, eine festgelegte Punktzahl haben.
+    Sobald ein Task mindestens einen Subtask besitzt, wird die Punktzahl des Tasks (n) mit \verb+auto+ automatisch aufsummiert und
+    sollte nicht manuell gesetzt werden (verringert Fehleranfälligkeit).
+    Außerdem ist es sinnvoll, die einzelnen Aufgaben mit Kommentaren zu versehen, sodass auch im \LaTeX-Code die Aufgabennummer
+    schnell ersichtlich ist.
+    Sollte die Aufgabe referenziert werden, ist es sinnvoll diese mit einem entsprechenden Label zu markieren (automatische Labels
+    für Tasks und Subtasks sind aber bald für die Vorlage geplant).
 
     Weitere Details gibt es in der
     \href{http://mirrors.ctan.org/macros/latex/contrib/tuda-ci/doc/DEMO-TUDaExercise.pdf}{Dokumentation von \texttt{tudaexercise}}.
     % \begin{noindent}% \begin{noindent}
     \subsection{Kästen und Boxen}\label{boxes}
+    \vspace{-1em}
+    Ein wichtiger Bestandteil des Designs der Algorithmik-Übungsblätter sind die vordefinierten Boxen und environments.
+    Es gibt drei Arten von Boxen: 
+
+    \begin{figure}[ht!
+        ]
+        \begin{subfigure}[t]{\textwidth/3-1ex}
+            \mbox{}\centering
+            \begin{defBox}
+                \fatsf{defBox:}\par
+                Das ist eine defBox (der Name kommt von definition box).
+                Eine defBox hat links einen Balken in der Akzentfarbe, und einen farbigen Hintergrund.
+                DefBoxen sind für sehr wichtige Informationen gedacht, wie verbindliche Anforderungen.
+            \end{defBox}
+            \caption{defBox}
+            \label{fig:box-types:def}
+        \end{subfigure}
+        \hfill%
+        \begin{subfigure}[t]{\textwidth/3-1ex}
+            \mbox{}\centering
+            \begin{infoBox}
+                \fatsf{infoBox:}\par
+                Das ist eine infoBox.
+                Eine infoBox hat links einen Balken in der Akzentfarbe, aber keinen farbigen Hintergrund.
+                InfoBoxen sind für Informationen gedacht, die zwar noch direkt die Übung betreffen, aber nicht ganz so wichtig sind, also für
+                Hinweise, Beispiele, etc.
+            \end{infoBox}
+            \caption{infoBox} \label{fig:box-types:info}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}[t]{\textwidth/3-1ex} \mbox{}\centering
+            \begin{grayInfoBox}
+                \fatsf{grayInfoBox:}\par Das ist eine grayInfoBox.
+                %
+                Eine grayInfoBox hat links einen grauen Balken, und einen grauen Hintergrund.
+                HrayInfoBoxen sind für Informationen gedacht, die nicht relevant für die Hausübung sind, also für Verständnisfragen, fun facts,
+                etc.
+            \end{grayInfoBox}
+            \caption{grayInfoBox} \label{fig:box-types:grayInfo}
+        \end{subfigure}
+        \caption{Übersicht Box-Types}
+        \label{fig:box-types}
+    \end{figure}
+
+    Für häufig verwendete Boxen sind bereits Makros vordefiniert, die die entsprechenden Boxen erzeugen: 
+
+    % \begin{noindent}
+        \begin{table}[ht] \centering
+            \begin{tabular}{cccl} 
+                \toprule 
+                \fatsf{Name} & \fatsf{Boxart} & \fatsf{default-Specifier}                                & \fatsf{Titel}                            \\ 
+                \midrule 
+                tipp     & infoBox & \{\} & Tipp     \\ 
+                hinweis  & infoBox & \{\} & Hinweis  \\ 
+                hinweise & infoBox & \{\} & Hinweise \\
+                uvhinweis & infoBox & \{\} & Unverbindlicher~Hinweis \\
+                uvhinweise & infoBox & \{\} & Unverbindliche~Hinweise \\
+                erinnerung & infoBox & \{\} & Erinnerung \\
+                anmerkung & infoBox & \{\} & Anmerkung \\
+                anmerkungr & infoBox & \{\} & Anmerkung~am~Rande \\
+                bemerkung & infoBox & \{\} & Bemerkung \\
+                bemerkungr & infoBox & \{\} & Bemerkung~am~Rande \\
+                beispiel & infoBox & \{\} & Beispiel \\
+                beispiele & infoBox & \{\} & Beispiele \\
+                vfrage & grayInfoBox & 0~Punkte &  Verständnisfrage \\
+                vfrager & grayInfoBox & 0~Punkte &  Verständnisfrage~am~Rande \\
+                vfragen & grayInfoBox & 0~Punkte &  Verständnisfragen \\
+                vfragenr & grayInfoBox & 0~Punkte &  Verständnisfragen~am~Rande \\
+                vanforderung & defBox & \{\} &  Verbindliche~Anforderung \\
+                vanforderungen & defBox & \{\} &  Verbindliche~Anforderungen \\
+                vanforderunghu & defBox & \{\} &  Verbindliche~Anforderung~für~die~gesamte~Hausübung \\
+                vanforderungenhu & defBox & \{\} &  Verbindliche~Anforderungen~für~die~gesamte~Hausübung \\
+                \bottomrule
+            \end{tabular}
+            \caption{Übersicht vordefinierter Box-Environments} \label{tab:box-environments}
+        \end{table}
+        % \end{noindent}
+
+    \vspace{-1em}
+    Ein Aufruf sind dann z.B. so aus: \vspace{-2cm} \vspace{\fill}
+    \begin{figure}[ht!
+        ]
+        \centering
+        \begin{subfigure}[t]{.4\textwidth-1ex}
+            \centering
+            \begin{vanforderung}[Für H2.2]
+                es darf keine Rekursion verwendet werden.
+            \end{vanforderung}
+            \caption{Ergebnis}
+            \label{fig:vanforderungen-ex:result}
+        \end{subfigure}
+        \hfill%
+        \begin{subfigure}[t]{.6\textwidth-1ex}
+            \centering
+            \begin{codeBlock}[]{minted language=latex}
+                    \begin{vanforderung}[Für H2.2]
+                        es darf keine Rekursion verwendet werden.
+                    \end{vanforderung}
+                \end{codeBlock}
+            \caption{Code}
+            \label{fig:vanforderungen-ex:result}
+        \end{subfigure}
+        \label{fig:vanforderungen-ex}
+        \caption{Beispiel vanforderungen}
+    \end{figure}
+    \clearpage
     \subsection{Code-Blöcke}
-    \begin{codeBlock}[]{minted language=latex,title=\faCode\hfill Example Java Code-Block\hfill\faCode}
-            \begin{codeBlock}[]{minted language=java}
-                public static int fibRec(int n) {
-                    return n < 2 ? n : fibRec(n - 1) + fibRec(n - 2);
-                }
-            \end{@codeBlock@}
-        \end{codeBlock}
+    Das Code-Block environment nutzt intern \verb+minted+ und \verb+tcolorbox+.
+    Das erste (optionale) Argument kann für minted Optionen benutzt werden, das zweite Argument für optionen der ColorBox.
+    \begin{figure}[ht!]
+        \centering
+        \begin{subfigure}[t]{\textwidth}
+            \centering
+            \begin{codeBlock}[]{minted language=java, title=\codeBlockTitle{Fibonacci}}
+                    public static int fibRec(int n) {
+                        return n < 2 ? n : fibRec(n - 1) + fibRec(n - 2);
+                    }
+                \end{codeBlock}
+            \caption{Ergebnis}
+            \label{fig:code-block-example:result}
+        \end{subfigure}
+        \begin{subfigure}[t]{\textwidth}
+            \centering
+            \begin{codeBlock}[]{minted language=latex,title=\faCode\hfill Example Java Code-Block\hfill\faCode}
+                    \begin{@codeBlock@}[]{minted language=java, title=\codeBlockTitle{Fibonacci}}
+                        public static int fibRec(int n) {
+                            return n < 2 ? n : fibRec(n - 1) + fibRec(n - 2);
+                        }
+                    \end{@codeBlock@}
+                \end{codeBlock}
+            \caption{Code}
+            \label{fig:code-block-example:code}
+        \end{subfigure}
+        \label{fig:code-block-example}
+        \caption{Beispiel Code-Block}
+    \end{figure}
     \subsection{Kopfzeilen}
+    Neben den Kopfzeilen der TU-Vorlage werden durch \verb+algoexercise+ noch weitere Kopfzeilen definiert.
+    Hier ist eine vollständige Liste der vordefinierten Kopfzeilen:
+    \begin{description}[leftmargin=3cm]
+        \item[title-name-id] Eine
+            Kopfzeile mit dem Kurztitel, sowie namens- und Matrikelnummerfelder
+        \item[title-name] Eine Kopfzeile mit dem Kurztitel und
+            Namensfeld
+        \item[title] Eine Kopfzeile mit dem Kurztitel
+        \item[fulltitle-centered] Eine Kopfzeile mit dem vollständigen Titel
+            (zentriert).
+            Diese Kopfzeile wird auch hier im Handbuch verwendet.
+        \item[name-id] Eine Kopfzeile mit Namens- und Matrikelnummernfeldern
+        \item[name] Eine Kopfzeile nur mit Namensfeld
+        \item[aud] Eine Kopfzeile für Theorieblätter in der AuD (mit Übungsblatttitel, Professor, namens und
+            Matrikelnummerfeldern)
+        \item[aud-min] Das gleiche wie aud, nur ohne Namens- und Matrikelnummerfelder
+    \end{description}
     \subsection{Weitere \LaTeX-Konventionen}
     \begin{itemize}
         \item Anführungszeichen -- \enquote{Anführungszeichen} werden mit dem Befehl \verb+\enquote{<text>}+ des Paketes
-            \verb+csquotes+ gesetzt (bereits geladen).
+            \verb+csquotes+
+            gesetzt (bereits geladen).
         \item Mathematische Gleichungen -- Gleichungen werden entweder mit dem \verb+equation+- oder mit dem \verb+align+- bzw.
             \verb+alignat+Environment oder den gesternten Varianten gesetzt.
             Inline-Gleichungen werden mit \verb+$<equation>$+ gesetzt.
