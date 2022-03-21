@@ -16,6 +16,7 @@
 \ExplSyntaxOff
 \usetikzlibrary{calc}
 \RequirePackage{listings}
+\RequirePackage{fontawesome}
 
 \ExplSyntaxOn
 
@@ -608,7 +609,7 @@ frame~hidden,
 boxrule=0pt,
 arc=\rubos@boxarc,
 %hbox, % This option could be used to limit the Length of Code Blocks automatically, but does not work with the minted Line Numbers
-title~style=\IfDarkModeTF{accentcolor!60!black}{black!90},
+title~style=\IfDarkModeTF{accentcolor!60!black}{accentcolor},
 minted~style/.expanded=\IfDarkModeTF{dracula}{tango}, % Highlighting Style anpassen
 minted~language=java, % Sprache setzen
 minted~options={ %Minted Optionen
@@ -736,6 +737,8 @@ overlay={ % Für Grauen Bereich links
 }{
     \DeclareDocumentCommand{\code}{m}{{\texttt{\footnotesize #1}}}
 }
+
+\DeclareDocumentCommand{\codeBlockTitle}{m}{\faCode\hfill\mbox{}#1\hfill\faCode}
 
 \DeclareDocumentCommand{\raisedcode}{m}{\raisebox{.1em}{\code{#1}}}
 \DeclareDocumentCommand{\bluecode}{m}{\code{\textcolor{\IfDarkModeTF{cyan}{blue}}{#1}}}

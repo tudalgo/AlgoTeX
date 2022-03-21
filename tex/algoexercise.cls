@@ -93,6 +93,7 @@
 \RequirePackage{subcaption}
 \RequirePackage{csquotes}
 \RequirePackage{nameref}
+\RequirePackage{fontawesome}
 
 \ifPDFTeX
     \RequirePackage[utf8]{inputenc}

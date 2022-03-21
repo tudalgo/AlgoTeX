@@ -81,7 +81,8 @@
     Die \LaTeX-Vorlage dient der Erstellung der Übungsblätter in der FOP und der AuD.
     In diesem Handbuch wird die Funktions- und Arbeitsweise mit Algo\TeX{} erklärt.
 
-    Da Algo\TeX{} auf der Tu-Vorlage basiert, lassen sich alle bekannten Einstellungen der TU-Template auch auf diese Vorlage anwenden.
+    Da Algo\TeX{} auf der Tu-Vorlage basiert, lassen sich alle bekannten Einstellungen der TU-Template auch auf diese Vorlage
+    anwenden.
     Der Vollständigkeit halber werden hier aber auch nochmal die relevanten Einstellungen beschrieben.
     % \section{Funktionsweise der LaTeX-Vorlage}
     \vspace{-1em}
@@ -106,18 +107,20 @@
             Mathemodus kann das unerwünschte Nebeneffekte haben, und kann z.B. bei einer matrix mit \verb+\hiderowcolors{}+ pro Element
             deaktiviert werden)
         \item[inlineshortcut] Legt die Programmiersprache für den Inlineshortcut fest (entweder java oder Racket).
-            Damit funktioniert dann z.B. das Makro
-            \verb+\inlinejava{<java-code>}+, um bequem Java-Codeschnipsel zu tippen (sowas wie \inlinejava{public}-Klasse)
-        \item[manual\_term] Stellt die Standartfunktionalität der TU-Vorlage bei der generierung des Terms (= Box unter dem Titel) wieder
-            her
-        \item[maxdifficulty] Die Maximale Anzahl an Sternen, die die Schwierigkeitsskala von Vorübungen anzeigen soll (default: 3)
+            Damit funktioniert dann z.B. das Makro \verb+\inlinejava{<java-code>}+, um bequem Java-Codeschnipsel zu tippen (sowas wie
+            \inlinejava{public}-Klasse)
+        \item[manual\_term] Stellt die Standartfunktionalität der TU-Vorlage bei der generierung des Terms (=
+            Box unter dem Titel) wieder her
+        \item[maxdifficulty] Die Maximale Anzahl an Sternen, die die Schwierigkeitsskala von Vorübungen
+            anzeigen soll (default: 3)
         \item[showpoints] wenn \verb+showpoints=false+ gesetzt wird, werden alle Punktzahlen auf 1 gesetzt.
             Das ist besonders dann hilfreich, wenn das Blatt im Vorhinein an Tester gegeben werden soll, die die Punktzahl nicht sehen
             dürfen.
         \item[hidepoints] die Gegenteilige Option zu \verb+showpoints+
         \item[shell\_escape] Ein manuelles Überschreiben der Shell-Escape-Flag-Erkennung (das ist nur zum Testen des
             Kompatibilitätsmodus der Code-Blöcke Notwendig und sollte nicht in Übungsblättern verwendet werden)
-        \item[logopath] Überschreiben des TU-Datmstadt Logos (dient nur zu Testzwecken und sollte nicht in Übungsblättern verwendet
+        \item[logopath] Überschreiben des TU-Datmstadt Logos (dient nur zu Testzwecken und sollte nicht in Übungsblättern
+            verwendet
             werden)
         \item[corporatedesign] \textbf{deprecated}!!
             Nutzt das TU-Design statt dem alten FOP-Design
@@ -189,9 +192,11 @@
         \item[date] Das Erstellungsdatum des Blattes (mit \verb+\date{\today}+ kann immer das aktuelle Datum genutzt werden).
         \item[duedate] Das Fälligkeitsdatum des Übungsblattes.
         \item[semester] Das aktuelle Studiensemester (z.
-            B. WiSe 21/22 oder SoSe 2022).
+            B.
+            WiSe 21/22 oder SoSe 2022).
         \item[fachbereich] Der Fachbereich des Moduls (z.
-            B. Informatik).
+            B.
+            Informatik).
         \item[supervisor] Der Übungsblattbetreuer (Hauptverantwortlicher des Übungsblattes).
             Falls der Übungsblattbetreuer der Autor ist, kann der Autor durch \verb+\supervisor{\getAuthor}+ kopiert werden.
             (Aktuell unterstützt der supervisor kein \verb+\and+,
@@ -202,7 +207,9 @@
     \end{description}
     \clearpage
     \section{Aufgabenstellungen, Teilaufgaben und Punktesystem}\label{Exercises}
+    \vspace{-1em}
     \subsection{Übungsblatttitel und Gesamtpunktzahl}\label{totalpoints_and_sheet_title}
+    \vspace{-1em}
     Jedes Übungsblatt braucht einen Kurzen Titel, der Beschreibt um was es geht.
     Dieser kann zwar gleich den Topics sein, aber kreative Titel sind immer willkommen.
     Um den Übungsblatttitel anzugeben, eignet sich am Besten das Optionale Kurztitelargument des \verb+\title[]{}+-Commands (siehe
@@ -221,18 +228,56 @@
             \item \verb+\hue{FOP Projekt}{Pizza-Liefersevice}{\getPointsTotal{}}[Gesamt Teil A: * Punkte]+
         \end{itemize}
     \end{beispiele}
-    \subsection{Tasks und Subtasks}
+    \vspace{-1em}
+    \subsection{Tasks und Subtasks}\label{tasksAndSubtasks}
+    \vspace{-1em}
     Genau wie bei der TU-Vorlage \verb+tudaexercise+ nutzen wir \verb+task+- und \verb+subtask+-Environments.
-    
-    Weitere Details gibt es in der \href{http://mirrors.ctan.org/macros/latex/contrib/tuda-ci/doc/DEMO-TUDaExercise.pdf}{Dokumentation von \texttt{tudaexercise}}.
+    Um einen einheitlicheren Syntax zu haben, nutzen wir meistens die gesternte Variante des \verb+subtask+-Environments:
+    \begin{codeBlock}[]{minted language=latex, title=\codeBlockTitle{Beispielschema für Tasks und Subtasks}}
+        %--------------%
+        %--Aufgabe H1--%
+        %--------------%
+        \begin{task}[points=<n>]{<Aufgabentitel>}\label{ex:H1} % Aufgabe ohne Subtasks
+            <Aufgabenstellung>
+        \end{task}
+        %--------------%
+        %--Aufgabe H2--%
+        %--------------%
+        \begin{task}[points=auto]{<Aufgabentitel>}\label{ex:H2} % Aufgabe mit Subtasks
+            <Einleitung>
+            % Aufgabe H2.1
+            \begin{subtask*}[points=<n2>]{<Aufgabentitel>}\label{ex:H2.1}
+                <Aufgabenstellung Teilaufgabe 1>
+            \end{subtask*}
+        \end{task}
+    \end{codeBlock}
+
+    Wie man in dem Schema erkennen kann, sollte jede Aufgabe, die keine Teilaufgaben besitzt, eine Festgelegte Punktzahl haben. Sobald ein Task mindestens einen Subtask besitzt, wird die Punktzahl des Tasks (n) mit \verb+auto+ automatisch aufsummiert und sollte nicht manuell gesetzt werden (verringert Fehleranfälligkeit). Außerdem ist es sinnvoll, die einzelnen Aufgaben mit Kommentaren zu versehen, sodass auch im \LaTeX-Code die Aufgabennummer schnell ersichtlich ist. Sollte die Aufgabe referenziert werden, ist es sinnvoll diese mit einem entsprechenden Label zu markieren (automatische Labels für Tasks und Subtasks sind aber bald für die Vorlage geplant).
+
+    Weitere Details gibt es in der
+    \href{http://mirrors.ctan.org/macros/latex/contrib/tuda-ci/doc/DEMO-TUDaExercise.pdf}{Dokumentation von \texttt{tudaexercise}}.
+    % \begin{noindent}% \begin{noindent}
     \subsection{Kästen und Boxen}\label{boxes}
     \subsection{Code-Blöcke}
+    \begin{codeBlock}[]{minted language=latex,title=\faCode\hfill Example Java Code-Block\hfill\faCode}
+            \begin{codeBlock}[]{minted language=java}
+                public static int fibRec(int n) {
+                    return n < 2 ? n : fibRec(n - 1) + fibRec(n - 2);
+                }
+            \end{@codeBlock@}
+        \end{codeBlock}
+    \subsection{Kopfzeilen}
     \subsection{Weitere \LaTeX-Konventionen}
     \begin{itemize}
-        \item Anführungszeichen -- \enquote{Anführungszeichen} werden mit dem Befehl \verb+\enquote{<text>}+ des Paketes \verb+csquotes+ gesetzt (bereits geladen).
-        \item Mathematische Gleichungen -- Gleichungen werden entweder mit dem \verb+equation+- oder mit dem \verb+align+- bzw. \verb+alignat+Environment oder den gesternten Varianten gesetzt. Inline-Gleichungen werden mit \verb+$<equation>$+ gesetzt. Der Syntax \verb+\[<display math\]+ und \verb+\(<inline math>\)+ wird nicht verwendet.
+        \item Anführungszeichen -- \enquote{Anführungszeichen} werden mit dem Befehl \verb+\enquote{<text>}+ des Paketes
+            \verb+csquotes+ gesetzt (bereits geladen).
+        \item Mathematische Gleichungen -- Gleichungen werden entweder mit dem \verb+equation+- oder mit dem \verb+align+- bzw.
+            \verb+alignat+Environment oder den gesternten Varianten gesetzt.
+            Inline-Gleichungen werden mit \verb+$<equation>$+ gesetzt.
+            Der Syntax \verb+\[<display math\]+ und \verb+\(<inline math>\)+ wird nicht verwendet.
         \item Eigene Makros, die mehr als einmal verwendet werden, werden in der Präambel geschrieben
-        \item Tabellen und Abbildungen haben stets ein label und eine Beschreibung (nach Möglichkeit mit Referenz auf die entsprechende Aufgabe)
+        \item Tabellen und Abbildungen haben stets ein label und eine Beschreibung (nach Möglichkeit mit Referenz auf die
+            entsprechende Aufgabe)
     \end{itemize}
     \clearpage{}
 \end{document}
