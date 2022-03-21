@@ -1,6 +1,6 @@
 \NeedsTeXFormat{LaTeX2e}
 \RequirePackage{expl3}
-\ProvidesExplPackage{algo-common}{2022/03/10}{1.0.1}{Common Definitions for all Algo templates - Based on rubos-common (https://github.com/Rdeisenroth/Rubos-TUDA-Template/blob/main/tex/rubos-common.sty)}
+\ProvidesExplPackage{algo-common}{2022/03/22}{1.0.2}{Common Definitions for all Algo templates - Based on rubos-common (https://github.com/Rdeisenroth/Rubos-TUDA-Template/blob/main/tex/rubos-common.sty)}
 % Package Made by Ruben Deisenroth, 2022
 % Available at https://github.com/Rdeisenroth/Rubos-TUDA-Template/blob/main/tex/rubos-common.sty
 
@@ -16,6 +16,7 @@
 \ExplSyntaxOff
 \usetikzlibrary{calc}
 \RequirePackage{listings}
+\RequirePackage{fontawesome}
 
 \ExplSyntaxOn
 
@@ -366,6 +367,13 @@
         }{
     \end{infoBox}
 }
+\DeclareDocumentEnvironment{beispiele}{O{}m}{
+    \begin{infoBox}
+        \normalsize\textsf{\textbf{Beispiele\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
+        #2
+        }{
+    \end{infoBox}
+}
 \DeclareDocumentEnvironment{example}{O{}m}{
     \begin{infoBox}
         \normalsize\textsf{\textbf{Beispiel\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
@@ -601,7 +609,7 @@ frame~hidden,
 boxrule=0pt,
 arc=\rubos@boxarc,
 %hbox, % This option could be used to limit the Length of Code Blocks automatically, but does not work with the minted Line Numbers
-title~style=\IfDarkModeTF{accentcolor!60!black}{black!90},
+title~style=\IfDarkModeTF{accentcolor!60!black}{accentcolor},
 minted~style/.expanded=\IfDarkModeTF{dracula}{tango}, % Highlighting Style anpassen
 minted~language=java, % Sprache setzen
 minted~options={ %Minted Optionen
@@ -729,6 +737,8 @@ overlay={ % Für Grauen Bereich links
 }{
     \DeclareDocumentCommand{\code}{m}{{\texttt{\footnotesize #1}}}
 }
+
+\DeclareDocumentCommand{\codeBlockTitle}{m}{\faCode\hfill\mbox{}#1\hfill\faCode}
 
 \DeclareDocumentCommand{\raisedcode}{m}{\raisebox{.1em}{\code{#1}}}
 \DeclareDocumentCommand{\bluecode}{m}{\code{\textcolor{\IfDarkModeTF{cyan}{blue}}{#1}}}

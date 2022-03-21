@@ -1,0 +1,437 @@
+\documentclass[
+    titleprefix=AlgoTeX,
+    inlineshortcut=java,
+    corporatedesign,
+    boxarc,
+    % dark_mode,
+]{algoexercise}
+
+%%------------%%
+%%--Packages--%%
+%%------------%%
+
+% \usepackage{audutils}
+% \usepackage{fopbot}
+\usepackage{tabularx}
+\usepackage{booktabs}
+
+%%----------------------------%%
+%%--Stilistische Anpassungen--%%
+%%----------------------------%%
+
+\ExplSyntaxOn
+% Author
+\renewcommand*{\author}[1]{
+    \seq_gset_split:Nnn \g_ptxcd_author_seq {\and} {#1}
+    \seq_if_empty:NF \g_ptxcd_author_seq {\tl_gset:Nn \printAuthor {\int_compare:nTF{\seq_count:N \g_ptxcd_author_seq >
+                1}{Autoren}{Autor}:~\hfill\seq_use:Nnnn \g_ptxcd_author_seq {~\authorandname{}~} {,~} {~\authorandname{}~}\par}}
+}
+\termLeft{}
+\termRight{}
+\term{
+    \printDate{}\hfill\printVersion{}\\
+    \printAuthor{}
+    \printTopics{}
+    % \printSlides{}\\
+    % \printDuedate{}
+}
+\ExplSyntaxOff
+\ConfigureHeadline{
+    headline={fulltitle-centered}
+}
+
+%%---------------------------%%
+%%--Dokumenteneinstellungen--%%
+%%---------------------------%%
+
+\date{\today}
+\author{Ruben Deisenroth}
+\subtitle{Rückfragen zu diesem Handbuch vorzugsweise in Discord an Rubosplay\#0815!}
+\dozent{Prof. Dr. rer. nat. Karsten Weihe} % chktex 12
+\fachbereich{Informatik}
+\semester{SoSe 2022}
+\sheetnumber{1}
+% \slides{<1>}
+\supervisor{\mbox{ }}
+\topics{Funktionalitäten der Vorlage, \LaTeX-Konventionen für das Erstellen v. Übungsblättern}
+\title[Handbuch]{Handbuch zur algoexercise-Klasse}
+\version{2.2.2}
+\graphicspath{{./pictures/}}
+
+%%-------------------------%%
+%%--Beginn des Dokumentes--%%
+%%-------------------------%%
+
+\begin{document}
+    %
+
+    %%-----------%%
+    %%--Titelei--%%
+    %%-----------%%
+
+    \maketitle{}
+    % \hue{Hausübung \getSheetnumber{}}{\getShorttitle{}}{\getPointsTotal{}}
+
+    \tableofcontents{}
+    \clearpage{}
+
+    %%--------------%%
+    %%--Einleitung--%%
+    %%--------------%%
+
+    \section{Einleitung}
+    Die \LaTeX-Vorlage dient der Erstellung der Übungsblätter in der FOP und der AuD.
+    In diesem Handbuch wird die Funktions- und Arbeitsweise mit Algo\TeX{} erklärt.
+
+    Da Algo\TeX{} auf der Tu-Vorlage basiert, lassen sich alle bekannten Einstellungen der TU-Template auch auf diese Vorlage
+    anwenden.
+    Der Vollständigkeit halber werden hier aber auch nochmal die relevanten Einstellungen beschrieben.
+    % \section{Funktionsweise der LaTeX-Vorlage}
+    \vspace{-1em}
+    \section{Allgemeine Einstellungen der LaTeX-Vorlage (Präambel)}
+    \vspace{-1em}
+    \subsection{Klasseneinstellungen}\label{Klasseneinstellungen}
+    \vspace{-1em}
+    Die Klasseneinstellungen sind Einstellungen, die für das ganze Dokument gelten und werden in dem optionalen ersten Argument von
+    \verb+\documentclass[]{}+ festgelegt.
+    Zusätzlich zu den Einstellungen der TU-Template (z.B. \verb+ngerman+, \verb+T1+, \verb+fontsize+,$\ldots$) gibt es die folgenden
+    Einstellungen:
+    \begin{description}[leftmargin = 3cm]
+        \item[titleprefix] ein Prefix, der vorne an den Titel angehängt werden soll
+            (z.B. Algorithmen und Datenstrukturen)
+        \item[boxarc] Abgerundete Ecken für die Kästen (siehe \ref{boxes})
+        \item[dark\_mode]
+            Stellt den Dunklen Modus für das Übungsblatt ein, (das ist besonders Abends sehr Angenehm zum Schreiben)
+        \item[load\_common] Läd
+            eine Liste an oft benutzten \LaTeX{}-Paketen (das ist sehr ineffizient, stattdessen sollten die benötigten Pakete direkt in der
+            Präambel geladen werden)
+        \item[fancy\_row\_color] Ändert die Spaltenfarbe in Tabellen auf ein alternierendes Muster (im
+            Mathemodus kann das unerwünschte Nebeneffekte haben, und kann z.B. bei einer matrix mit \verb+\hiderowcolors{}+ pro Element
+            deaktiviert werden)
+        \item[inlineshortcut] Legt die Programmiersprache für den Inlineshortcut fest (entweder java oder Racket).
+            Damit funktioniert dann z.B. das Makro \verb+\inlinejava{<java-code>}+, um bequem Java-Codeschnipsel zu tippen (sowas wie
+            \inlinejava{public}-Klasse)
+        \item[manual\_term] Stellt die Standartfunktionalität der TU-Vorlage bei der generierung des Terms (=
+            Box unter dem Titel) wieder her
+        \item[maxdifficulty] Die Maximale Anzahl an Sternen, die die Schwierigkeitsskala von Vorübungen
+            anzeigen soll (default: 3)
+        \item[showpoints] wenn \verb+showpoints=false+ gesetzt wird, werden alle Punktzahlen auf 1 gesetzt.
+            Das ist besonders dann hilfreich, wenn das Blatt im Vorhinein an Tester gegeben werden soll, die die Punktzahl nicht sehen
+            dürfen.
+        \item[hidepoints] die Gegenteilige Option zu \verb+showpoints+
+        \item[shell\_escape] Ein manuelles Überschreiben der Shell-Escape-Flag-Erkennung (das ist nur zum Testen des
+            Kompatibilitätsmodus der Code-Blöcke Notwendig und sollte nicht in Übungsblättern verwendet werden)
+        \item[logopath] Überschreiben des TU-Datmstadt Logos (dient nur zu Testzwecken und sollte nicht in Übungsblättern
+            verwendet
+            werden)
+        \item[corporatedesign] \textbf{deprecated}!!
+            Nutzt das TU-Design statt dem alten FOP-Design
+    \end{description}
+    \vspace{-1em} \subsection{Titelei} \vspace{-1em}\sloppy Wie bei
+    der TU-Vorlage wird der Titel mittels \verb+\maketitle{}+ generiert.
+    Dazu müssen \textbf{vorher} die entsprechenden Dokumenteneinstellungen festgelegt werden.
+    Am besten macht man das bereits in der Präambel (also vor \verb+\begin{document}+).
+    Zusätzlich zu den Optionen der TU-Vorlage gibt es allerdings noch einige Erweiterungen:
+    \begin{itemize}
+        \item Klasseneinstellung
+            \verb+titleprefix+ (siehe~\ref{Klasseneinstellungen})
+        \item neben dem normalen \verb+\term{}+-Command, gibt es noch weitere
+            Optionen, den Term (also den Kasten direkt unter dem Titel mit den Blatteigenschaften) zu verändern:
+            \begin{itemize}
+                \item der
+                    Command \verb+\termStyle{<style>}+ erlaubt eine einfachere Titelgestaltung.
+                    Dabei gibt es dann zusätzlich zu der Standartoption (\verb+manual+) noch folgende Stile:
+                    \begin{description}[leftmargin=3cm]
+                        \item[center] Zentriert den inhalt von \verb+\term{}+
+                        \item[left-right] definiert die Commands \verb+\termLeft{}+ und
+                            \verb+\termRight{}+.
+                            Alles in \verb+\termLeft{}+ wird links ausgerichtet, alles in \verb+\termRight{}+ wird rechts ausgerichtet.
+                            Die beiden Terms werden nebeneinander geschrieben.
+                        \item[left-right-manual] wie left-right, nur ist der \verb+\term{}+-Command wieder Erlaubt, und sein
+                            Inhalt wird darunter gepackt.
+                    \end{description}
+            \end{itemize}
+        \item fast alle Dokumenteneigenschaften haben Auswirkungen auf die Titelei (siehe~\ref{sheet-properties}).
+    \end{itemize}
+    \clearpage
+    \subsection{Blatt-Eigenschaften}\label{sheet-properties}
+    Zusätzlich zu den bekannten Dokumenteneigenschaften (wie \verb+\date{}+,\verb+\author{}+,.
+    ..) bietet die Vorlage noch weitere
+    Konstanten.
+    Jede Konstante lässt sich mit dem Befehl \verb+\<konstantenname>{}+ setzen und mit dem Befehl \verb+get<Konstantenname>{}+
+    abrufen (der Erste Buchstabe des Konstantennamen ist hierbei immer groß).
+    Außerdem hat jede eigenschaft einen print-Befehl \verb+\print<Konstantenname>{}+ (der Erste Buchstabe des Konstantennamen ist
+    hierbei immer groß), welcher bestimmt, wie der Befehl im Term angezeigt werden soll.
+    \begin{beispiel}[\texttt{author}-Eigenschaft]
+        \begin{itemize}
+            \item \verb+\author{Max Mustermann}+ setzt den Autor auf Max Mustermann.
+            \item \verb+\getAuthor{}+ liefert den aktuellen Autor zurück: \getAuthor{}
+            \item \verb+\printAuthor{}+ liefert die Autor-Zeile der Titelseite zurück:\par\printAuthor{}
+        \end{itemize}
+    \end{beispiel}
+    Hier ist eine vollständige Liste der relevanten Konstanten:
+    \begin{description}[leftmargin=2.5cm]
+        \item[title] \sloppy{}Der Titel
+            des Übungsblattes, steht in der ersten Zeile.
+            Der Titel hat keinen print-Befehl.
+            Kann durch die Klassenoption \verb+titleprefix+ beeinflusst werden.
+            (siehe \ref{Klasseneinstellungen}).
+            Der \verb+\title{}+-Befehl kann als Optionales Argument einen Kurztitel annehmen, welcher mittels \verb+\getShortTitle{}+
+            abgerufen werden kann.
+            Beispiel: \verb+\title[Kurztitel]{Ein Ausführlicher Titel}+
+        \item[subtitle] Der Untertitel des Übungsblattes, steht über dem
+            term.
+            Der Untertitel hat keinen print-Befehl.
+            In der Algorithmik nutzen wir den Untertitel meistens nur, um auf die Kontaktmöglichkeiten bei Rückfragen hinzuweisen.
+        \item[author] Die Autoren des Übungsblattes.
+            Wenn mehrere Autoren angegeben werden sollen, können diese mit \verb+\and+ getrennt werden.
+            Beispiel: \verb+\author{Max Mustermann\and Otto Normalverbraucher}+
+        \item[version] Die Version des Übungsblattes.
+            Generell ist hier \href{https://semver.org/lang/de/}{semantic Versioning} zu beachten.
+        \item[sheetnumber] Die Nummer des Übungsblattes.
+            Hier werden \textbf{nur} Zahlen akzeptiert.
+            Führende Nullen werden automatisch hinzugefügt (also $9$ wird zu $09$).
+        \item[date] Das Erstellungsdatum des Blattes (mit \verb+\date{\today}+ kann immer das aktuelle Datum genutzt werden).
+        \item[duedate] Das Fälligkeitsdatum des Übungsblattes.
+        \item[semester] Das aktuelle Studiensemester (z.
+            B.
+            WiSe 21/22 oder SoSe 2022).
+        \item[fachbereich] Der Fachbereich des Moduls (z.
+            B.
+            Informatik).
+        \item[supervisor] Der Übungsblattbetreuer (Hauptverantwortlicher des Übungsblattes).
+            Falls der Übungsblattbetreuer der Autor ist, kann der Autor durch \verb+\supervisor{\getAuthor}+ kopiert werden.
+            (Aktuell unterstützt der supervisor kein \verb+\and+,
+            also wird das bei mehreren Autoren zu problemen führen).
+        \item[topics] die relevanten Themen für das Übungsblatt
+        \item[slides] die relevanten Foliensätze für das Übungsblatt (bitte Nummern mit angeben!).
+        \item[dozent] der betreuende Dozent des Moduls (Gesamtleitung)
+    \end{description}
+    \clearpage
+    \section{Aufgabenstellungen, Teilaufgaben und Punktesystem}\label{Exercises}
+    \vspace{-1em}
+    \subsection{Übungsblatttitel und Gesamtpunktzahl}\label{totalpoints_and_sheet_title}
+    \vspace{-1em}
+    Jedes Übungsblatt braucht einen Kurzen Titel, der Beschreibt um was es geht.
+    Dieser kann zwar gleich den Topics sein, aber kreative Titel sind immer willkommen.
+    Um den Übungsblatttitel anzugeben, eignet sich am Besten das Optionale Kurztitelargument des \verb+\title[]{}+-Commands (siehe
+    \ref{sheet-properties}).
+
+    Das erste, was nach dem Command \verb+\maketitle{}+ kommen sollte, ist die Hausübungsleiste.
+    Die Hausübungsleiste kommt noch daher, dass früher auf jedem Blatt sowohl Vorübungen (V) als auch Hausübungen (H) standen.
+    Die Hausübungsleiste lässt sich mit dem
+    \verb+\hue{<hausübungsnummer>}{<hausübungstitel>}{<gesamtpunktzahl>}[<punktzahlformat>]+-Command erstellen.
+    Das vierte, optionale Argument ist dabei nur dann notwendig, wenn das Standartpunkteformat überschrieben werden muss.
+    Beim Punktzahlformat wird statt der Punktzahl einfach ein * als Platzhalter geschrieben.
+
+    \begin{beispiele}
+        \begin{itemize}
+            \item \verb+\hue{Hausübung \getSheetnumber{}}{\getShorttitle{}}{\getPointsTotal{}}+
+            \item \verb+\hue{FOP Projekt}{Pizza-Liefersevice}{\getPointsTotal{}}[Gesamt Teil A: * Punkte]+
+        \end{itemize}
+    \end{beispiele}
+    \vspace{-1em}
+    \subsection{Tasks und Subtasks}\label{tasksAndSubtasks}
+    \vspace{-1em}
+    Genau wie bei der TU-Vorlage \verb+tudaexercise+ nutzen wir \verb+task+- und \verb+subtask+-Environments.
+    Um einen einheitlicheren Syntax zu haben, nutzen wir meistens die gesternte Variante des \verb+subtask+-Environments:
+    \begin{codeBlock}[]{minted language=latex, title=\codeBlockTitle{Beispielschema für Tasks und Subtasks}}
+        %--------------%
+        %--Aufgabe H1--%
+        %--------------%
+        \begin{task}[points=<n>]{<Aufgabentitel>}\label{ex:H1} % Aufgabe ohne Subtasks
+            <Aufgabenstellung>
+        \end{task}
+        %--------------%
+        %--Aufgabe H2--%
+        %--------------%
+        \begin{task}[points=auto]{<Aufgabentitel>}\label{ex:H2} % Aufgabe mit Subtasks
+            <Einleitung>
+            % Aufgabe H2.1
+            \begin{subtask*}[points=<n2>]{<Aufgabentitel>}\label{ex:H2.1}
+                <Aufgabenstellung Teilaufgabe 1>
+            \end{subtask*}
+        \end{task}
+    \end{codeBlock} 
+
+    Wie man in dem Schema erkennen kann, sollte jede Aufgabe, die keine Teilaufgaben besitzt, eine festgelegte Punktzahl haben.
+    Sobald ein Task mindestens einen Subtask besitzt, wird die Punktzahl des Tasks (n) mit \verb+auto+ automatisch aufsummiert und
+    sollte nicht manuell gesetzt werden (verringert Fehleranfälligkeit).
+    Außerdem ist es sinnvoll, die einzelnen Aufgaben mit Kommentaren zu versehen, sodass auch im \LaTeX-Code die Aufgabennummer
+    schnell ersichtlich ist.
+    Sollte die Aufgabe referenziert werden, ist es sinnvoll diese mit einem entsprechenden Label zu markieren (automatische Labels
+    für Tasks und Subtasks sind aber bald für die Vorlage geplant).
+
+    Weitere Details gibt es in der
+    \href{http://mirrors.ctan.org/macros/latex/contrib/tuda-ci/doc/DEMO-TUDaExercise.pdf}{Dokumentation von \texttt{tudaexercise}}.
+    % \begin{noindent}% \begin{noindent}
+    \subsection{Kästen und Boxen}\label{boxes}
+    \vspace{-1em}
+    Ein wichtiger Bestandteil des Designs der Algorithmik-Übungsblätter sind die vordefinierten Boxen und environments.
+    Es gibt drei Arten von Boxen: 
+
+    \begin{figure}[ht!
+        ]
+        \begin{subfigure}[t]{\textwidth/3-1ex}
+            \mbox{}\centering
+            \begin{defBox}
+                \fatsf{defBox:}\par
+                Das ist eine defBox (der Name kommt von definition box).
+                Eine defBox hat links einen Balken in der Akzentfarbe, und einen farbigen Hintergrund.
+                DefBoxen sind für sehr wichtige Informationen gedacht, wie verbindliche Anforderungen.
+            \end{defBox}
+            \caption{defBox}
+            \label{fig:box-types:def}
+        \end{subfigure}
+        \hfill%
+        \begin{subfigure}[t]{\textwidth/3-1ex}
+            \mbox{}\centering
+            \begin{infoBox}
+                \fatsf{infoBox:}\par
+                Das ist eine infoBox.
+                Eine infoBox hat links einen Balken in der Akzentfarbe, aber keinen farbigen Hintergrund.
+                InfoBoxen sind für Informationen gedacht, die zwar noch direkt die Übung betreffen, aber nicht ganz so wichtig sind, also für
+                Hinweise, Beispiele, etc.
+            \end{infoBox}
+            \caption{infoBox} \label{fig:box-types:info}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}[t]{\textwidth/3-1ex} \mbox{}\centering
+            \begin{grayInfoBox}
+                \fatsf{grayInfoBox:}\par Das ist eine grayInfoBox.
+                %
+                Eine grayInfoBox hat links einen grauen Balken, und einen grauen Hintergrund.
+                HrayInfoBoxen sind für Informationen gedacht, die nicht relevant für die Hausübung sind, also für Verständnisfragen, fun facts,
+                etc.
+            \end{grayInfoBox}
+            \caption{grayInfoBox} \label{fig:box-types:grayInfo}
+        \end{subfigure}
+        \caption{Übersicht Box-Types}
+        \label{fig:box-types}
+    \end{figure}
+
+    Für häufig verwendete Boxen sind bereits Makros vordefiniert, die die entsprechenden Boxen erzeugen: 
+
+    % \begin{noindent}
+        \begin{table}[ht] \centering
+            \begin{tabular}{cccl} 
+                \toprule 
+                \fatsf{Name} & \fatsf{Boxart} & \fatsf{default-Specifier}                                & \fatsf{Titel}                            \\ 
+                \midrule 
+                tipp     & infoBox & \{\} & Tipp     \\ 
+                hinweis  & infoBox & \{\} & Hinweis  \\ 
+                hinweise & infoBox & \{\} & Hinweise \\
+                uvhinweis & infoBox & \{\} & Unverbindlicher~Hinweis \\
+                uvhinweise & infoBox & \{\} & Unverbindliche~Hinweise \\
+                erinnerung & infoBox & \{\} & Erinnerung \\
+                anmerkung & infoBox & \{\} & Anmerkung \\
+                anmerkungr & infoBox & \{\} & Anmerkung~am~Rande \\
+                bemerkung & infoBox & \{\} & Bemerkung \\
+                bemerkungr & infoBox & \{\} & Bemerkung~am~Rande \\
+                beispiel & infoBox & \{\} & Beispiel \\
+                beispiele & infoBox & \{\} & Beispiele \\
+                vfrage & grayInfoBox & 0~Punkte &  Verständnisfrage \\
+                vfrager & grayInfoBox & 0~Punkte &  Verständnisfrage~am~Rande \\
+                vfragen & grayInfoBox & 0~Punkte &  Verständnisfragen \\
+                vfragenr & grayInfoBox & 0~Punkte &  Verständnisfragen~am~Rande \\
+                vanforderung & defBox & \{\} &  Verbindliche~Anforderung \\
+                vanforderungen & defBox & \{\} &  Verbindliche~Anforderungen \\
+                vanforderunghu & defBox & \{\} &  Verbindliche~Anforderung~für~die~gesamte~Hausübung \\
+                vanforderungenhu & defBox & \{\} &  Verbindliche~Anforderungen~für~die~gesamte~Hausübung \\
+                \bottomrule
+            \end{tabular}
+            \caption{Übersicht vordefinierter Box-Environments} \label{tab:box-environments}
+        \end{table}
+        % \end{noindent}
+
+    \vspace{-1em}
+    Ein Aufruf sind dann z.B. so aus: \vspace{-2cm} \vspace{\fill}
+    \begin{figure}[ht!
+        ]
+        \centering
+        \begin{subfigure}[t]{.4\textwidth-1ex}
+            \centering
+            \begin{vanforderung}[Für H2.2]
+                es darf keine Rekursion verwendet werden.
+            \end{vanforderung}
+            \caption{Ergebnis}
+            \label{fig:vanforderungen-ex:result}
+        \end{subfigure}
+        \hfill%
+        \begin{subfigure}[t]{.6\textwidth-1ex}
+            \centering
+            \begin{codeBlock}[]{minted language=latex}
+                    \begin{vanforderung}[Für H2.2]
+                        es darf keine Rekursion verwendet werden.
+                    \end{vanforderung}
+                \end{codeBlock}
+            \caption{Code}
+            \label{fig:vanforderungen-ex:result}
+        \end{subfigure}
+        \label{fig:vanforderungen-ex}
+        \caption{Beispiel vanforderungen}
+    \end{figure}
+    \clearpage
+    \subsection{Code-Blöcke}
+    Das Code-Block environment nutzt intern \verb+minted+ und \verb+tcolorbox+.
+    Das erste (optionale) Argument kann für minted Optionen benutzt werden, das zweite Argument für optionen der ColorBox.
+    \begin{figure}[ht!]
+        \centering
+        \begin{subfigure}[t]{\textwidth}
+            \centering
+            \begin{codeBlock}[]{minted language=java, title=\codeBlockTitle{Fibonacci}}
+                    public static int fibRec(int n) {
+                        return n < 2 ? n : fibRec(n - 1) + fibRec(n - 2);
+                    }
+                \end{codeBlock}
+            \caption{Ergebnis}
+            \label{fig:code-block-example:result}
+        \end{subfigure}
+        \begin{subfigure}[t]{\textwidth}
+            \centering
+            \begin{codeBlock}[]{minted language=latex,title=\faCode\hfill Example Java Code-Block\hfill\faCode}
+                    \begin{@codeBlock@}[]{minted language=java, title=\codeBlockTitle{Fibonacci}}
+                        public static int fibRec(int n) {
+                            return n < 2 ? n : fibRec(n - 1) + fibRec(n - 2);
+                        }
+                    \end{@codeBlock@}
+                \end{codeBlock}
+            \caption{Code}
+            \label{fig:code-block-example:code}
+        \end{subfigure}
+        \label{fig:code-block-example}
+        \caption{Beispiel Code-Block}
+    \end{figure}
+    \subsection{Kopfzeilen}
+    Neben den Kopfzeilen der TU-Vorlage werden durch \verb+algoexercise+ noch weitere Kopfzeilen definiert.
+    Hier ist eine vollständige Liste der vordefinierten Kopfzeilen:
+    \begin{description}[leftmargin=3cm]
+        \item[title-name-id] Eine
+            Kopfzeile mit dem Kurztitel, sowie namens- und Matrikelnummerfelder
+        \item[title-name] Eine Kopfzeile mit dem Kurztitel und
+            Namensfeld
+        \item[title] Eine Kopfzeile mit dem Kurztitel
+        \item[fulltitle-centered] Eine Kopfzeile mit dem vollständigen Titel
+            (zentriert).
+            Diese Kopfzeile wird auch hier im Handbuch verwendet.
+        \item[name-id] Eine Kopfzeile mit Namens- und Matrikelnummernfeldern
+        \item[name] Eine Kopfzeile nur mit Namensfeld
+        \item[aud] Eine Kopfzeile für Theorieblätter in der AuD (mit Übungsblatttitel, Professor, namens und
+            Matrikelnummerfeldern)
+        \item[aud-min] Das gleiche wie aud, nur ohne Namens- und Matrikelnummerfelder
+    \end{description}
+    \subsection{Weitere \LaTeX-Konventionen}
+    \begin{itemize}
+        \item Anführungszeichen -- \enquote{Anführungszeichen} werden mit dem Befehl \verb+\enquote{<text>}+ des Paketes
+            \verb+csquotes+
+            gesetzt (bereits geladen).
+        \item Mathematische Gleichungen -- Gleichungen werden entweder mit dem \verb+equation+- oder mit dem \verb+align+- bzw.
+            \verb+alignat+Environment oder den gesternten Varianten gesetzt.
+            Inline-Gleichungen werden mit \verb+$<equation>$+ gesetzt.
+            Der Syntax \verb+\[<display math\]+ und \verb+\(<inline math>\)+ wird nicht verwendet.
+        \item Eigene Makros, die mehr als einmal verwendet werden, werden in der Präambel geschrieben
+        \item Tabellen und Abbildungen haben stets ein label und eine Beschreibung (nach Möglichkeit mit Referenz auf die
+            entsprechende Aufgabe)
+    \end{itemize}
+    \clearpage{}
+\end{document}

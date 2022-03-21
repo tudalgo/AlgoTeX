@@ -1,7 +1,7 @@
 % FoP and AuD Exercise template class
 % Author: Ruben Deisenroth
-\def\fileversion{2.2.1}
-\def\filedate{2022/03/10}
+\def\fileversion{2.2.2}
+\def\filedate{2022/03/22}
 
 % Sets the LaTeX version for the package to work.
 \NeedsTeXFormat{LaTeX2e}
@@ -92,6 +92,8 @@
 \RequirePackage{cprotect}
 \RequirePackage{subcaption}
 \RequirePackage{csquotes}
+\RequirePackage{nameref}
+\RequirePackage{fontawesome}
 
 \ifPDFTeX
     \RequirePackage[utf8]{inputenc}
@@ -121,6 +123,14 @@
 % \RequirePackage{pifont}
 
 %%--Document Properties--%%
+% Title
+\newcommand*{\getTitle}{
+    \@title
+}
+% Subtitle
+\newcommand*{\getSubtitle}{
+    \@subtitle
+}
 % Date
 \tl_gclear_new:N \datename
 \tl_gset:Nn \datename {Datum}
@@ -131,6 +141,9 @@
 }
 
 % Author
+\newcommand*{\getAuthor}{
+    \@author
+}
 \tl_gclear_new:N \printAuthor
 \renewcommand*{\author}[1]{
     \seq_gset_split:Nnn \g_ptxcd_author_seq {\and} {#1}
@@ -466,6 +479,7 @@
                     \smallskip
                     \StudentName},
                 #1 / title .code:n = \tl_gset:cn {g_ptxcd_ex_headline_#1_tl} {\g_ptxcd_shorttitle_tl},
+                #1 / fulltitle-centered .code:n = \tl_gset:cn {g_ptxcd_ex_headline_#1_tl} {\centering\textbf{\textsf{\@title}}},
                 #1 / name-id .code:n = \tl_gset:cn {g_ptxcd_ex_headline_#1_tl} {\StudentName\StudentID},
                 #1 / name .code:n = \tl_gset:cn {g_ptxcd_ex_headline_#1_tl} {\StudentName},
                 #1 / aud .code:n = \tl_gset:cn {g_ptxcd_ex_headline_#1_tl} {
@@ -488,6 +502,7 @@
                     \smallskip
                     \StudentName},
                 #1 / title .code:n = \tl_gset:cn {g_TUDa_ex_headline_#1_tl} {\g_TUDa_shorttitle_tl},
+                #1 / fulltitle-centered .code:n = \tl_gset:cn {g_TUDa_ex_headline_#1_tl} {\centering\textbf{\textsf{\@title}}},
                 #1 / name-id .code:n = \tl_gset:cn {g_TUDa_ex_headline_#1_tl} {\StudentName\StudentID},
                 #1 / name .code:n = \tl_gset:cn {g_TUDa_ex_headline_#1_tl} {\StudentName},
                 #1 / aud .code:n= \tl_gset:cn {g_TUDa_ex_headline_#1_tl} {
