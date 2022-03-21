@@ -21,7 +21,8 @@
 % Author
 \renewcommand*{\author}[1]{
     \seq_gset_split:Nnn \g_ptxcd_author_seq {\and} {#1}
-    \seq_if_empty:NF \g_ptxcd_author_seq {\tl_gset:Nn \printAuthor {\int_compare:nTF{\seq_count:N \g_ptxcd_author_seq > 1}{Autoren}{Autor}:~\hfill\seq_use:Nnnn \g_ptxcd_author_seq {~\authorandname{}~} {,~} {~\authorandname{}~}\par}}
+    \seq_if_empty:NF \g_ptxcd_author_seq {\tl_gset:Nn \printAuthor {\int_compare:nTF{\seq_count:N \g_ptxcd_author_seq >
+                1}{Autoren}{Autor}:~\hfill\seq_use:Nnnn \g_ptxcd_author_seq {~\authorandname{}~} {,~} {~\authorandname{}~}\par}}
 }
 \termLeft{}
 \termRight{}
@@ -34,7 +35,7 @@
 }
 \ExplSyntaxOff
 \ConfigureHeadline{
-    headline={aud-min}
+    headline={fulltitle-centered}
 }
 
 %%---------------------------%%
@@ -70,52 +71,168 @@
     % \hue{Hausübung \getSheetnumber{}}{\getShorttitle{}}{\getPointsTotal{}}
 
     \tableofcontents{}
+    \clearpage{}
 
     %%--------------%%
     %%--Einleitung--%%
     %%--------------%%
 
     \section{Einleitung}
-    Die LaTeX-Vorlage dient der Erstellung der Übungsblätter in der FOP und der AuD. In diesem Handbuch wird die Funktions- und Arbeitsweise mit AlgoTeX erklärt.
+    Die \LaTeX-Vorlage dient der Erstellung der Übungsblätter in der FOP und der AuD.
+    In diesem Handbuch wird die Funktions- und Arbeitsweise mit Algo\TeX{} erklärt.
 
-    Da AlgoTeX auf der Tu-Vorlage basiert, lassen sich alle bekannten Einstellungen der TU-Template auch auf diese Vorlage anwenden. Der Vollständigkeit halber werden hier aber auch nochmal die relevanten Einstellungen beschrieben.
-    \section{Funktionsweise der LaTeX-Vorlage}
+    Da Algo\TeX{} auf der Tu-Vorlage basiert, lassen sich alle bekannten Einstellungen der TU-Template auch auf diese Vorlage anwenden.
+    Der Vollständigkeit halber werden hier aber auch nochmal die relevanten Einstellungen beschrieben.
+    % \section{Funktionsweise der LaTeX-Vorlage}
+    \vspace{-1em}
+    \section{Allgemeine Einstellungen der LaTeX-Vorlage (Präambel)}
+    \vspace{-1em}
     \subsection{Klasseneinstellungen}\label{Klasseneinstellungen}
-    Die Klasseneinstellungen sind Einstellungen, die für das ganze Dokument gelten und werden in dem optionalen ersten Argument von \verb+\documentclass[]{}+ festgelegt. Zusätzlich zu den Einstellungen der TU-Template (z.B. \verb+ngerman+, \verb+T1+, \verb+fontsize+,$\ldots$) gibt es die folgenden Einstellungen:
+    \vspace{-1em}
+    Die Klasseneinstellungen sind Einstellungen, die für das ganze Dokument gelten und werden in dem optionalen ersten Argument von
+    \verb+\documentclass[]{}+ festgelegt.
+    Zusätzlich zu den Einstellungen der TU-Template (z.B. \verb+ngerman+, \verb+T1+, \verb+fontsize+,$\ldots$) gibt es die folgenden
+    Einstellungen:
     \begin{description}[leftmargin = 3cm]
-        \item[titleprefix] ein Prefix, der vorne an den Titel angehängt werden soll (z.B. Algorithmen und Datenstrukturen)
+        \item[titleprefix] ein Prefix, der vorne an den Titel angehängt werden soll
+            (z.B. Algorithmen und Datenstrukturen)
         \item[boxarc] Abgerundete Ecken für die Kästen (siehe \ref{boxes})
-        \item[dark\_mode] Stellt den Dunklen Modus für das Übungsblatt ein, (das ist besonders Abends sehr Angenehm zum Schreiben)
-        \item[load\_common] Läd eine Liste an oft benutzten \LaTeX{}-Paketen (das ist sehr ineffizient, stattdessen sollten die benötigten Pakete direkt in der Präambel geladen werden)
-        \item[fancy\_row\_color] Ändert die Spaltenfarbe in Tabellen auf ein alternierendes Muster (im Mathemodus kann das unerwünschte Nebeneffekte haben, und kann z.B. bei einer matrix mit \verb+\hiderowcolors{}+ pro Element deaktiviert werden)
-        \item[inlineshortcut] Legt die Programmiersprache für den Inlineshortcut fest (entweder java oder Racket). Damit funktioniert dann z.B. das Makro \verb+\inlinejava{<java-code>}+, um bequem Java-Codeschnipsel zu tippen (sowas wie \inlinejava{public}-Klasse)
-        \item[manual\_term] Stellt die Standartfunktionalität der TU-Vorlage bei der generierung des Terms (= Box unter dem Titel) wieder her
+        \item[dark\_mode]
+            Stellt den Dunklen Modus für das Übungsblatt ein, (das ist besonders Abends sehr Angenehm zum Schreiben)
+        \item[load\_common] Läd
+            eine Liste an oft benutzten \LaTeX{}-Paketen (das ist sehr ineffizient, stattdessen sollten die benötigten Pakete direkt in der
+            Präambel geladen werden)
+        \item[fancy\_row\_color] Ändert die Spaltenfarbe in Tabellen auf ein alternierendes Muster (im
+            Mathemodus kann das unerwünschte Nebeneffekte haben, und kann z.B. bei einer matrix mit \verb+\hiderowcolors{}+ pro Element
+            deaktiviert werden)
+        \item[inlineshortcut] Legt die Programmiersprache für den Inlineshortcut fest (entweder java oder Racket).
+            Damit funktioniert dann z.B. das Makro
+            \verb+\inlinejava{<java-code>}+, um bequem Java-Codeschnipsel zu tippen (sowas wie \inlinejava{public}-Klasse)
+        \item[manual\_term] Stellt die Standartfunktionalität der TU-Vorlage bei der generierung des Terms (= Box unter dem Titel) wieder
+            her
         \item[maxdifficulty] Die Maximale Anzahl an Sternen, die die Schwierigkeitsskala von Vorübungen anzeigen soll (default: 3)
-        \item[showpoints] wenn \verb+showpoints=false+ gesetzt wird, werden alle Punktzahlen auf 1 gesetzt. Das ist besonders dann hilfreich, wenn das Blatt im Vorhinein an Tester gegeben werden soll, die die Punktzahl nicht sehen dürfen.
+        \item[showpoints] wenn \verb+showpoints=false+ gesetzt wird, werden alle Punktzahlen auf 1 gesetzt.
+            Das ist besonders dann hilfreich, wenn das Blatt im Vorhinein an Tester gegeben werden soll, die die Punktzahl nicht sehen
+            dürfen.
         \item[hidepoints] die Gegenteilige Option zu \verb+showpoints+
-        \item[shell\_escape] Ein manuelles Überschreiben der Shell-Escape-Flag-Erkennung (das ist nur zum Testen des Kompatibilitätsmodus der Code-Blöcke Notwendig und sollte nicht in Übungsblättern verwendet werden)
-        \item[logopath] Überschreiben des TU-Datmstadt Logos (dient nur zu Testzwecken und sollte nicht in Übungsblättern verwendet werden)
-        \item[corporatedesign] \textbf{deprecated}!! Nutzt das TU-Design statt dem alten FOP-Design
+        \item[shell\_escape] Ein manuelles Überschreiben der Shell-Escape-Flag-Erkennung (das ist nur zum Testen des
+            Kompatibilitätsmodus der Code-Blöcke Notwendig und sollte nicht in Übungsblättern verwendet werden)
+        \item[logopath] Überschreiben des TU-Datmstadt Logos (dient nur zu Testzwecken und sollte nicht in Übungsblättern verwendet
+            werden)
+        \item[corporatedesign] \textbf{deprecated}!!
+            Nutzt das TU-Design statt dem alten FOP-Design
     \end{description}
-    \subsection{Titelei}
-    \sloppy
-    Wie bei der TU-Vorlage wird der Titel mittels \verb+\maketitle{}+ generiert.
-    Dazu müssen \textbf{vorher} die entsprechenden Dokumenteneinstellungen festgelegt werden. Am besten macht man das bereits in der Präambel (also vor \verb+\begin{document}+).
+    \vspace{-1em} \subsection{Titelei} \vspace{-1em}\sloppy Wie bei
+    der TU-Vorlage wird der Titel mittels \verb+\maketitle{}+ generiert.
+    Dazu müssen \textbf{vorher} die entsprechenden Dokumenteneinstellungen festgelegt werden.
+    Am besten macht man das bereits in der Präambel (also vor \verb+\begin{document}+).
     Zusätzlich zu den Optionen der TU-Vorlage gibt es allerdings noch einige Erweiterungen:
     \begin{itemize}
-        \item Klasseneinstellung \verb+titleprefix+ (siehe~\ref{Klasseneinstellungen})
-        \item neben dem normalen \verb+\term{}+-Command, gibt es noch weitere Optionen, den Term (also den Kasten direkt unter dem Titel mit den Blatteigenschaften) zu verändern:\begin{itemize}
-            \item der Command \verb+\termStyle{<style>}+ erlaubt eine einfachere Titelgestaltung. Dabei gibt es dann zusätzlich zu der Standartoption (\verb+manual+) noch folgende Stile:\begin{description}
-                \item[center] Zentriert den inhalt von \verb+\term{}+
-                \item[left-right] definiert die Commands \verb+\termLeft{}+ und \verb+\termRight{}+. Alles in \verb+\termLeft{}+ wird links ausgerichtet, alles in \verb+\termRight{}+ wird rechts ausgerichtet. Die beiden Terms werden nebeneinander geschrieben. 
-                \item[left-right-manual] wie left-right, nur ist der \verb+\term{}+-Command wieder Erlaubt, und sein Inhalt wird darunter gepackt.
-            \end{description}
-        \end{itemize}
-        \item einige der Dokumenteneigenschaften haben Auswirkungen auf die Titelei (siehe~\ref{sheet-properties}).
+        \item Klasseneinstellung
+            \verb+titleprefix+ (siehe~\ref{Klasseneinstellungen})
+        \item neben dem normalen \verb+\term{}+-Command, gibt es noch weitere
+            Optionen, den Term (also den Kasten direkt unter dem Titel mit den Blatteigenschaften) zu verändern:
+            \begin{itemize}
+                \item der
+                    Command \verb+\termStyle{<style>}+ erlaubt eine einfachere Titelgestaltung.
+                    Dabei gibt es dann zusätzlich zu der Standartoption (\verb+manual+) noch folgende Stile:
+                    \begin{description}[leftmargin=3cm]
+                        \item[center] Zentriert den inhalt von \verb+\term{}+
+                        \item[left-right] definiert die Commands \verb+\termLeft{}+ und
+                            \verb+\termRight{}+.
+                            Alles in \verb+\termLeft{}+ wird links ausgerichtet, alles in \verb+\termRight{}+ wird rechts ausgerichtet.
+                            Die beiden Terms werden nebeneinander geschrieben.
+                        \item[left-right-manual] wie left-right, nur ist der \verb+\term{}+-Command wieder Erlaubt, und sein
+                            Inhalt wird darunter gepackt.
+                    \end{description}
+            \end{itemize}
+        \item fast alle Dokumenteneigenschaften haben Auswirkungen auf die Titelei (siehe~\ref{sheet-properties}).
     \end{itemize}
+    \clearpage
     \subsection{Blatt-Eigenschaften}\label{sheet-properties}
-    a
+    Zusätzlich zu den bekannten Dokumenteneigenschaften (wie \verb+\date{}+,\verb+\author{}+,.
+    ..) bietet die Vorlage noch weitere
+    Konstanten.
+    Jede Konstante lässt sich mit dem Befehl \verb+\<konstantenname>{}+ setzen und mit dem Befehl \verb+get<Konstantenname>{}+
+    abrufen (der Erste Buchstabe des Konstantennamen ist hierbei immer groß).
+    Außerdem hat jede eigenschaft einen print-Befehl \verb+\print<Konstantenname>{}+ (der Erste Buchstabe des Konstantennamen ist
+    hierbei immer groß), welcher bestimmt, wie der Befehl im Term angezeigt werden soll.
+    \begin{beispiel}[\texttt{author}-Eigenschaft]
+        \begin{itemize}
+            \item \verb+\author{Max Mustermann}+ setzt den Autor auf Max Mustermann.
+            \item \verb+\getAuthor{}+ liefert den aktuellen Autor zurück: \getAuthor{}
+            \item \verb+\printAuthor{}+ liefert die Autor-Zeile der Titelseite zurück:\par\printAuthor{}
+        \end{itemize}
+    \end{beispiel}
+    Hier ist eine vollständige Liste der relevanten Konstanten:
+    \begin{description}[leftmargin=2.5cm]
+        \item[title] \sloppy{}Der Titel
+            des Übungsblattes, steht in der ersten Zeile.
+            Der Titel hat keinen print-Befehl.
+            Kann durch die Klassenoption \verb+titleprefix+ beeinflusst werden.
+            (siehe \ref{Klasseneinstellungen}).
+            Der \verb+\title{}+-Befehl kann als Optionales Argument einen Kurztitel annehmen, welcher mittels \verb+\getShortTitle{}+
+            abgerufen werden kann.
+            Beispiel: \verb+\title[Kurztitel]{Ein Ausführlicher Titel}+
+        \item[subtitle] Der Untertitel des Übungsblattes, steht über dem
+            term.
+            Der Untertitel hat keinen print-Befehl.
+            In der Algorithmik nutzen wir den Untertitel meistens nur, um auf die Kontaktmöglichkeiten bei Rückfragen hinzuweisen.
+        \item[author] Die Autoren des Übungsblattes.
+            Wenn mehrere Autoren angegeben werden sollen, können diese mit \verb+\and+ getrennt werden.
+            Beispiel: \verb+\author{Max Mustermann\and Otto Normalverbraucher}+
+        \item[version] Die Version des Übungsblattes.
+            Generell ist hier \href{https://semver.org/lang/de/}{semantic Versioning} zu beachten.
+        \item[sheetnumber] Die Nummer des Übungsblattes.
+            Hier werden \textbf{nur} Zahlen akzeptiert.
+            Führende Nullen werden automatisch hinzugefügt (also $9$ wird zu $09$).
+        \item[date] Das Erstellungsdatum des Blattes (mit \verb+\date{\today}+ kann immer das aktuelle Datum genutzt werden).
+        \item[duedate] Das Fälligkeitsdatum des Übungsblattes.
+        \item[semester] Das aktuelle Studiensemester (z.
+            B. WiSe 21/22 oder SoSe 2022).
+        \item[fachbereich] Der Fachbereich des Moduls (z.
+            B. Informatik).
+        \item[supervisor] Der Übungsblattbetreuer (Hauptverantwortlicher des Übungsblattes).
+            Falls der Übungsblattbetreuer der Autor ist, kann der Autor durch \verb+\supervisor{\getAuthor}+ kopiert werden.
+            (Aktuell unterstützt der supervisor kein \verb+\and+,
+            also wird das bei mehreren Autoren zu problemen führen).
+        \item[topics] die relevanten Themen für das Übungsblatt
+        \item[slides] die relevanten Foliensätze für das Übungsblatt (bitte Nummern mit angeben!).
+        \item[dozent] der betreuende Dozent des Moduls (Gesamtleitung)
+    \end{description}
+    \clearpage
+    \section{Aufgabenstellungen, Teilaufgaben und Punktesystem}\label{Exercises}
+    \subsection{Übungsblatttitel und Gesamtpunktzahl}\label{totalpoints_and_sheet_title}
+    Jedes Übungsblatt braucht einen Kurzen Titel, der Beschreibt um was es geht.
+    Dieser kann zwar gleich den Topics sein, aber kreative Titel sind immer willkommen.
+    Um den Übungsblatttitel anzugeben, eignet sich am Besten das Optionale Kurztitelargument des \verb+\title[]{}+-Commands (siehe
+    \ref{sheet-properties}).
+
+    Das erste, was nach dem Command \verb+\maketitle{}+ kommen sollte, ist die Hausübungsleiste.
+    Die Hausübungsleiste kommt noch daher, dass früher auf jedem Blatt sowohl Vorübungen (V) als auch Hausübungen (H) standen.
+    Die Hausübungsleiste lässt sich mit dem
+    \verb+\hue{<hausübungsnummer>}{<hausübungstitel>}{<gesamtpunktzahl>}[<punktzahlformat>]+-Command erstellen.
+    Das vierte, optionale Argument ist dabei nur dann notwendig, wenn das Standartpunkteformat überschrieben werden muss.
+    Beim Punktzahlformat wird statt der Punktzahl einfach ein * als Platzhalter geschrieben.
+
+    \begin{beispiele}
+        \begin{itemize}
+            \item \verb+\hue{Hausübung \getSheetnumber{}}{\getShorttitle{}}{\getPointsTotal{}}+
+            \item \verb+\hue{FOP Projekt}{Pizza-Liefersevice}{\getPointsTotal{}}[Gesamt Teil A: * Punkte]+
+        \end{itemize}
+    \end{beispiele}
+    \subsection{Tasks und Subtasks}
+    Genau wie bei der TU-Vorlage \verb+tudaexercise+ nutzen wir \verb+task+- und \verb+subtask+-Environments.
+    
+    Weitere Details gibt es in der \href{http://mirrors.ctan.org/macros/latex/contrib/tuda-ci/doc/DEMO-TUDaExercise.pdf}{Dokumentation von \texttt{tudaexercise}}.
     \subsection{Kästen und Boxen}\label{boxes}
-    a
+    \subsection{Code-Blöcke}
+    \subsection{Weitere \LaTeX-Konventionen}
+    \begin{itemize}
+        \item Anführungszeichen -- \enquote{Anführungszeichen} werden mit dem Befehl \verb+\enquote{<text>}+ des Paketes \verb+csquotes+ gesetzt (bereits geladen).
+        \item Mathematische Gleichungen -- Gleichungen werden entweder mit dem \verb+equation+- oder mit dem \verb+align+- bzw. \verb+alignat+Environment oder den gesternten Varianten gesetzt. Inline-Gleichungen werden mit \verb+$<equation>$+ gesetzt. Der Syntax \verb+\[<display math\]+ und \verb+\(<inline math>\)+ wird nicht verwendet.
+        \item Eigene Makros, die mehr als einmal verwendet werden, werden in der Präambel geschrieben
+        \item Tabellen und Abbildungen haben stets ein label und eine Beschreibung (nach Möglichkeit mit Referenz auf die entsprechende Aufgabe)
+    \end{itemize}
     \clearpage{}
 \end{document}

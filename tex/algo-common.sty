@@ -366,6 +366,13 @@
         }{
     \end{infoBox}
 }
+\DeclareDocumentEnvironment{beispiele}{O{}m}{
+    \begin{infoBox}
+        \normalsize\textsf{\textbf{Beispiele\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
+        #2
+        }{
+    \end{infoBox}
+}
 \DeclareDocumentEnvironment{example}{O{}m}{
     \begin{infoBox}
         \normalsize\textsf{\textbf{Beispiel\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
