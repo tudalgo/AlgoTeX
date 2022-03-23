@@ -388,9 +388,23 @@
         }{
     \end{grayInfoBox}
 }
+\DeclareDocumentEnvironment{wvfrage}{O{0~Punkte}m}{
+    \begin{grayInfoBox}
+        \normalsize\textsf{\textbf{Wichtige~Verständnisfrage\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
+        #2
+        }{
+    \end{grayInfoBox}
+}
 \DeclareDocumentEnvironment{vfragen}{O{0~Punkte}m}{
     \begin{grayInfoBox}
         \normalsize\textsf{\textbf{Verständnisfragen\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
+        #2
+        }{
+    \end{grayInfoBox}
+}
+\DeclareDocumentEnvironment{wvfragen}{O{0~Punkte}m}{
+    \begin{grayInfoBox}
+        \normalsize\textsf{\textbf{Wichtige~Verständnisfragen\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
         #2
         }{
     \end{grayInfoBox}
