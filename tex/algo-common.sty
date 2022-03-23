@@ -451,6 +451,13 @@
         }{
     \end{defBox}
 }
+\DeclareDocumentEnvironment{kaufgabe}{O{}m}{
+    \begin{defBox}
+        \normalsize\textsf{\textbf{Konkrete~Aufgabe\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
+        #2
+        }{
+    \end{defBox}
+}
 % \theoremstyle{fopTheorem}%
 % \newtheorem{hinweisT}{\textsf{Hinweis:}}%
 % \newenvironment{hinweis}{\begin{infoBox}\begin{hinweisT}}{\end{hinweisT}\end{infoBox}}%
