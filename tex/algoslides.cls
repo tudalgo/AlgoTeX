@@ -140,3 +140,6 @@
         \setbeamertemplate{subsection~in~toc~shaded}[default][50]
     }
 }
+
+% Temporary fix for the bug in the XCharter package (https://github.com/tudace/tuda_latex_templates/issues/366)
+\AtEndPreamble{\renewcommand*{\familydefault}{\sfdefault}}

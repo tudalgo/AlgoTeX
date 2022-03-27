@@ -286,177 +286,184 @@
             \end{ideaT}
         \end{defBox}
     }%
-}
 
-\DeclareDocumentEnvironment{tipp}{O{}m}{
-    \begin{infoBox}
-        \normalsize\textsf{\textbf{Tipp\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
-        #2
-        }{
-    \end{infoBox}
-}
+    \DeclareDocumentEnvironment{tipp}{O{}m}{
+        \begin{infoBox}
+            \normalsize\textsf{\textbf{Tipp\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
+            #2
+            }{
+        \end{infoBox}
+    }
 
-\DeclareDocumentEnvironment{hinweis}{O{}m}{
-    \begin{infoBox}
-        \normalsize\textsf{\textbf{Hinweis\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
-        #2
-        }{
-    \end{infoBox}
-}
+    \DeclareDocumentEnvironment{hinweis}{O{}m}{
+        \begin{infoBox}
+            \normalsize\textsf{\textbf{Hinweis\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
+            #2
+            }{
+        \end{infoBox}
+    }
 
-\DeclareDocumentEnvironment{hinweise}{O{}m}{
-    \begin{infoBox}
-        \normalsize\textsf{\textbf{Hinweise\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
-        #2
-        }{
-    \end{infoBox}
-}
-\DeclareDocumentEnvironment{uvhinweis}{O{}m}{
-    \begin{infoBox}
-        \normalsize\textsf{\textbf{Unverbindlicher~Hinweis\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
-        #2
-        }{
-    \end{infoBox}
-}
-\DeclareDocumentEnvironment{uvhinweise}{O{}m}{
-    \begin{infoBox}
-        \normalsize\textsf{\textbf{Unverbindlicher~Hinweise\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
-        #2
-        }{
-    \end{infoBox}
-}
-\DeclareDocumentEnvironment{erinnerung}{O{}m}{
-    \begin{infoBox}
-        \normalsize\textsf{\textbf{Erinnerung\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
-        #2
-        }{
-    \end{infoBox}
-}
-\DeclareDocumentEnvironment{anmerkung}{O{}m}{
-    \begin{infoBox}
-        \normalsize\textsf{\textbf{Anmerkung\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
-        #2
-        }{
-    \end{infoBox}
-}
-\DeclareDocumentEnvironment{anmerkungr}{O{}m}{
-    \begin{infoBox}
-        \normalsize\textsf{\textbf{Anmerkung~am~Rande\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
-        #2
-        }{
-    \end{infoBox}
-}
-\DeclareDocumentEnvironment{bemerkung}{O{}m}{
-    \begin{infoBox}
-        \normalsize\textsf{\textbf{Bemerkung\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
-        #2
-        }{
-    \end{infoBox}
-}
-\DeclareDocumentEnvironment{bemerkungr}{O{}m}{
-    \begin{infoBox}
-        \normalsize\textsf{\textbf{Bemerkung~am~Rande\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
-        #2
-        }{
-    \end{infoBox}
-}
-\DeclareDocumentEnvironment{beispiel}{O{}m}{
-    \begin{infoBox}
-        \normalsize\textsf{\textbf{Beispiel\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
-        #2
-        }{
-    \end{infoBox}
-}
-\DeclareDocumentEnvironment{beispiele}{O{}m}{
-    \begin{infoBox}
-        \normalsize\textsf{\textbf{Beispiele\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
-        #2
-        }{
-    \end{infoBox}
-}
-\DeclareDocumentEnvironment{example}{O{}m}{
-    \begin{infoBox}
-        \normalsize\textsf{\textbf{Beispiel\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
-        #2
-        }{
-    \end{infoBox}
-}
-\DeclareDocumentEnvironment{vfrage}{O{0~Punkte}m}{
-    \begin{grayInfoBox}
-        \normalsize\textsf{\textbf{Verständnisfrage\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
-        #2
-        }{
-    \end{grayInfoBox}
-}
-\DeclareDocumentEnvironment{wvfrage}{O{0~Punkte}m}{
-    \begin{grayInfoBox}
-        \normalsize\textsf{\textbf{Wichtige~Verständnisfrage\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
-        #2
-        }{
-    \end{grayInfoBox}
-}
-\DeclareDocumentEnvironment{vfragen}{O{0~Punkte}m}{
-    \begin{grayInfoBox}
-        \normalsize\textsf{\textbf{Verständnisfragen\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
-        #2
-        }{
-    \end{grayInfoBox}
-}
-\DeclareDocumentEnvironment{wvfragen}{O{0~Punkte}m}{
-    \begin{grayInfoBox}
-        \normalsize\textsf{\textbf{Wichtige~Verständnisfragen\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
-        #2
-        }{
-    \end{grayInfoBox}
-}
-\DeclareDocumentEnvironment{vfrager}{O{0~Punkte}m}{
-    \begin{grayInfoBox}
-        \normalsize\textsf{\textbf{Verständnisfrage~am~Rande\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
-        #2
-        }{
-    \end{grayInfoBox}
-}
-\DeclareDocumentEnvironment{vfragenr}{O{0~Punkte}m}{
-    \begin{grayInfoBox}
-        \normalsize\textsf{\textbf{Verständnisfragen~am~Rande\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
-        #2
-        }{
-    \end{grayInfoBox}
-}
-\DeclareDocumentEnvironment{vanforderung}{O{}m}{
-    \begin{defBox}
-        \normalsize\textsf{\textbf{Verbindliche~Anforderung\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
-        #2
-        }{
-    \end{defBox}
-}
-\DeclareDocumentEnvironment{vanforderungen}{O{}m}{
-    \begin{defBox}
-        \normalsize\textsf{\textbf{Verbindliche~Anforderungen\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
-        #2
-        }{
-    \end{defBox}
-}
-\DeclareDocumentEnvironment{vanforderunghu}{O{}m}{
-    \begin{defBox}
-        \normalsize\textsf{\textbf{Verbindliche~Anforderung~für~die~gesamte~Hausübung \tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
-        #2
-        }{
-    \end{defBox}
-}
-\DeclareDocumentEnvironment{vanforderungenhu}{O{}m}{
-    \begin{defBox}
-        \normalsize\textsf{\textbf{Verbindliche~Anforderungen~für~die~gesamte~Hausübung \tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
-        #2
-        }{
-    \end{defBox}
-}
-\DeclareDocumentEnvironment{kaufgabe}{O{}m}{
-    \begin{defBox}
-        \normalsize\textsf{\textbf{Konkrete~Aufgabe\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
-        #2
-        }{
-    \end{defBox}
+    \DeclareDocumentEnvironment{hinweise}{O{}m}{
+        \begin{infoBox}
+            \normalsize\textsf{\textbf{Hinweise\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
+            #2
+            }{
+        \end{infoBox}
+    }
+    \DeclareDocumentEnvironment{uvhinweis}{O{}m}{
+        \begin{infoBox}
+            \normalsize\textsf{\textbf{Unverbindlicher~Hinweis\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
+            #2
+            }{
+        \end{infoBox}
+    }
+    \DeclareDocumentEnvironment{uvhinweise}{O{}m}{
+        \begin{infoBox}
+            \normalsize\textsf{\textbf{Unverbindlicher~Hinweise\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
+            #2
+            }{
+        \end{infoBox}
+    }
+    \DeclareDocumentEnvironment{erinnerung}{O{}m}{
+        \begin{infoBox}
+            \normalsize\textsf{\textbf{Erinnerung\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
+            #2
+            }{
+        \end{infoBox}
+    }
+    \DeclareDocumentEnvironment{anmerkung}{O{}m}{
+        \begin{infoBox}
+            \normalsize\textsf{\textbf{Anmerkung\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
+            #2
+            }{
+        \end{infoBox}
+    }
+    \DeclareDocumentEnvironment{anmerkungr}{O{}m}{
+        \begin{infoBox}
+            \normalsize\textsf{\textbf{Anmerkung~am~Rande\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
+            #2
+            }{
+        \end{infoBox}
+    }
+    \DeclareDocumentEnvironment{bemerkung}{O{}m}{
+        \begin{infoBox}
+            \normalsize\textsf{\textbf{Bemerkung\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
+            #2
+            }{
+        \end{infoBox}
+    }
+    \DeclareDocumentEnvironment{bemerkungr}{O{}m}{
+        \begin{infoBox}
+            \normalsize\textsf{\textbf{Bemerkung~am~Rande\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
+            #2
+            }{
+        \end{infoBox}
+    }
+    \DeclareDocumentEnvironment{beispiel}{O{}m}{
+        \begin{infoBox}
+            \normalsize\textsf{\textbf{Beispiel\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
+            #2
+            }{
+        \end{infoBox}
+    }
+    \DeclareDocumentEnvironment{beispiele}{O{}m}{
+        \begin{infoBox}
+            \normalsize\textsf{\textbf{Beispiele\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
+            #2
+            }{
+        \end{infoBox}
+    }
+    \DeclareDocumentEnvironment{example}{O{}m}{
+        \begin{infoBox}
+            \normalsize\textsf{\textbf{Beispiel\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
+            #2
+            }{
+        \end{infoBox}
+    }
+    \DeclareDocumentEnvironment{vfrage}{O{0~Punkte}m}{
+        \begin{grayInfoBox}
+            \normalsize\textsf{\textbf{Verständnisfrage\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
+            #2
+            }{
+        \end{grayInfoBox}
+    }
+    \DeclareDocumentEnvironment{wvfrage}{O{0~Punkte}m}{
+        \begin{grayInfoBox}
+            \normalsize\textsf{\textbf{Wichtige~Verständnisfrage\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
+            #2
+            }{
+        \end{grayInfoBox}
+    }
+    \DeclareDocumentEnvironment{vfragen}{O{0~Punkte}m}{
+        \begin{grayInfoBox}
+            \normalsize\textsf{\textbf{Verständnisfragen\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
+            #2
+            }{
+        \end{grayInfoBox}
+    }
+    \DeclareDocumentEnvironment{wvfragen}{O{0~Punkte}m}{
+        \begin{grayInfoBox}
+            \normalsize\textsf{\textbf{Wichtige~Verständnisfragen\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
+            #2
+            }{
+        \end{grayInfoBox}
+    }
+    \DeclareDocumentEnvironment{vfrager}{O{0~Punkte}m}{
+        \begin{grayInfoBox}
+            \normalsize\textsf{\textbf{Verständnisfrage~am~Rande\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
+            #2
+            }{
+        \end{grayInfoBox}
+    }
+    \DeclareDocumentEnvironment{vfragenr}{O{0~Punkte}m}{
+        \begin{grayInfoBox}
+            \normalsize\textsf{\textbf{Verständnisfragen~am~Rande\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
+            #2
+            }{
+        \end{grayInfoBox}
+    }
+    \DeclareDocumentEnvironment{vanforderung}{O{}m}{
+        \begin{defBox}
+            \normalsize\textsf{\textbf{Verbindliche~Anforderung\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
+            #2
+            }{
+        \end{defBox}
+    }
+    \DeclareDocumentEnvironment{vanforderungen}{O{}m}{
+        \begin{defBox}
+            \normalsize\textsf{\textbf{Verbindliche~Anforderungen\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
+            #2
+            }{
+        \end{defBox}
+    }
+    \DeclareDocumentEnvironment{vanforderunghu}{O{}m}{
+        \begin{defBox}
+            \normalsize\textsf{\textbf{Verbindliche~Anforderung~für~die~gesamte~Hausübung \tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
+            #2
+            }{
+        \end{defBox}
+    }
+    \DeclareDocumentEnvironment{vanforderungenhu}{O{}m}{
+        \begin{defBox}
+            \normalsize\textsf{\textbf{Verbindliche~Anforderungen~für~die~gesamte~Hausübung \tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
+            #2
+            }{
+        \end{defBox}
+    }
+    \DeclareDocumentEnvironment{kaufgabe}{O{}m}{
+        \begin{defBox}
+            \normalsize\textsf{\textbf{Konkrete~Aufgabe\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
+            #2
+            }{
+        \end{defBox}
+    }
+    \DeclareDocumentEnvironment{kaufgaben}{O{}m}{
+        \begin{defBox}
+            \normalsize\textsf{\textbf{Konkrete~Aufgaben\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
+            #2
+            }{
+        \end{defBox}
+    }
 }
 % \theoremstyle{fopTheorem}%
 % \newtheorem{hinweisT}{\textsf{Hinweis:}}%
