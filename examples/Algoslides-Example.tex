@@ -1,0 +1,113 @@
+\documentclass[
+    ngerman,
+    accentcolor=3b,
+    dark_mode,
+    fontsize=12pt,
+    a4paper,
+    aspectratio=169,
+    colorback=true,
+    fancy_row_colors,
+    leqno,
+    fleqn,
+    boxarc,
+    fleqn,
+]{algoslides}
+
+%%------------%%
+%%--Packages--%%
+%%------------%%
+
+% \usepackage{audutils}
+% \usepackage{fopbot}
+\usepackage{booktabs}
+
+%%---------------------------%%
+%%--Dokumenteneinstellungen--%%
+%%---------------------------%%
+
+\title{Algoslides-Test}
+\subtitle{Testdokument}
+\author{Ruben Deisenroth}
+\department{TU Darmstadt | Algo}
+\date{\today}
+\logo*{\includegraphics{example-image-16x9}}
+\titlegraphic*{\includegraphics{example-image}}
+
+%%----------------------------%%
+%%--Stilistische Anpassungen--%%
+%%----------------------------%%
+
+\renewcommand\tabularxcolumn[1]{m{#1}}% for vertical centering text in X column
+% Remove unwanted space from tables
+\aboverulesep = 0mm \belowrulesep = 0mm
+\renewcommand{\arraystretch}{1.4}
+
+%%-------------------------%%
+%%--Beginn des Dokumentes--%%
+%%-------------------------%%
+
+\begin{document}
+
+    %%-----------%%
+    %%--Titelei--%%
+    %%-----------%%
+
+    \maketitle{}
+
+    \begin{frame}[c]
+        \centering\huge\textbf{Gude!}
+    \end{frame}
+
+    \begin{frame}
+        \frametitle{Das steht heute auf dem Plan}
+        \tableofcontents[subsubsectionstyle=hide]
+    \end{frame}
+
+    %%---------------------------%%
+    %%--Beginn der Präsentation--%%
+    %%---------------------------%%
+
+    \section{Kapitel}
+    \subsection{Unterkapitel}
+
+    \begin{frame}
+        \slidehead{}
+        Test-Slide
+    \end{frame}
+
+    \section{Code-Block} \subsection{allgemeines} \subsection{java}
+    
+    \begin{frame}[fragile,c]
+        \slidehead{}
+        \begin{codeBlock}[]{title=\codeBlockTitle{Java-Example}}
+        package com.example;
+
+        // This is a comment
+        public class Main {
+            public static void main(String[] args) {
+                System.out.println("Hello World!");
+            }
+        }
+    \end{codeBlock}
+        \begin{defBox}
+            Wenn ein Frame einen Code-Block enthält, muss das frame als fragile markiert werden.
+        \end{defBox}
+    \end{frame}
+    \subsection{racket}
+    \begin{frame}[fragile,c]
+        \slidehead{}
+        \begin{codeBlock}[]{minted language=racket,title=\codeBlockTitle{Racket-Example}}
+        ;; Type: real -> real
+        ;; Precondition: n is a natural number
+        ;; Returns: The fibbonacci number of the given number
+        (define (fib n)
+            (if (< n 2)
+                n
+                (+ (fib (- n 1)) (fib (- n 2)))))
+
+        ; Test the function
+        (fib 10) # => 55
+    \end{codeBlock}
+    \end{frame}
+
+\end{document}
