@@ -12,6 +12,7 @@
 {\fileversion}{FoP and AuD Beamer Presentation Template}
 
 \RequirePackage[minted_workaround,caption_workaround]{algo-common}
+\RequirePackage{xr-hyper}
 
 % \DeclareGraphicsExtensions{.pdf,.png,.jpg}
 \RequirePackage[table, dvipsnames]{xcolor}
@@ -63,6 +64,7 @@
 % \RequirePackage[style=numeric]{biblatex}
 \RequirePackage{amsmath, amsthm, amssymb}
 \RequirePackage[squaren]{SIunits}
+\RequirePackage{standalone}
 \RequirePackage[straightvoltages]{circuitikz}
 \RequirePackage{caption}[2013/01/01] % needs v3.3 or newer
 \RequirePackage{tikz}
