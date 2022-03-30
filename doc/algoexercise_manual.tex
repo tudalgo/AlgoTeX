@@ -312,37 +312,30 @@
 
     \vspace{-1em}
     Für häufig verwendete Boxen sind bereits Makros vordefiniert, die die entsprechenden Boxen erzeugen: 
+
     \vspace{-1em}
     % \begin{noindent}
-        \begin{table}[ht] \centering
+        \begin{table}[ht!] \centering
+            \renewcommand{\arraystretch}{0.5}
             \begin{tabular}{cccl} 
                 \toprule 
                 \fatsf{Name} & \fatsf{Boxart} & \fatsf{default-Specifier}                                & \fatsf{Titel}                            \\ 
                 \midrule 
-                tipp     & infoBox & \{\} & Tipp     \\ 
-                hinweis  & infoBox & \{\} & Hinweis  \\ 
-                hinweise & infoBox & \{\} & Hinweise \\
-                uvhinweis & infoBox & \{\} & Unverbindlicher~Hinweis \\
-                uvhinweise & infoBox & \{\} & Unverbindliche~Hinweise \\
-                erinnerung & infoBox & \{\} & Erinnerung \\
-                anmerkung & infoBox & \{\} & Anmerkung \\
-                anmerkungr & infoBox & \{\} & Anmerkung~am~Rande \\
-                bemerkung & infoBox & \{\} & Bemerkung \\
-                bemerkungr & infoBox & \{\} & Bemerkung~am~Rande \\
-                beispiel & infoBox & \{\} & Beispiel \\
-                beispiele & infoBox & \{\} & Beispiele \\
-                wvfrage & grayInfoBox & 0~Punkte &  Wichtige~Verständnisfrage \\
-                vfrage & grayInfoBox & 0~Punkte &  Verständnisfrage \\
-                vfrager & grayInfoBox & 0~Punkte &  Verständnisfrage~am~Rande \\
-                vfragen & grayInfoBox & 0~Punkte &  Verständnisfragen \\
-                wvfragen & grayInfoBox & 0~Punkte &  Wichtige~Verständnisfragen \\
-                vfragenr & grayInfoBox & 0~Punkte &  Verständnisfragen~am~Rande \\
-                vanforderung & defBox & \{\} &  Verbindliche~Anforderung \\
-                vanforderungen & defBox & \{\} &  Verbindliche~Anforderungen \\
-                vanforderunghu & defBox & \{\} &  Verbindliche~Anforderung~für~die~gesamte~Hausübung \\
-                vanforderungenhu & defBox & \{\} &  Verbindliche~Anforderungen~für~die~gesamte~Hausübung \\
-                kaufgabe & defBox & \{\} &  Konkrete~Aufgabe \\
-                \bottomrule
+                \ExplSyntaxOn
+                \seq_map_inline:Nn \rubos_color_box_environment_seq {
+                    \bool_gset_true:N \rubos_color_box_environment_first_param_bool
+                    \seq_map_inline:Nn {#1} {
+                        \bool_if:NTF \rubos_color_box_environment_first_param_bool {
+                            \bool_gset_false:N \rubos_color_box_environment_first_param_bool
+                        } {
+                            &
+                        }
+                        \tl_if_empty:nTF {##1} {\{\}} {##1}
+                    }
+                    \\
+                }
+                \ExplSyntaxOff%
+                \\[0cm]\bottomrule
             \end{tabular}
             \caption{Übersicht vordefinierter Box-Environments} \label{tab:box-environments}
         \end{table}

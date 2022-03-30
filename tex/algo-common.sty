@@ -292,184 +292,59 @@
             \end{ideaT}
         \end{defBox}
     }%
-
-    \DeclareDocumentEnvironment{tipp}{O{}m}{
-        \begin{infoBox}
-            \normalsize\textsf{\textbf{Tipp\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
-            #2
-            }{
-        \end{infoBox}
+    
+    \seq_gclear_new:N \rubos_color_box_environment_seq
+    
+    % #1: (optional) Default bracket text
+    % #2: Environment name
+    % #3: Environment Box
+    % #4: Environment Text
+    \DeclareDocumentCommand{\rubosDeclareColorBoxEnvironment}{O{}mmm}{
+        \DeclareDocumentEnvironment{#2}{O{#1}m}{
+            \begin{#3}
+                \normalsize\textsf{\textbf{#4\tl_if_blank:nF {##1} {~(\textmd{##1})}:}}\par
+                ##2
+        }{
+            \end{#3}
+        }
+        \seq_gclear_new:N \rubos_curr_color_box_environment_seq
+        \seq_gput_right:Nn \rubos_curr_color_box_environment_seq {#2}
+        \seq_gput_right:Nn \rubos_curr_color_box_environment_seq {#3}
+        \seq_gput_right:Nn \rubos_curr_color_box_environment_seq {#1}
+        \seq_gput_right:Nn \rubos_curr_color_box_environment_seq {#4}
+        \seq_gput_right:No \rubos_color_box_environment_seq {\rubos_curr_color_box_environment_seq}
     }
 
-    \DeclareDocumentEnvironment{hinweis}{O{}m}{
-        \begin{infoBox}
-            \normalsize\textsf{\textbf{Hinweis\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
-            #2
-            }{
-        \end{infoBox}
-    }
-
-    \DeclareDocumentEnvironment{hinweise}{O{}m}{
-        \begin{infoBox}
-            \normalsize\textsf{\textbf{Hinweise\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
-            #2
-            }{
-        \end{infoBox}
-    }
-    \DeclareDocumentEnvironment{uvhinweis}{O{}m}{
-        \begin{infoBox}
-            \normalsize\textsf{\textbf{Unverbindlicher~Hinweis\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
-            #2
-            }{
-        \end{infoBox}
-    }
-    \DeclareDocumentEnvironment{uvhinweise}{O{}m}{
-        \begin{infoBox}
-            \normalsize\textsf{\textbf{Unverbindlicher~Hinweise\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
-            #2
-            }{
-        \end{infoBox}
-    }
-    \DeclareDocumentEnvironment{erinnerung}{O{}m}{
-        \begin{infoBox}
-            \normalsize\textsf{\textbf{Erinnerung\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
-            #2
-            }{
-        \end{infoBox}
-    }
-    \DeclareDocumentEnvironment{anmerkung}{O{}m}{
-        \begin{infoBox}
-            \normalsize\textsf{\textbf{Anmerkung\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
-            #2
-            }{
-        \end{infoBox}
-    }
-    \DeclareDocumentEnvironment{anmerkungr}{O{}m}{
-        \begin{infoBox}
-            \normalsize\textsf{\textbf{Anmerkung~am~Rande\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
-            #2
-            }{
-        \end{infoBox}
-    }
-    \DeclareDocumentEnvironment{bemerkung}{O{}m}{
-        \begin{infoBox}
-            \normalsize\textsf{\textbf{Bemerkung\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
-            #2
-            }{
-        \end{infoBox}
-    }
-    \DeclareDocumentEnvironment{bemerkungr}{O{}m}{
-        \begin{infoBox}
-            \normalsize\textsf{\textbf{Bemerkung~am~Rande\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
-            #2
-            }{
-        \end{infoBox}
-    }
-    \DeclareDocumentEnvironment{beispiel}{O{}m}{
-        \begin{infoBox}
-            \normalsize\textsf{\textbf{Beispiel\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
-            #2
-            }{
-        \end{infoBox}
-    }
-    \DeclareDocumentEnvironment{beispiele}{O{}m}{
-        \begin{infoBox}
-            \normalsize\textsf{\textbf{Beispiele\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
-            #2
-            }{
-        \end{infoBox}
-    }
-    \DeclareDocumentEnvironment{example}{O{}m}{
-        \begin{infoBox}
-            \normalsize\textsf{\textbf{Beispiel\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
-            #2
-            }{
-        \end{infoBox}
-    }
-    \DeclareDocumentEnvironment{vfrage}{O{0~Punkte}m}{
-        \begin{grayInfoBox}
-            \normalsize\textsf{\textbf{Verständnisfrage\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
-            #2
-            }{
-        \end{grayInfoBox}
-    }
-    \DeclareDocumentEnvironment{wvfrage}{O{0~Punkte}m}{
-        \begin{grayInfoBox}
-            \normalsize\textsf{\textbf{Wichtige~Verständnisfrage\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
-            #2
-            }{
-        \end{grayInfoBox}
-    }
-    \DeclareDocumentEnvironment{vfragen}{O{0~Punkte}m}{
-        \begin{grayInfoBox}
-            \normalsize\textsf{\textbf{Verständnisfragen\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
-            #2
-            }{
-        \end{grayInfoBox}
-    }
-    \DeclareDocumentEnvironment{wvfragen}{O{0~Punkte}m}{
-        \begin{grayInfoBox}
-            \normalsize\textsf{\textbf{Wichtige~Verständnisfragen\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
-            #2
-            }{
-        \end{grayInfoBox}
-    }
-    \DeclareDocumentEnvironment{vfrager}{O{0~Punkte}m}{
-        \begin{grayInfoBox}
-            \normalsize\textsf{\textbf{Verständnisfrage~am~Rande\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
-            #2
-            }{
-        \end{grayInfoBox}
-    }
-    \DeclareDocumentEnvironment{vfragenr}{O{0~Punkte}m}{
-        \begin{grayInfoBox}
-            \normalsize\textsf{\textbf{Verständnisfragen~am~Rande\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
-            #2
-            }{
-        \end{grayInfoBox}
-    }
-    \DeclareDocumentEnvironment{vanforderung}{O{}m}{
-        \begin{defBox}
-            \normalsize\textsf{\textbf{Verbindliche~Anforderung\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
-            #2
-            }{
-        \end{defBox}
-    }
-    \DeclareDocumentEnvironment{vanforderungen}{O{}m}{
-        \begin{defBox}
-            \normalsize\textsf{\textbf{Verbindliche~Anforderungen\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
-            #2
-            }{
-        \end{defBox}
-    }
-    \DeclareDocumentEnvironment{vanforderunghu}{O{}m}{
-        \begin{defBox}
-            \normalsize\textsf{\textbf{Verbindliche~Anforderung~für~die~gesamte~Hausübung \tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
-            #2
-            }{
-        \end{defBox}
-    }
-    \DeclareDocumentEnvironment{vanforderungenhu}{O{}m}{
-        \begin{defBox}
-            \normalsize\textsf{\textbf{Verbindliche~Anforderungen~für~die~gesamte~Hausübung \tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
-            #2
-            }{
-        \end{defBox}
-    }
-    \DeclareDocumentEnvironment{kaufgabe}{O{}m}{
-        \begin{defBox}
-            \normalsize\textsf{\textbf{Konkrete~Aufgabe\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
-            #2
-            }{
-        \end{defBox}
-    }
-    \DeclareDocumentEnvironment{kaufgaben}{O{}m}{
-        \begin{defBox}
-            \normalsize\textsf{\textbf{Konkrete~Aufgaben\tl_if_blank:nF {#1} {~(\textmd{#1})}:}}\par
-            #2
-            }{
-        \end{defBox}
-    }
+    \rubosDeclareColorBoxEnvironment{tipp}{infoBox}{Tipp}
+    \rubosDeclareColorBoxEnvironment{tipps}{infoBox}{Tipps}
+    \rubosDeclareColorBoxEnvironment{hinweis}{infoBox}{Hinweis}
+    \rubosDeclareColorBoxEnvironment{hinweise}{infoBox}{Hinweise}
+    \rubosDeclareColorBoxEnvironment{uvhinweis}{infoBox}{Unverbindlicher~Hinweis}
+    \rubosDeclareColorBoxEnvironment{uvhinweise}{infoBox}{Unverbindliche~Hinweise}
+    \rubosDeclareColorBoxEnvironment{erinnerung}{infoBox}{Erinnerung}
+    \rubosDeclareColorBoxEnvironment{anmerkung}{infoBox}{Anmerkung}
+    \rubosDeclareColorBoxEnvironment{anmerkungen}{infoBox}{Anmerkungen}
+    \rubosDeclareColorBoxEnvironment{anmerkungr}{infoBox}{Anmerkung~am~Rande}
+    \rubosDeclareColorBoxEnvironment{anmerkungenr}{infoBox}{Anmerkungen~am~Rande}
+    \rubosDeclareColorBoxEnvironment{bemerkung}{infoBox}{Bemerkung}
+    \rubosDeclareColorBoxEnvironment{bemerkungen}{infoBox}{Bemerkungen}
+    \rubosDeclareColorBoxEnvironment{bemerkungr}{infoBox}{Bemerkung~am~Rande}
+    \rubosDeclareColorBoxEnvironment{bemerkungenr}{infoBox}{Bemerkungen~am~Rande}
+    \rubosDeclareColorBoxEnvironment{beispiel}{infoBox}{Beispiel}
+    \rubosDeclareColorBoxEnvironment{beispiele}{infoBox}{Beispiele}
+    \rubosDeclareColorBoxEnvironment{example}{infoBox}{Beispiel}
+    \rubosDeclareColorBoxEnvironment[0~Punkte]{vfrage}{grayInfoBox}{Verständnisfrage}
+    \rubosDeclareColorBoxEnvironment[0~Punkte]{wvfrage}{grayInfoBox}{Wichtige~Verständnisfrage}
+    \rubosDeclareColorBoxEnvironment[0~Punkte]{vfragen}{grayInfoBox}{Verständnisfragen}
+    \rubosDeclareColorBoxEnvironment[0~Punkte]{wvfragen}{grayInfoBox}{Wichtige~Verständnisfragen}
+    \rubosDeclareColorBoxEnvironment[0~Punkte]{vfrager}{grayInfoBox}{Verständnisfrage~am~Rande}
+    \rubosDeclareColorBoxEnvironment[0~Punkte]{vfragenr}{grayInfoBox}{Verständnisfragen~am~Rande}
+    \rubosDeclareColorBoxEnvironment[0~Punkte]{vanforderung}{defBox}{Verbindliche~Anforderung}
+    \rubosDeclareColorBoxEnvironment[0~Punkte]{vanforderungen}{defBox}{Verbindliche~Anforderungen}
+    \rubosDeclareColorBoxEnvironment[0~Punkte]{vanforderunghu}{defBox}{Verbindliche~Anforderung~für~die~gesamte~Hausübung}
+    \rubosDeclareColorBoxEnvironment[0~Punkte]{vanforderungenhu}{defBox}{Verbindliche~Anforderungen~für~die~gesamte~Hausübung}
+    \rubosDeclareColorBoxEnvironment[kaufgabe]{vanforderungenhu}{defBox}{Konkrete~Aufgabe}
+    \rubosDeclareColorBoxEnvironment[kaufgaben]{vanforderungenhu}{defBox}{Konkrete~Aufgaben}
 }
 % \theoremstyle{fopTheorem}%
 % \newtheorem{hinweisT}{\textsf{Hinweis:}}%
