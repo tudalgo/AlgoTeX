@@ -66,15 +66,15 @@
 \colorlet{fgcolor}{black}
 
 %%-- Dark-Mode--%%
-\prg_new_conditional:Nnn \__rubos_of_dark_mode: {T,F,TF} {
+\prg_new_conditional:Nnn \__rubos_if_dark_mode: {T,F,TF} {
     \bool_if:NTF \g_rubos_dark_mode_bool
     {\prg_return_true:}
     {\prg_return_false:}
 }
 
-\cs_set_eq:NN\IfDarkModeT \__rubos_of_dark_mode:T
-\cs_set_eq:NN\IfDarkModeF \__rubos_of_dark_mode:F
-\cs_set_eq:NN\IfDarkModeTF \__rubos_of_dark_mode:TF
+\cs_set_eq:NN\IfDarkModeT \__rubos_if_dark_mode:T
+\cs_set_eq:NN\IfDarkModeF \__rubos_if_dark_mode:F
+\cs_set_eq:NN\IfDarkModeTF \__rubos_if_dark_mode:TF
 
 \IfDarkModeT {
     \pagecolor{rubos@anthrazitgrau}\color{white}\selectcolormodel{RGB}
