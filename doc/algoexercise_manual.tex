@@ -19,7 +19,7 @@
 %%--Stilistische Anpassungen--%%
 %%----------------------------%%
 
-\ExplSyntaxOn
+\ExplSyntaxOn%
 % Author
 \renewcommand*{\author}[1]{
     \seq_gset_split:Nnn \g_ptxcd_author_seq {\and} {#1}
@@ -301,7 +301,7 @@
                 \fatsf{grayInfoBox:}\par Das ist eine grayInfoBox.
                 %
                 Eine grayInfoBox hat links einen grauen Balken, und einen grauen Hintergrund.
-                HrayInfoBoxen sind für Informationen gedacht, die nicht relevant für die Hausübung sind, also für Verständnisfragen, fun facts,
+                GrayInfoBoxen sind für Informationen gedacht, die nicht relevant für die Hausübung sind, also für Verständnisfragen, fun facts,
                 etc.
             \end{grayInfoBox}
             \caption{grayInfoBox} \label{fig:box-types:grayInfo}
@@ -317,7 +317,7 @@
     % \begin{noindent}
         \begin{table}[ht!] \centering
             \rowcolors{2}{\thepagecolor}{fgcolor!10!\thepagecolor}
-            \renewcommand{\arraystretch}{0.5}
+            \renewcommand{\arraystretch}{1.3}
             \begin{tabular}{cccl} 
                 \toprule 
                 \fatsf{Name} & \fatsf{Boxart} & \fatsf{default-Specifier}                                & \fatsf{Titel}                            \\ 
@@ -336,14 +336,14 @@
                     \\
                 }
                 \ExplSyntaxOff%
-                \\[0cm]\bottomrule
+                \\[-.5cm]\bottomrule
             \end{tabular}
             \caption{Übersicht vordefinierter Box-Environments} \label{tab:box-environments}
         \end{table}
         % \end{noindent}
 
-    \vspace{-2.5em}
-    Ein Aufruf sind dann z.B. so aus: \vspace{-2cm} \vspace{\fill}
+    % \vspace{-2.5em}
+    Ein Aufruf sind dann z.B. so aus:
     \begin{figure}[ht!
         ]
         \centering
@@ -370,7 +370,7 @@
         \label{fig:vanforderungen-ex}
         \caption{Beispiel vanforderungen}
     \end{figure}
-    \clearpage
+    \clearpage{}
     \subsection{Code-Blöcke}
     Das Code-Block environment nutzt intern \verb+minted+ und \verb+tcolorbox+.
     Das erste (optionale) Argument kann für minted Optionen benutzt werden, das zweite Argument für optionen der ColorBox.
@@ -432,5 +432,8 @@
         \item Tabellen und Abbildungen haben stets ein label und eine Beschreibung (nach Möglichkeit mit Referenz auf die
             entsprechende Aufgabe)
     \end{itemize}
+    \begin{vfrager}
+        a
+    \end{vfrager}
     \clearpage{}
 \end{document}
