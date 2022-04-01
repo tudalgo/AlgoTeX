@@ -483,10 +483,10 @@
                 #1 / name-id .code:n = \tl_gset:cn {g_ptxcd_ex_headline_#1_tl} {\StudentName\StudentID},
                 #1 / name .code:n = \tl_gset:cn {g_ptxcd_ex_headline_#1_tl} {\StudentName},
                 #1 / aud .code:n = \tl_gset:cn {g_ptxcd_ex_headline_#1_tl} {
-                    \textbf{AuD\space{}}im\space\fatsf{\getSemester{}}\space{}bei\space\fatsf{Prof.~Dr.~rer.~nat.~Karsten~Weihe}\hfill\fatsf{\@title}~--~\g_ptxcd_shorttitle_tl\par
+                    \textbf{AuD\space{}}im\space\fatsf{\getSemester{}}\space{}bei\space\fatsf{\getDozent{}}\hfill\fatsf{\@title}~--~\g_ptxcd_shorttitle_tl\par
                     \StudentName\StudentID},
                 #1 / aud-min .code:n = \tl_gset:cn {g_ptxcd_ex_headline_#1_tl} {
-                    \textbf{AuD\space{}}im\space\fatsf{\getSemester{}}\space{}bei\space\fatsf{Prof.~Dr.~rer.~nat.~Karsten~Weihe}\hfill\fatsf{\@title}~--~\g_ptxcd_shorttitle_tl},
+                    \textbf{AuD\space{}}im\space\fatsf{\getSemester{}}\space{}bei\space\fatsf{\getDozent{}}\hfill\fatsf{\@title}~--~\g_ptxcd_shorttitle_tl},
             }
         }
     }{
