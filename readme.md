@@ -31,6 +31,11 @@ Dadurch kann die Vorlage Reibungslos mit VS-Code kompillieren.
 
 Die Vorlage wurde für LuaLaTeX geschrieben, ist aber dank des Latex3-Kernels auch mit PDFLaTeX und XELaTeX kompatibel.
 ## Installation
+
+### Automatisch
+Für Arch-basierende Linux-Distributionen wird das Paket [`algotex-git`](https://aur.archlinux.org/packages/algotex-git) im [`AUR`](https://aur.archlinux.org/) bereitgestellt.
+
+### Manuell
 Der [`tex`](tex/)-Ordner der Vorlage muss im TeX-Path existieren.
 Diesen findet man mit dem Befehl:
 ```sh
