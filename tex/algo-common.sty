@@ -118,68 +118,28 @@
 % #1: Property Name
 % #2: Default Value
 % #3: Print Text (use * for value)
-\DeclareDocumentCommand{\DeclareDocumentProperty}{mO{}O{}}{
-\tl_gclear_new:c {g_rubos_document_#1_tl}
-\tl_gclear_new:c {
-	print
-	\str_uppercase:f { \tl_head:n {#1} }
-	\tl_tail:n {#1}
-}
-% Get Property Command
-\expandafter\DeclareDocumentCommand\csname get\str_uppercase:f { \tl_head:n {#1} }\tl_tail:n {#1}\endcsname{m}{
-	\tl_use:c {g_rubos_document_#1_tl}
-}
-% Set Property Command
-\expandafter\DeclareDocumentCommand\csname#1\endcsname{m}{
-	\tl_gset:cn {g_rubos_document_#1_tl} {##1}
-	\tl_if_empty:cF {g_rubos_document_#1_tl} {
-		% Print Text
-		\tl_if_blank:nTF {#3} {
-			% Default Text
-			\tl_gset:cn {
-				print
-				\str_uppercase:f { \tl_head:n {#1} }
-				\tl_tail:n {#1}
-			} {
-				\sffamily\textbf{
-					\str_uppercase:f { \tl_head:n {#1} }
-					\tl_tail:n {#1}:~}\tl_use:c {g_rubos_document_#1_tl}
-			}
-		} {
-			% Custom Text
-			\tl_gclear_new:c {g_rubos_document_#1_print_tl}
-			\tl_gset:cn {g_rubos_document_#1_print_tl} {#3}
-			\exp_args:Nnnc \regex_replace_all:nnN {\*} {
-				\u{g_rubos_document_#1_tl}
-			} {g_rubos_document_#1_print_tl}
-			\tl_gset:cn {
-				print
-				\str_uppercase:f { \tl_head:n {#1} }
-				\tl_tail:n {#1}
-			} {
-				\tl_use:c {g_rubos_document_#1_print_tl}
-			}
-		}
-	}
-}
-\tl_if_blank:nF {#2} {
-	\csname#1\endcsname{#2}
-}
-}
+\DeclareDocumentCommand{\DeclareDocumentProperty}{mO{}
+	O{}}{ \tl_gclear_new:c {g_rubos_document_#1_tl} \tl_gclear_new:c { print \str_uppercase:f { \tl_head:n {#1} } \tl_tail:n {#1} }
+	\expandafter\DeclareDocumentCommand\csname get\str_uppercase:f { \tl_head:n {#1} }\tl_tail:n {#1}\endcsname{m}{ \tl_use:c
+		{g_rubos_document_#1_tl} }  \expandafter\DeclareDocumentCommand\csname#1\endcsname{m}{ \tl_gset:cn {g_rubos_document_#1_tl} {##1}
+		\tl_if_empty:cF {g_rubos_document_#1_tl} {  \tl_if_blank:nTF {#3} {  \tl_gset:cn { print \str_uppercase:f { \tl_head:n {#1} }
+					\tl_tail:n {#1} } { \sffamily\textbf{ \str_uppercase:f { \tl_head:n {#1} } \tl_tail:n {#1}:~}\tl_use:c {g_rubos_document_#1_tl} }
+			} {  \tl_gclear_new:c {g_rubos_document_#1_print_tl} \tl_gset:cn {g_rubos_document_#1_print_tl} {#3} \exp_args:Nnnc
+				\regex_replace_all:nnN {\*} { \u{g_rubos_document_#1_tl} } {g_rubos_document_#1_print_tl} \tl_gset:cn { print \str_uppercase:f {
+						\tl_head:n {#1} } \tl_tail:n {#1} } { \tl_use:c {g_rubos_document_#1_print_tl} } } } } \tl_if_blank:nF {#2} {
+		\csname#1\endcsname{#2} } }
 
-% Document Version
 \DeclareDocumentProperty{version}[1.0][\textsf{\textbf{Version:}}~v*]
 
-% Topic
 \DeclareDocumentProperty{topic}[][\textsf{\textbf{Themen:~}*}]
 
-%%--Blocks, Boxes and Environments--%%
-\def\rubos@boxarc{\prop_item:Nn \g_rubos_document_opts_prop {boxarc}} % Used for Code Blocks, Info boxes, etc.
+\def\rubos@boxarc{\prop_item:Nn \g_rubos_document_opts_prop {boxarc}}
 \@ifundefined{\string\color@accentcolor}{\definecolor{accentcolor}{RGB}{0, 157, 129}}{}
 
-% Fancy Table Row Color
-\bool_if:NT \g_ptxcd_ex_fancy_rowcolor_bool {
-	\rowcolors{2}{\thepagecolor}{fgcolor!10!\thepagecolor}
+\bool_if:NT
+\g_ptxcd_ex_fancy_rowcolor_bool { \rowcolors{2}{\thepagecolor}{fgcolor!
+		% Get Property Command% Set Property Command% Print Text% Default Text% Custom Text% Document Version% Topic%%--Blocks, Boxes and Environments--%%% Used for Code Blocks, Info boxes, etc.% Fancy Table Row Color
+		10!\thepagecolor}
 }
 
 % A Gray Info Box (gray bar on the Left+ light gray background)
