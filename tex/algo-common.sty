@@ -745,11 +745,11 @@ overlay={ % Für Grauen Bereich links
 % Key-Value Option
 \keys_define:nn {algoexercise/javadoc}
 {
-    jdk .int_set:N=\l_algoexercise_javadoc_jdk_int,
+    jdk .int_set:N=\l_rubos_javadoc_jdk_int,
     jdk .initial:n=17,
-    title .tl_set:N=\l_algoexercise_javadoc_title_tl,
+    title .tl_set:N=\l_rubos_javadoc_title_tl,
     title .initial:n=,
-    ref .tl_set:N=\l_algoexercise_javadoc_ref_tl,
+    ref .tl_set:N=\l_rubos_javadoc_ref_tl,
     ref .initial:n=,
 }
 
@@ -775,25 +775,25 @@ overlay={ % Für Grauen Bereich links
     \regex_replace_all:nnN {\.}{/} \l_tmpa_tl
 
     % Format title
-    \tl_if_empty:NTF {\l_algoexercise_javadoc_title_tl}
+    \tl_if_empty:NTF {\l_rubos_javadoc_title_tl}
     {
         % No custom title, copy class namme
         \tl_set:Nn \l_tmpb_tl {#2}
     }
     {
         % Custom title, copy title
-        \tl_set:Nf \l_tmpb_tl {\l_algoexercise_javadoc_title_tl}
+        \tl_set:Nf \l_tmpb_tl {\l_rubos_javadoc_title_tl}
     }
 
     % Reference name
-    \tl_if_empty:NTF {\l_algoexercise_javadoc_ref_tl}
+    \tl_if_empty:NTF {\l_rubos_javadoc_ref_tl}
     {
         % No reference name provided
     }
     {
         % #reference
-        \tl_set:Nf \l_tmpc_tl {\#\l_algoexercise_javadoc_ref_tl}
-        \tl_if_empty:NTF {\l_algoexercise_javadoc_title_tl}
+        \tl_set:Nf \l_tmpc_tl {\#\l_rubos_javadoc_ref_tl}
+        \tl_if_empty:NTF {\l_rubos_javadoc_title_tl}
         {
             % No custom title, add reference name
             \tl_set:Nf \l_tmpb_tl {\l_tmpb_tl\l_tmpc_tl}
@@ -805,14 +805,14 @@ overlay={ % Für Grauen Bereich links
 
     % Full url: prefix + java class + suffix + method
     \tl_set:Nf \l_tmpd_tl {
-        \g_rubos_javadoc_prefix_one_tl\int_use:c{l_algoexercise_javadoc_jdk_int}\g_rubos_javadoc_prefix_two_tl\l_tmpa_tl\g_rubos_javadoc_suffix_tl\l_tmpc_tl
+        \g_rubos_javadoc_prefix_one_tl\int_use:c{l_rubos_javadoc_jdk_int}\g_rubos_javadoc_prefix_two_tl\l_tmpa_tl\g_rubos_javadoc_suffix_tl\l_tmpc_tl
     }
 
     % Hyperlink
     \href{\l_tmpd_tl}{\l_tmpb_tl}
 
     % Reset variables
-    \int_set:Nn \l_algoexercise_javadoc_jdk_int {17}
-    \tl_clear:N \l_algoexercise_javadoc_title_tl
-    \tl_clear:N \l_algoexercise_javadoc_ref_tl
+    \int_set:Nn \l_rubos_javadoc_jdk_int {17}
+    \tl_clear:N \l_rubos_javadoc_title_tl
+    \tl_clear:N \l_rubos_javadoc_ref_tl
 }
