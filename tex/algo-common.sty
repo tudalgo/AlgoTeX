@@ -757,7 +757,7 @@ overlay={ % Für Grauen Bereich links
 % Reference JavaDoc
 % Syntax: \refJavadoc[jdk=17,title=Comparator<T>,ref=compare(T,T)]{java.util.Comparator}
 % Output: Comparator<T>#compare(T,T)
-\NewDocumentCommand{\refJavaDoc}{o m}
+\DeclareDocumentCommand{\refJavaDoc}{+o m}
 {
     % #1: Options
     % #2: Class name
