@@ -252,7 +252,7 @@
                 <Aufgabenstellung Teilaufgabe 1>
             \end{subtask*}
         \end{task}
-    \end{codeBlock} 
+    \end{codeBlock}
 
     Wie man in dem Schema erkennen kann, sollte jede Aufgabe, die keine Teilaufgaben besitzt, eine festgelegte Punktzahl haben.
     Sobald ein Task mindestens einen Subtask besitzt, wird die Punktzahl des Tasks (n) mit \verb+auto+ automatisch aufsummiert und
@@ -268,7 +268,7 @@
     \subsection{Kästen und Boxen}\label{boxes}
     \vspace{-1em}
     Ein wichtiger Bestandteil des Designs der Algorithmik-Übungsblätter sind die vordefinierten Boxen und environments.
-    Es gibt drei Arten von Boxen: 
+    Es gibt drei Arten von Boxen:
 
     \begin{figure}[ht!
         ]
@@ -311,17 +311,17 @@
     \end{figure}
 
     \vspace{-1em}
-    Für häufig verwendete Boxen sind bereits Makros vordefiniert, die die entsprechenden Boxen erzeugen: 
+    Für häufig verwendete Boxen sind bereits Makros vordefiniert, die die entsprechenden Boxen erzeugen:
 
     \vspace{-1em}
     % \begin{noindent}
         \begin{table}[ht!] \centering
             \rowcolors{2}{\thepagecolor}{fgcolor!10!\thepagecolor}
             \renewcommand{\arraystretch}{1.3}
-            \begin{tabular}{cccl} 
-                \toprule 
-                \fatsf{Name} & \fatsf{Boxart} & \fatsf{default-Specifier}                                & \fatsf{Titel}                            \\ 
-                \midrule 
+            \begin{tabular}{cccl}
+                \toprule
+                \fatsf{Name} & \fatsf{Boxart} & \fatsf{default-Specifier}                                & \fatsf{Titel}                            \\
+                \midrule
                 \ExplSyntaxOn
                 \seq_map_inline:Nn \rubos_color_box_environment_seq {
                     \bool_gset_true:N \rubos_color_box_environment_first_param_bool
@@ -419,6 +419,47 @@
             Matrikelnummerfeldern)
         \item[aud-min] Das gleiche wie aud, nur ohne Namens- und Matrikelnummerfelder
     \end{description}
+    \clearpage
+    \subsection{Java-Dokumentation Referenzieren}
+    Um eine Java-Dokumentation zu referenzieren, ist die folgende Syntax zu verwenden:
+    \begin{codeBlock}[]{minted language=latex}
+        \refJavadoc[<options>]{<referenced-element>}
+    \end{codeBlock}
+    Dabei gibt es die folgenden Optionen:
+    \begin{description}[leftmargin=2cm]
+        \item[jdk] die JDK-Version der Dokumentation (Default: 17)
+        \item[title] überschreibt den angezeigten Text
+        \item[ref] Spezifischere Referenz (z.B. auf eine Bestimmte Methode, Attribut oder Konstruktor)
+    \end{description}
+    \paragraph{Beispiele}\mbox{}
+
+    \begin{minipage}{0.3\textwidth}
+        \refJavaDoc{java.util.ArrayList}
+    \end{minipage}%
+    \begin{minipage}{.7\textwidth}
+        \begin{codeBlock}[]{minted language=latex}
+            \refJavaDoc{java.util.ArrayList}
+        \end{codeBlock}
+    \end{minipage}
+
+    \begin{minipage}{0.3\textwidth}
+        \refJavaDoc[jdk=11,ref=size]{java.util.ArrayList}
+    \end{minipage}%
+    \begin{minipage}{.7\textwidth}
+        \begin{codeBlock}[]{minted language=latex}
+            \refJavaDoc[jdk=11,ref=size]{java.util.ArrayList}
+        \end{codeBlock}
+    \end{minipage}
+
+    \begin{minipage}{0.3\textwidth}
+        \refJavaDoc[jdk=11,title=Methode \inlinejava{size} von \inlinejava{ArrayList},ref=size]{java.util.ArrayList}
+    \end{minipage}%
+    \begin{minipage}{.7\textwidth}
+        \begin{codeBlock}[]{minted language=latex}
+            \refJavaDoc[jdk=11,title=Methode \inlinejava{size} von \inlinejava{ArrayList},ref=size]{java.util.ArrayList}
+        \end{codeBlock}
+    \end{minipage}%
+    \clearpage
     \subsection{Weitere \LaTeX-Konventionen}
     \begin{itemize}
         \item Anführungszeichen -- \enquote{Anführungszeichen} werden mit dem Befehl \verb+\enquote{<text>}+ des Paketes
