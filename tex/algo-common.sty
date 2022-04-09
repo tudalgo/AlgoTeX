@@ -733,11 +733,12 @@ overlay={ % Für Grauen Bereich links
 %%-----------%%
 %%--JavaDoc--%%
 %%-----------%%
+% Command by: nyanyan <nhanhuynh_online@protonmail.com>
 
 % Variables
-\tl_gset:Nn \c_algoexercise_javadoc_prefix_one_tl {https://docs.oracle.com/en/java/javase/}
-\tl_gset:Nn \c_algoexercise_javadoc_prefix_two_tl {/docs/api/java.base/}
-\tl_gset:Nn \c_algoexercise_javadoc_suffix_tl {.html}
+\tl_gset:Nn \g_rubos_javadoc_prefix_one_tl {https://docs.oracle.com/en/java/javase/}
+\tl_gset:Nn \g_rubos_javadoc_prefix_two_tl {/docs/api/java.base/}
+\tl_gset:Nn \g_rubos_javadoc_suffix_tl {.html}
 \tl_new:N \l_tmpc_tl
 \tl_new:N \l_tmpd_tl
 
@@ -804,7 +805,7 @@ overlay={ % Für Grauen Bereich links
 
     % Full url: prefix + java class + suffix + method
     \tl_set:Nf \l_tmpd_tl {
-        \c_algoexercise_javadoc_prefix_one_tl\int_use:c{l_algoexercise_javadoc_jdk_int}\c_algoexercise_javadoc_prefix_two_tl\l_tmpa_tl\c_algoexercise_javadoc_suffix_tl\l_tmpc_tl
+        \g_rubos_javadoc_prefix_one_tl\int_use:c{l_algoexercise_javadoc_jdk_int}\g_rubos_javadoc_prefix_two_tl\l_tmpa_tl\g_rubos_javadoc_suffix_tl\l_tmpc_tl
     }
 
     % Hyperlink
