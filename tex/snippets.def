@@ -40,3 +40,25 @@
     \UseSnippet{globalhints}
     Die für diese Hausübung in der Vorlage relevanten Verzeichnisse sind \texttt{src/main/h\getSheetnumber{}} und \texttt{src/test/h\getSheetnumber{}}.
 }
+\DeclareSnippet{tests-introduction}{Globale Hinweise für Tests}{
+    \begin{hinweis}
+        \bigskip
+        Auch wenn Sie für das Erstellen von Tests keine Punkte erhalten:
+        Das Teilen jeglicher Tests zur Hausübung
+        (auch solcher,
+        welche nicht auf Basis dieser Aufgabe erstellt wurden)
+        ist nicht erlaubt.
+        Unser Ziel ist,
+        die Verbreitung fehlerhafter Tests in Ihrem Sinne zu verhindern.
+        \par\bigskip
+        Die von uns bereitgestellten Public Tests überprüfen nur einen kleinen Teil Ihrer Implementation.
+        Erfüllt Ihre Lösung nicht alle Public Tests,
+        erhalten Sie auf keinen Fall die volle Punktzahl.
+        Im Umkehrschluss bedeutet dies aber nicht,
+        dass Sie die volle Punktzahl erhalten,
+        wenn Ihre Lösung alle Public Tests besteht.
+        \par\bigskip
+        Der folgende Leitfaden dient als Unterstützung zum Aufbau Ihrer eigenen Tests.
+        Sie können vom Leitfaden abweichen und dabei mindestens genauso aussagekräftige Testergebnisse erzeugen.
+    \end{hinweis}
+}
