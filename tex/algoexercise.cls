@@ -84,6 +84,7 @@
     \LoadClass[12pt, a4paper]{article}
 }
 
+\RequirePackage{algo-snippets}
 \RequirePackage{tcolorbox}
 \tcbuselibrary{skins}
 \RequirePackage{enumitem}
