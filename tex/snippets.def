@@ -6,17 +6,18 @@
     \begin{vanforderungenahu}
         \bigskip
         Das Dokumentieren und Kommentieren Ihres Quelltextes ist nicht verbindlich,
-        wird jedoch zum besseren Verständnis Ihrer Lösung dringend empfohlen.
-        Alle zur Bewertung dieser Hausübung relevanten Deklarationen von Klassen, Methoden (hierzu zählen auch Konstruktoren) und Attributen sind bereits in der Quelltext-Vorlage enthalten und dürfen nicht modifiziert oder entfernt werden.
+        wird zum besseren Verständnis \mbox{Ihrer} Lösung jedoch empfohlen.
+        Alle zur Bewertung dieser Hausübung relevanten Deklarationen von Klassen, Methoden (hierzu zählen auch Konstruktoren) und Attributen sind bereits in der Quelltext-Vorlage enthalten
+        und dürfen nicht modifiziert oder entfernt werden.
         Ihnen steht aber frei,
         Hilfskonstrukte in Form von weiteren Klassen, Methoden und Attributen zu erstellen,
         sofern dies nicht explizit auf dem Übungsblatt verboten wurde
         und Ihre Hilfskonstrukte nicht gegen verbindliche Anforderungen verstoßen.
-        Datenstrukturen und Hilfsmethoden aus der Java-Standardbibliothek sowie Arrays dürfen nicht verwendet werden,
+        Datenstrukturen und Hilfsmethoden aus der Java-Standardbibliothek sowie Arrays sind nicht erlaubt,
         sofern dies nicht explizit auf dem Übungsblatt gefordert oder erlaubt wurde.
         Ihre Methoden müssen auch dann funktionieren,
         wenn Aufrufe von in der Vorlage deklarierten Methoden
-        (auch von solchen, die von Ihnen implementiert werden)
+        (auch von solchen, welche von Ihnen implementiert werden)
         durch andere, korrekte Implementationen ersetzt werden.
         \par\bigskip
         Der Verstoß gegen verbindliche Anforderungen führt zu Punktabzügen und kann die korrekte Bewertung Ihrer Abgabe unter Umständen beeinflussen.
