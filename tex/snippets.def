@@ -1,9 +1,8 @@
 % #1: starred or not - starred snippets are not included in the list of snippets
 % #2: name of the snippet
 % #3: description
-% #4: params
-% #5: snippet
-\DeclareSnippet{exercise-introduction}{Globale Vanforderungen und Hinweise}{
+% #4: snippet
+\DeclareSnippet{globalvanforderungen}{Globale Verbindliche Anforderungen}{
     \begin{vanforderungenahu}
         \bigskip
         Das Dokumentieren und Kommentieren Ihres Quelltextes ist nicht verbindlich,
@@ -24,7 +23,8 @@
         Die Implementation einer in der Quelltext-Vorlage deklarierten Methode wird nur bewertet,
         wenn der mit \texttt{TODO} markierte Exception-Wurf entfernt wird.
     \end{vanforderungenahu}
-%
+}
+\DeclareSnippet{globalhints}{Globale Hinweise}{
     \begin{infoBox}
         \fatsf{Hinweise für alle Hausübungen:}
         \bigskip\\
@@ -34,6 +34,9 @@
         \\\\
         Bei Fragen stehen wir Ihnen vorzugsweise im Moodle-Kurs und in den Sprechstunden zur Verfügung.
     \end{infoBox}
-%
+}
+\DeclareSnippet{exercise-introduction}{Globale Verbindliche Anforderungen und Hinweise}{
+    \UseSnippet{globalvanforderungen}
+    \UseSnippet{globalhints}
     Die für diese Hausübung in der Vorlage relevanten Verzeichnisse sind \texttt{src/main/h\getSheetnumber{}} und \texttt{src/test/h\getSheetnumber{}}.
 }
