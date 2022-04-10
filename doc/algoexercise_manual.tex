@@ -111,7 +111,7 @@
         \item[inlineshortcut] Legt die Programmiersprache für den Inlineshortcut fest (entweder java oder Racket).
             Damit funktioniert dann z.B. das Makro \verb+\inlinejava{<java-code>}+, um bequem Java-Codeschnipsel zu tippen (sowas wie
             \inlinejava{public}-Klasse)
-        \item[manual\_term] Stellt die Standartfunktionalität der TU-Vorlage bei der generierung des Terms (=
+        \item[manual\_term] Stellt die Standartfunktionalität der TU-Vorlage bei der Generierung des Terms (=
             Box unter dem Titel) wieder her
         \item[maxdifficulty] Die Maximale Anzahl an Sternen, die die Schwierigkeitsskala von Vorübungen
             anzeigen soll (default: 3)
@@ -121,7 +121,7 @@
         \item[hidepoints] die Gegenteilige Option zu \verb+showpoints+
         \item[shell\_escape] Ein manuelles Überschreiben der Shell-Escape-Flag-Erkennung (das ist nur zum Testen des
             Kompatibilitätsmodus der Code-Blöcke Notwendig und sollte nicht in Übungsblättern verwendet werden)
-        \item[logopath] Überschreiben des TU-Datmstadt Logos (dient nur zu Testzwecken und sollte nicht in Übungsblättern
+        \item[logopath] Überschreiben des TU-Darmstadt Logos (dient nur zu Testzwecken und sollte nicht in Übungsblättern
             verwendet
             werden)
         \item[corporatedesign] \textbf{deprecated}!!
@@ -142,7 +142,7 @@
                     Command \verb+\termStyle{<style>}+ erlaubt eine einfachere Titelgestaltung.
                     Dabei gibt es dann zusätzlich zu der Standartoption (\verb+manual+) noch folgende Stile:
                     \begin{description}[leftmargin=3cm]
-                        \item[center] Zentriert den inhalt von \verb+\term{}+
+                        \item[center] Zentriert den Inhalt von \verb+\term{}+
                         \item[left-right] definiert die Commands \verb+\termLeft{}+ und
                             \verb+\termRight{}+.
                             Alles in \verb+\termLeft{}+ wird links ausgerichtet, alles in \verb+\termRight{}+ wird rechts ausgerichtet.
@@ -158,9 +158,9 @@
     Zusätzlich zu den bekannten Dokumenteneigenschaften (wie \verb+\date{}+,\verb+\author{}+,.
     ..) bietet die Vorlage noch weitere
     Konstanten.
-    Jede Konstante lässt sich mit dem Befehl \verb+\<konstantenname>{}+ setzen und mit dem Befehl \verb+get<Konstantenname>{}+
+    Jede Konstante lässt sich mit dem Befehl \verb+\<Konstantenname>{}+ setzen und mit dem Befehl \verb+get<Konstantenname>{}+
     abrufen (der Erste Buchstabe des Konstantennamen ist hierbei immer groß).
-    Außerdem hat jede eigenschaft einen print-Befehl \verb+\print<Konstantenname>{}+ (der Erste Buchstabe des Konstantennamen ist
+    Außerdem hat jede Eigenschaft einen print-Befehl \verb+\print<Konstantenname>{}+ (der Erste Buchstabe des Konstantennamen ist
     hierbei immer groß), welcher bestimmt, wie der Befehl im Term angezeigt werden soll.
     \begin{beispiel}[\texttt{author}-Eigenschaft]
         \begin{itemize}
@@ -202,7 +202,7 @@
         \item[supervisor] Der Übungsblattbetreuer (Hauptverantwortlicher des Übungsblattes).
             Falls der Übungsblattbetreuer der Autor ist, kann der Autor durch \verb+\supervisor{\getAuthor}+ kopiert werden.
             (Aktuell unterstützt der supervisor kein \verb+\and+,
-            also wird das bei mehreren Autoren zu problemen führen).
+            also wird das bei mehreren Autoren zu Problemen führen).
         \item[topics] die relevanten Themen für das Übungsblatt
         \item[slides] die relevanten Foliensätze für das Übungsblatt (bitte Nummern mit angeben!).
         \item[dozent] der betreuende Dozent des Moduls (Gesamtleitung)
@@ -373,7 +373,7 @@
     \clearpage{}
     \subsection{Code-Blöcke}
     Das Code-Block environment nutzt intern \verb+minted+ und \verb+tcolorbox+.
-    Das erste (optionale) Argument kann für minted Optionen benutzt werden, das zweite Argument für optionen der ColorBox.
+    Das erste (optionale) Argument kann für minted Optionen benutzt werden, das zweite Argument für Optionen der ColorBox.
     \begin{figure}[ht!]
         \centering
         \begin{subfigure}[t]{\textwidth}
@@ -425,6 +425,7 @@
     \begin{codeBlock}[]{minted language=latex}
         \refJavaDoc[<options>]{<referenced-element>}
     \end{codeBlock}
+    Außerdem existiert noch die gesternte Variante \verb+\refJavaDoc*{}+, welche den Packagenamen abschneidet (java.util.ArrayList -> ArrayList)
     Dabei gibt es die folgenden Optionen:
     \begin{description}[leftmargin=2cm]
         \item[jdk] die JDK-Version der Dokumentation (Default: 17)
@@ -458,7 +459,8 @@
         \begin{codeBlock}[]{minted language=latex}
             \refJavaDoc[jdk=11,title=Methode \inlinejava{size} von \inlinejava{ArrayList},ref=size]{java.util.ArrayList}
         \end{codeBlock}
-    \end{minipage}%
+    \end{minipage}
+
     \subsection{Folien-Referenzen}
     Um die Foliensätze der FOP zu referenzieren, ist die folgende Syntax zu verwenden:
     \begin{codeBlock}[]{minted language=latex}

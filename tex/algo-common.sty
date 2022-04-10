@@ -762,29 +762,35 @@ overlay={ % Für Grauen Bereich links
 % Reference JavaDoc
 % Syntax: \refJavadoc[jdk=17,title=Comparator<T>,ref=compare(T,T)]{java.util.Comparator}
 % Output: Comparator<T>#compare(T,T)
-\DeclareDocumentCommand{\refJavaDoc}{+o m}
+\DeclareDocumentCommand{\refJavaDoc}{s +o m}
 {
-    % #1: Options
-    % #2: Class name
+    % #1: (optional) if a star is used, only the class name will be shown (java.util.Comparator -> Comparator)
+    % #2: Options
+    % #3: Class name
     % \l_tmpa_tl: Class name url
     % \l_tmpb_tl: Formatted title
     % \l_tmpc_tl: Reference name
     % \l_tmpd_tl: Full url
 
     % Process options
-    \IfNoValueF{#1}{
-        \keys_set:nn {algoexercise/javadoc}{#1}
+    \IfNoValueF{#2}{
+        \keys_set:nn {algoexercise/javadoc}{#2}
     }
 
     % \l_tmpa_tl: Replace . with / in order to create a valid url
-    \tl_set:Nf \l_tmpa_tl {#2}
+    \tl_set:Nf \l_tmpa_tl {#3}
     \regex_replace_all:nnN {\.}{/} \l_tmpa_tl
 
     % Format title
     \tl_if_empty:NTF {\l_rubos_javadoc_title_tl}
     {
         % No custom title, copy class namme
-        \tl_set:Nn \l_tmpb_tl {#2}
+        \bool_if:NTF #1 {
+            \regex_extract_once:nnN {([\w\.]*\.)*(\w+)} {#3} \l_tmpx_tl
+            \tl_set:Nn \l_tmpb_tl {\seq_item:Nn \l_tmpx_tl {3}}
+        } {
+            \tl_set:Nn \l_tmpb_tl {#3}
+        }
     }
     {
         % Custom title, copy title
