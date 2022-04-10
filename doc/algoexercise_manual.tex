@@ -460,7 +460,40 @@
         \end{codeBlock}
     \end{minipage}%
     \subsection{Folien-Referenzen}
-    \fopSlideRef[26][28]{Folien 03a Systematische Abrundung bisheriges Java - Grundlegendes}
+    Um die Foliensätze der FOP zu referenzieren, ist die folgende Syntax zu verwenden:
+    \begin{codeBlock}[]{minted language=latex}
+        \fopSlideRef[<first>][<last>]{<pdf-name>}
+    \end{codeBlock}
+
+    \paragraph{Beispiele}\mbox{}
+
+    \begin{minipage}{0.3\textwidth}
+        \fopSlideRef[26][28]{Folien 03a Systematische Abrundung bisheriges Java - Grundlegendes}
+    \end{minipage}%
+    \begin{minipage}{.7\textwidth}
+        \begin{codeBlock}[]{minted language=latex}
+            \fopSlideRef[26][28]{Folien 03a Systematische Abrundung bisheriges Java - Grundlegendes}
+        \end{codeBlock}
+    \end{minipage}
+
+    \begin{minipage}{0.3\textwidth}
+        \fopSlideRef[26]{Folien 06 Generics}
+    \end{minipage}%
+    \begin{minipage}{.7\textwidth}
+        \begin{codeBlock}[]{minted language=latex}
+            \fopSlideRef[26]{Folien 06 Generics}
+        \end{codeBlock}
+    \end{minipage}
+
+    \begin{minipage}{0.3\textwidth}
+        \fopSlideRef{Folien 06 Generics}
+    \end{minipage}%
+    \begin{minipage}{.7\textwidth}
+        \begin{codeBlock}[]{minted language=latex}
+            \fopSlideRef{Folien 06 Generics}
+        \end{codeBlock}
+    \end{minipage}
+
     \clearpage
     \subsection{Weitere \LaTeX-Konventionen}
     \begin{itemize}
