@@ -91,13 +91,13 @@
 \RequirePackage{caption}
 \RequirePackage{cprotect}
 \RequirePackage{subcaption}
-\RequirePackage{csquotes}
 \RequirePackage{nameref}
 \RequirePackage{fontawesome}
 
 \ifPDFTeX
-    \RequirePackage[utf8]{inputenc}
+\RequirePackage[utf8]{inputenc}
 \fi
+\RequirePackage{csquotes}
 \RequirePackage[german, ngerman]{babel}
 
 % \RequirePackage{parskip}
