@@ -18,7 +18,7 @@
         wenn Aufrufe von in der Vorlage deklarierten Methoden
         (auch von solchen, die von Ihnen implementiert werden)
         durch andere, korrekte Implementationen ersetzt werden.
-        \par
+        \par\bigskip
         Der Verstoß gegen verbindliche Anforderungen führt zu Punktabzügen und kann die korrekte Bewertung Ihrer Abgabe unter Umständen beeinflussen.
         Die Implementation einer in der Quelltext-Vorlage deklarierten Methode wird nur bewertet,
         wenn der mit \texttt{TODO} markierte Exception-Wurf entfernt wird.
@@ -31,7 +31,7 @@
         Die zu verwendenen Zugriffsmodifizierer sind in der Vorlage bereits gegeben und werden auf dem Übungsblatt nicht immer angegeben.
         Beachten Sie weiter die Seiten \href{https://moodle.informatik.tu-darmstadt.de/mod/page/view.php?id=45434}{\textit{Informationen zum Importieren, Bearbeiten und Exportieren von Hausübungen}} sowie
         \href{https://moodle.informatik.tu-darmstadt.de/mod/page/view.php?id=47778}{\textit{Informationen zu Plagiarismus}} im Moodle-Kurs.
-        \\\\
+        \par\bigskip
         Bei Fragen stehen wir Ihnen vorzugsweise im Moodle-Kurs und in den Sprechstunden zur Verfügung.
     \end{infoBox}
 }
