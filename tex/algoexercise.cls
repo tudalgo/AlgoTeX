@@ -93,7 +93,7 @@
 \RequirePackage{cprotect}
 \RequirePackage{subcaption}
 \RequirePackage{nameref}
-\RequirePackage{fontawesome}
+\RequirePackage{fontawesome5}
 
 \ifPDFTeX
 \RequirePackage[utf8]{inputenc}

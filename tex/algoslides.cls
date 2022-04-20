@@ -52,7 +52,7 @@
 %Includes
 \RequirePackage[ngerman]{babel}
 \RequirePackage{float}
-\RequirePackage{fontawesome}
+\RequirePackage{fontawesome5}
 \RequirePackage[babel]{csquotes}
 \RequirePackage{media9}
 \RequirePackage{animate}
