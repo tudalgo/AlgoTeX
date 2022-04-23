@@ -1,7 +1,7 @@
 % FoP and AuD Exercise template class
 % Author: Ruben Deisenroth
-\def\fileversion{2.2.2}
-\def\filedate{2022/03/22}
+\def\fileversion{2.2.3}
+\def\filedate{2022/04/23}
 
 % Sets the LaTeX version for the package to work.
 \NeedsTeXFormat{LaTeX2e}
@@ -96,7 +96,7 @@
 \RequirePackage{fontawesome5}
 
 \ifPDFTeX
-\RequirePackage[utf8]{inputenc}
+    \RequirePackage[utf8]{inputenc}
 \fi
 \RequirePackage{csquotes}
 \RequirePackage[german, ngerman]{babel}
@@ -137,8 +137,8 @@
 \tl_gset:Nn \datename {Datum}
 \tl_gclear_new:N \printDate
 \renewcommand*{\date}[1]{
-  \tl_gset:Nn \@date {#1}
-  \tl_if_empty:NF \@date {\tl_gset:Nn \printDate {\textsf{\textbf{\datename{}:~}}\@date}}
+    \tl_gset:Nn \@date {#1}
+    \tl_if_empty:NF \@date {\tl_gset:Nn \printDate {\textsf{\textbf{\datename{}:~}}\@date}}
 }
 
 % Author
@@ -259,7 +259,8 @@
             +\headsep
             +\ht\strutbox
             +\p@
-        }}
+        }
+    }
     \par
     \nointerlineskip
     \begingroup
@@ -315,7 +316,8 @@
                 {\makebox[2.2\c_ptxcd_logoheight_dim][l]{\includegraphics[height=\c_ptxcd_logoheight_dim]{\g_ptxcd_logofile_tl}}}
             }
             \par\medskip
-        }}
+        }
+    }
     \par
     \nointerlineskip
     \rule{\linewidth}{\g_ptxcd_titlerule_dim}
@@ -401,7 +403,9 @@
                     }
                 \end{minipage}
                 \vspace*{\dp\strutbox}
-            }}\par\nointerlineskip
+            }
+        }
+        \par\nointerlineskip
         \rule{\linewidth}{\g_ptxcd_titlerule_dim}
     }
     \par
@@ -473,21 +477,39 @@
             \keys_define:nn {ptxcd/exercise/headline} {
                 #1 .choice:,
                 #1 / title-name-id .code:n = \tl_gset:cn {g_ptxcd_ex_headline_#1_tl} {
-                    \g_ptxcd_shorttitle_tl\par
-                    \StudentName\StudentID},
+                    \g_ptxcd_shorttitle_tl
+                    \par
+                    \StudentName
+                    \StudentID
+                },
                 #1 / title-name .code:n = \tl_gset:cn {g_ptxcd_ex_headline_#1_tl} {
                     \g_ptxcd_shorttitle_tl\par
                     \smallskip
-                    \StudentName},
+                    \StudentName
+                },
                 #1 / title .code:n = \tl_gset:cn {g_ptxcd_ex_headline_#1_tl} {\g_ptxcd_shorttitle_tl},
-                #1 / fulltitle-centered .code:n = \tl_gset:cn {g_ptxcd_ex_headline_#1_tl} {\centering\textbf{\textsf{\@title}}},
-                #1 / name-id .code:n = \tl_gset:cn {g_ptxcd_ex_headline_#1_tl} {\StudentName\StudentID},
-                #1 / name .code:n = \tl_gset:cn {g_ptxcd_ex_headline_#1_tl} {\StudentName},
+                #1 / fulltitle-centered .code:n = \tl_gset:cn {g_ptxcd_ex_headline_#1_tl} {
+                    \centering
+                    \textbf{\textsf{\@title}
+                    }
+                },
+                #1 / name-id .code:n = \tl_gset:cn {g_ptxcd_ex_headline_#1_tl} {
+                    \StudentName
+                    \StudentID
+                },
+                #1 / name .code:n = \tl_gset:cn {g_ptxcd_ex_headline_#1_tl} {
+                    \StudentName
+                },
                 #1 / aud .code:n = \tl_gset:cn {g_ptxcd_ex_headline_#1_tl} {
-                    \textbf{AuD\space{}}im\space\fatsf{\getSemester{}}\space{}bei\space\fatsf{\getDozent{}}\hfill\fatsf{\@title}~--~\g_ptxcd_shorttitle_tl\par
-                    \StudentName\StudentID},
+                    \textbf{AuD\space{}}
+                    im\space\fatsf{\getSemester{}}\space{}
+                    bei\space\fatsf{\getDozent{}}\hfill\fatsf{\@title}~--~\g_ptxcd_shorttitle_tl\par
+                    \StudentName\StudentID
+                },
                 #1 / aud-min .code:n = \tl_gset:cn {g_ptxcd_ex_headline_#1_tl} {
-                    \textbf{AuD\space{}}im\space\fatsf{\getSemester{}}\space{}bei\space\fatsf{\getDozent{}}\hfill\fatsf{\@title}~--~\g_ptxcd_shorttitle_tl},
+                    \textbf{AuD\space{}}
+                    im\space\fatsf{\getSemester{}}\space{}
+                    bei\space\fatsf{\getDozent{}}\hfill\fatsf{\@title}~--~\g_ptxcd_shorttitle_tl},
             }
         }
     }{
