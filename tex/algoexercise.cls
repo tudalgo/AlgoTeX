@@ -627,7 +627,7 @@
 % #1 - Title
 % #2 - Points
 \DeclareDocumentCommand{\hueteilaufgabe}{mm}{
-    \subtask*[points=#2]{#1}
+    \subtask[points=#2,title={#1}]{}
 }
 
 % Description-list styling.
