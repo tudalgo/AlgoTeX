@@ -626,8 +626,8 @@
 % Compatibility with old Sheets
 % #1 - Title
 % #2 - Points
-\DeclareDocumentCommand{\hueaufgabe}{mm}{
-    \task[points=#2]{#1}
+\DeclareDocumentCommand{\hueteilaufgabe}{mm}{
+    \subtask*[points=#2]{#1}
 }
 
 % Description-list styling.
