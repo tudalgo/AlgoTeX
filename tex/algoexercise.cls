@@ -56,6 +56,11 @@
     titleprefix .tl_gset:N = \g_algo_ex_title_prefix_tl,
     titleprefix .default:n = {},
     titleprefix .initial:n = {},
+    template .code:n = \prop_gput:Nnn \g_algo_ex_opts_prop {template} {#1},
+    template .default:n = {},
+    template .initial:n = {},
+    fop .meta:n = {template=fop},
+    aud .meta:n = {template=aud},
 }
 % Additional Class Options
 \exp_args:Nno \keys_define:nn {ptxcd/exercise} { \g_algoexercise_keys_tl }
@@ -103,24 +108,6 @@
 
 % \RequirePackage{parskip}
 
-\bool_if:NF \g_algo_ex_corporate_design_bool  {
-    \RequirePackage[
-        left=2.5cm, right=2.5cm, top=3.5cm, bottom=2cm,
-        headheight=1cm, headsep=1.5cm,
-        footnotesep=0.3cm, footskip=1cm]{geometry}
-}
-\RequirePackage{graphicx}
-
-\bool_if:NF \g_algo_ex_corporate_design_bool  {
-    \RequirePackage{fancyhdr}
-
-    \pagestyle{fancy}
-    \fancyhf{}
-    \fancyhead[L]{Funktionale~und~objektorientierte~Programmierkonzepte}
-    \fancyhead[R]{\@title}
-    \fancyfoot[C]{\thepage}
-}
-
 % \RequirePackage{pifont}
 
 %%--Document Properties--%%
@@ -132,7 +119,7 @@
 \newcommand*{\getSubtitle}{
     \@subtitle
 }
-% Date
+% Datesubject
 \tl_gclear_new:N \datename
 \tl_gset:Nn \datename {Datum}
 \tl_gclear_new:N \printDate
@@ -182,6 +169,9 @@
 % Fachbereich
 \DeclareDocumentProperty{fachbereich}[][\textsf{\textbf{Fachbereich:~}*}]
 
+% Fach
+\DeclareDocumentProperty*{fach}[][\textsf{\textbf{Fach:~}*}]
+
 % Supervisor (Sheet maintainer)
 \DeclareDocumentProperty{supervisor}[][Übungsblatt-Betreuer:\hfill *]
 
@@ -196,6 +186,40 @@
 
 % Dozent
 \DeclareDocumentProperty{dozent}[][\textsf{\textbf{Dozent:~}*}]
+
+%%--Templates--%%
+\str_case_e:nnTF {\prop_item:Nn \g_algo_ex_opts_prop {template}} {
+    {fop} {
+            % \setkomavar{subject}[Funktionale~und~objektorientierte~Programmierkonzepte]{FoP}
+            \fach[Funktionale~und~objektorientierte~Programmierkonzepte]{FoP}
+            \tl_gset:Nn \g_algo_ex_title_prefix_tl {\getFach*{}}
+        }
+        {aud} {
+            % \setkomavar{subject}[Algorithmen~und~Datenstrukturen]{AuD}
+            \fach[Algorithmen~und~Datenstrukturen]{AuD}
+            \tl_gset:Nn \g_algo_ex_title_prefix_tl {\getFach*{}}
+        }
+} {%⟨true code ⟩
+    \bool_if:NF \g_algo_ex_corporate_design_bool  {
+        \RequirePackage[
+            left=2.5cm, right=2.5cm, top=3.5cm, bottom=2cm,
+            headheight=1cm, headsep=1.5cm,
+            footnotesep=0.3cm, footskip=1cm]{geometry}
+    }
+    \RequirePackage{graphicx}
+
+    \bool_if:NF \g_algo_ex_corporate_design_bool  {
+        \RequirePackage{fancyhdr}
+
+        \pagestyle{fancy}
+        \fancyhf{}
+        \fancyhead[L]{\usekomavar*{subject}}
+        \fancyhead[R]{\@title}
+        \fancyfoot[C]{\thepage}
+    }
+} {%⟨false code ⟩
+
+}
 
 \newcommand\algoexercise@stars[2]{
     \newcount\currentstar
@@ -281,11 +305,11 @@
                             \bool_if:NF \g_ptxcd_ex_compatibility_bool
                             {
                                 {\ifx
-                                        \@subtitle\@empty
-                                    \else
-                                        \usekomafont{subtitle}\@subtitle\par
-                                    \fi
-                                }%
+                                            \@subtitle\@empty
+                                        \else
+                                            \usekomafont{subtitle}\@subtitle\par
+                                        \fi
+                                    }%
                                 \gdef\@subtitle{}
                                 \vskip .5em
                             }
@@ -339,8 +363,8 @@
                             {
                                 \str_case_e:nnF {\g_ptxcd_ex_term_style_tl} {
                                     {manual} {
-                                        \g_ptxcd_ex_term_tl
-                                    }
+                                            \g_ptxcd_ex_term_tl
+                                        }
                                 }{
                                     \def\ptxcd_nextsep{}
                                     \bool_gset_true:N \g_tmpa_left_bool
@@ -348,23 +372,23 @@
                                         % Process different term Styles
                                         \str_case_e:nnF {\g_ptxcd_ex_term_style_tl} {
                                             {left} {
-                                                \tl_if_empty:cF {##1} {
-                                                    \seq_put_right:cn {\bool_if:nTF \g_tmpa_left_bool {g_ptxcd_term_left_seq} {g_ptxcd_term_right_seq}} {\use:c {##1}}
+                                                    \tl_if_empty:cF {##1} {
+                                                        \seq_put_right:cn {\bool_if:nTF \g_tmpa_left_bool {g_ptxcd_term_left_seq} {g_ptxcd_term_right_seq}} {\use:c {##1}}
+                                                    }
                                                 }
-                                            }
-                                            {center} {
-                                                \tl_if_empty:cF {##1} {
-                                                    \seq_put_right:cn {\bool_if:nTF \g_tmpa_left_bool {g_ptxcd_term_left_seq} {g_ptxcd_term_right_seq}} {\use:c {##1}}
+                                                {center} {
+                                                    \tl_if_empty:cF {##1} {
+                                                        \seq_put_right:cn {\bool_if:nTF \g_tmpa_left_bool {g_ptxcd_term_left_seq} {g_ptxcd_term_right_seq}} {\use:c {##1}}
+                                                    }
                                                 }
-                                            }
-                                            {left-right} {
-                                                \tl_if_empty:cF {##1} {
-                                                    \seq_put_right:cn {\bool_if:nTF \g_tmpa_left_bool {g_ptxcd_term_left_seq} {g_ptxcd_term_right_seq}} {\use:c {##1}}\bool_set:Nn \g_tmpa_left_bool {!\g_tmpa_left_bool}
+                                                {left-right} {
+                                                    \tl_if_empty:cF {##1} {
+                                                        \seq_put_right:cn {\bool_if:nTF \g_tmpa_left_bool {g_ptxcd_term_left_seq} {g_ptxcd_term_right_seq}} {\use:c {##1}}\bool_set:Nn \g_tmpa_left_bool {!\g_tmpa_left_bool}
+                                                    }
                                                 }
-                                            }
-                                            {left-right-manual} {
-                                                % Do Nothing lol
-                                            }
+                                                {left-right-manual} {
+                                                    % Do Nothing lol
+                                                }
                                         }
                                         {
                                             \ClassError{rubos_tuda_template}{Unknown Term style Option: \use:c {\g_ptxcd_ex_term_style_tl}}{Available options are: left, center, left-right (default)}
@@ -500,16 +524,20 @@
                 #1 / name .code:n = \tl_gset:cn {g_ptxcd_ex_headline_#1_tl} {
                     \StudentName
                 },
-                #1 / aud .code:n = \tl_gset:cn {g_ptxcd_ex_headline_#1_tl} {
-                    \textbf{AuD\space{}}
+                #1 / algo .code:n = \tl_gset:cn {g_ptxcd_ex_headline_#1_tl} {
+                    \textbf{\getFach{}\space{}}
                     im\space\fatsf{\getSemester{}}\space{}
                     bei\space\fatsf{\getDozent{}}\hfill\fatsf{\@title}~--~\g_ptxcd_shorttitle_tl\par
                     \StudentName\StudentID
                 },
-                #1 / aud-min .code:n = \tl_gset:cn {g_ptxcd_ex_headline_#1_tl} {
-                    \textbf{AuD\space{}}
+                #1 / algo-min .code:n = \tl_gset:cn {g_ptxcd_ex_headline_#1_tl} {
+                    \textbf{\getFach{}\space{}}
                     im\space\fatsf{\getSemester{}}\space{}
-                    bei\space\fatsf{\getDozent{}}\hfill\fatsf{\@title}~--~\g_ptxcd_shorttitle_tl},
+                    bei\space\fatsf{\getDozent{}}\hfill\fatsf{\@title}~--~\g_ptxcd_shorttitle_tl
+                },
+                % Backwards Compatibility
+                #1 / aud .meta:n = {#1 / algo = ##1},
+                #1 / aud-min .meta:n = {#1 / algo-min = ##1},
             }
         }
     }{
@@ -528,13 +556,16 @@
                 #1 / fulltitle-centered .code:n = \tl_gset:cn {g_TUDa_ex_headline_#1_tl} {\centering\textbf{\textsf{\@title}}},
                 #1 / name-id .code:n = \tl_gset:cn {g_TUDa_ex_headline_#1_tl} {\StudentName\StudentID},
                 #1 / name .code:n = \tl_gset:cn {g_TUDa_ex_headline_#1_tl} {\StudentName},
-                #1 / aud .code:n= \tl_gset:cn {g_TUDa_ex_headline_#1_tl} {
-                    \textbf{AuD\space{}}im\space\fatsf{\getSemester{}}\space{}bei\space\fatsf{\getDozent}\hfill \@title - \g_TUDa_shorttitle_tl\par
+                #1 / algo .code:n= \tl_gset:cn {g_TUDa_ex_headline_#1_tl} {
+                    \textbf{\usekomavar{subject}\space{}}im\space\fatsf{\getSemester{}}\space{}bei\space\fatsf{\getDozent}\hfill \@title - \g_TUDa_shorttitle_tl\par
                     \StudentName\StudentID
                 },
-                #1 / aud-min .code:n= \tl_gset:cn {g_TUDa_ex_headline_#1_tl} {
-                    \textbf{AuD\space{}}im\space\fatsf{\getSemester{}}\space{}bei\space\fatsf{\getDozent}\hfill \@title - \g_TUDa_shorttitle_tl
+                #1 / algo-min .code:n= \tl_gset:cn {g_TUDa_ex_headline_#1_tl} {
+                    \textbf{\usekomavar{subject}\space{}}im\space\fatsf{\getSemester{}}\space{}bei\space\fatsf{\getDozent}\hfill \@title - \g_TUDa_shorttitle_tl
                 },
+                % Backwards Compatibility
+                #1 / aud .meta:n = {#1 / algo = ##1},
+                #1 / aud-min .meta:n = {#1 / algo-min = ##1},
                 #1 / unknown .code:n = \tl_gset:cn {g_TUDa_ex_headline_#1_tl} {##1}
             }
         }
@@ -569,20 +600,20 @@
 % #3 Gesamtpunktzahl
 % #4 Optional: Punktzahlformat (* wird mit Gesamtpuntzahl replaced)
 \DeclareDocumentCommand{\hue}{mmmO{
-        Gesamt:~*~\fp_compare:nTF {*=1}{
-            \PointName
-        } {
-            \PointsName
-        }
-    }}{
+            Gesamt:~*~\fp_compare:nTF {*=1}{
+                \PointName
+            } {
+                \PointsName
+            }
+        }}{
     \tl_clear_new:N \l_algo_ex_hue_totpoints_fp
     \tl_set:Nn \l_algo_ex_hue_totpoints_fp {#3}
     \tl_set:Nn \l_algo_ex_hue_pointformat_tl {#4}
     \regex_replace_all:nnN {\*} {\u{l_algo_ex_hue_totpoints_fp}} \l_algo_ex_hue_pointformat_tl
     \unskip\section*{
-		    #1\hfill \l_algo_ex_hue_pointformat_tl
-		    \\\textrm{\textit{#2}}
-	    }
+      #1\hfill \l_algo_ex_hue_pointformat_tl
+      \\\textrm{\textit{#2}}
+     }
 }
 
 % Compatibility with old Sheets
