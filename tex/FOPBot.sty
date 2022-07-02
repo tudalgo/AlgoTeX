@@ -1,132 +1,142 @@
-\NeedsTeXFormat{LaTeX2e}[2014/08/21]
-\ProvidesPackage{FOPBot}[2021/09/18 FOP-Bot LaTeX Package]
+\NeedsTeXFormat{LaTeX2e}
+\RequirePackage{expl3}
+% \ProvidesPackage{FOPBot}[2021/09/18 FOP-Bot LaTeX Package]
+\ProvidesExplPackage{FOPBot}{2022/07/02}{1.0 Snapshot}{FOP-Bot LaTeX Package}
 
 % Made by Ruben Deisenroth, created in 2020
 % Available at https://github.com/Rdeisenroth/FOPBot-Latex-Package
 
 \RequirePackage{pgfkeys, tikz, xcolor}
+\ExplSyntaxOff
 \usetikzlibrary{shapes, arrows.meta, shadows.blur, backgrounds}
+\ExplSyntaxOn
 
-\newcommand{\@fopbot@color@define}[3]{%
-    \@ifundefined{\string\color@#1}{%
-        \definecolor{#1}{#2}{#3}%
+\DeclareDocumentCommand{\@fopbot@color@define}{mmm}{
+    \cs_if_exist:cTF {color@#1}{%
+        \PackageWarning{FOPBot}{Color~#1~is~a~reserved~color~for~the~FOPBot~package~and~should~not~be~overwritten.}
     }{%
-        \PackageWarning{FOPBot}{Color #1 is a reserved color for the FOPBot package and should not be overwritten.}}%
+        \definecolor{#1}{#2}{#3}%
+    }%
 }
 
 \@fopbot@color@define{fopbot@lightgray}{RGB}{192, 192, 192}
 \@fopbot@color@define{fopbot@dark_gray}{RGB}{128, 128, 128}
 \@fopbot@color@define{fopbot@bot_blue}{RGB}{41, 171, 226}
 \@fopbot@color@define{fopbot@bot_dark_blue}{RGB}{1, 0, 66}
+\@fopbot@color@define{fopbot@triangleborder}{RGB}{1, 0, 66}
 \@fopbot@color@define{fopbot@tetris_orange_border}{RGB}{255, 179, 128}
 \@fopbot@color@define{fopbot@tetris_light_orange}{RGB}{255, 143, 64}
 \@fopbot@color@define{fopbot@tetris_dark_orange}{RGB}{255, 103, 1}
 \@fopbot@color@define{fopbot@tetris_gray}{RGB}{102, 102, 102}
 \@fopbot@color@define{fopbot@chess_dark_gray}{RGB}{64,64,64}
+\@fopbot@color@define{fopbot@coin}{RGB}{255,0,0}
+
+\cs_if_exist:cT{IfDarkModeT}{
+    \IfDarkModeT{
+        \colorlet{fopbot@lightgray}{black!80!gray!98!blue}
+        \colorlet{fopbot@dark_gray}{white!20!gray!98!blue}
+        % \colorlet{fopbot@triangleborder}{black}
+        \colorlet{fopbot@coin}{orange!90}
+    }
+}
 
 % Definition der FOPBotWorld-Umgebung
-
-\newenvironment{FOPBotWorld}[2]{
+\DeclareDocumentEnvironment{FOPBotWorld}{mm}{
     % Constants
     \def\tilesize{1cm}
     \def\worldwidth{#1}
     \def\worldheight{#2}
 
     %Makros
-    \newcommand*\setcoin[3]{\expandafter\xdef \csname fopbot@C-##1-##2-\endcsname{##3}}
-    \newcommand*\getcoin[2]{\csname fopbot@C-##1-##2-\endcsname}
-    \newcommand{\putcoin}[3]{%
-        \expandafter \ifx  \csname fopbot@C-##1-##2-\endcsname \relax%
-            \expandafter\xdef \csname fopbot@C-##1-##2-\endcsname{##3}%
-        \else%
-            \def\temp{\the\numexpr\getcoin{##1}{##2} + ##3\relax}%
-            \expandafter\xdef \csname fopbot@C-##1-##2-\endcsname{\temp}%
-        \fi%
+    \DeclareDocumentCommand{\setcoin}{mmm}{
+        \int_gzero_new:c {fopbot@C-##1-##2-}
+        \int_gset:cn {fopbot@C-##1-##2-}{##3}
+    }
+    \DeclareDocumentCommand{\getcoin}{mm}{
+        \int_if_exist:cTF {fopbot@C-##1-##2-}{
+            \int_use:c {fopbot@C-##1-##2-}
+        }{
+            0
+        }
+    }
+
+    \DeclareDocumentCommand{\putcoin}{mmm}{%
+        \bool_if:nF {\tl_if_blank_p:e {##1} || \tl_if_blank_p:e {##2}}{
+            \int_gset:cn {fopbot@C-##1-##2-} {2}
+        }
     }
 
     % Icons
     \tikzset{
-        pics/Coin/.style={code={%
-                        \path[draw=none, semithick, fill=red] (0,0) circle (.4cm) node[font=\scriptsize\sffamily\bfseries]{##1};%
-                    }},
+        pics/Coin/.style={
+            code={%
+                \path[draw=none, semithick, fill=fopbot@coin] (0,0) circle (.4cm) node[font=\scriptsize\sffamily\bfseries,color=black]{##1};%
+            }
+        },
         pics/Coin/.default=1,
-        pics/Trianglebot/.style={code={%
-                        %\draw (-.5,-.5) rectangle (.5,.5);
-                        %Triangle 
-                        \draw[draw=fopbot@bot_dark_blue,fill=##1]
-                        (-.38,-.2) coordinate (c1) --
-                        (.38,-.2) coordinate (c2) --
-                        (0, .45) coordinate (c3) -- cycle;
-                        \draw[fill=white,draw=fopbot@bot_dark_blue] (0,.03) circle (1.38mm) coordinate (cc);
-                        \draw[fill=fopbot@bot_dark_blue,draw=fopbot@bot_dark_blue] (cc) circle (1.28pt);
-                        %Legs
-                        \draw[fill=white,draw=fopbot@bot_dark_blue] (-.195,-.2) rectangle (-.06,-.29);
-                        \draw[fill=white,draw=fopbot@bot_dark_blue] (-.195,-.29) rectangle (-.06,-.4);
-                        \draw[fill=white,draw=fopbot@bot_dark_blue] (.185,-.2) rectangle (.05,-.29);
-                        \draw[fill=white,draw=fopbot@bot_dark_blue] (.185,-.29) rectangle (.05,-.4);
-                        %Feet
-                        \draw[fill=##1,draw=fopbot@bot_dark_blue](-.04, -.445) arc(0:180:.09) --cycle;
-                        \draw[fill=##1,draw=fopbot@bot_dark_blue](.21, -.445) arc(0:180:.09) --cycle;
-                    }},
+        pics/Trianglebot/.style={
+            code={%
+                %\draw (-.5,-.5) rectangle (.5,.5);
+                %Triangle
+                \draw[thick, draw=fopbot@triangleborder,fill=##1]
+                (-.38,-.2) coordinate (c1) --
+                (.38,-.2) coordinate (c2) --
+                (0, .45) coordinate (c3) -- cycle;
+                \draw[thick, fill=white,draw=fopbot@bot_dark_blue] (0,.03) circle (1.38mm) coordinate (cc);
+                \draw[thick, fill=fopbot@bot_dark_blue,draw=fopbot@bot_dark_blue] (cc) circle (1.28pt);
+                %Legs
+                \draw[thick, fill=white,draw=fopbot@triangleborder] (-.195,-.2) rectangle (-.06,-.29);
+                \draw[thick, fill=white,draw=fopbot@triangleborder] (-.195,-.29) rectangle (-.06,-.4);
+                \draw[thick, fill=white,draw=fopbot@triangleborder] (.185,-.2) rectangle (.05,-.29);
+                \draw[thick, fill=white,draw=fopbot@triangleborder] (.185,-.29) rectangle (.05,-.4);
+                %Feet
+                \draw[thick, fill=##1,draw=fopbot@triangleborder] (-.04, -.445) arc (0\c_colon_str 180\c_colon_str .09) -- cycle;
+                \draw[thick, fill=##1,draw=fopbot@triangleborder] (.21, -.445) arc (0\c_colon_str 180\c_colon_str .09) -- cycle;
+            }
+        },
         pics/Trianglebot/.default={fopbot@bot_blue},
-        pics/Tetrisbot/.style={code={%
-                        % TODO: Better Argument Parsing
-                        \edef\temp{##1}
-                        % blue
-                        \edef\tempp{blue}
-                        \ifx \temp \tempp
-                            \definecolor{fopbot@tmp@tetrisborder}{RGB}{128, 179, 255}
-                            \definecolor{fopbot@tmp@tetrisupper}{RGB}{65, 141, 255}
-                            \definecolor{fopbot@tmp@tetrislower}{RGB}{0, 102, 255}
-                        \else
-                            % aqua
-                            \edef\tempp{aqua}
-                            \ifx \temp \tempp
-                                \definecolor{fopbot@tmp@tetrisborder}{RGB}{128, 230, 255}
-                                \definecolor{fopbot@tmp@tetrisupper}{RGB}{65, 217, 255}
-                                \definecolor{fopbot@tmp@tetrislower}{RGB}{0, 204, 255}
-                            \else
-                                % green
-                                \edef\tempp{green}
-                                \ifx \temp \tempp
-                                    \definecolor{fopbot@tmp@tetrisborder}{RGB}{128, 234, 128}
-                                    \definecolor{fopbot@tmp@tetrisupper}{RGB}{65, 223, 65}
-                                    \definecolor{fopbot@tmp@tetrislower}{RGB}{0, 212, 0}
-                                \else
-                                    % purple
-                                    \edef\tempp{purple}
-                                    \ifx \temp \tempp
-                                        \definecolor{fopbot@tmp@tetrisborder}{RGB}{184, 155, 228}
-                                        \definecolor{fopbot@tmp@tetrisupper}{RGB}{149, 106, 214}
-                                        \definecolor{fopbot@tmp@tetrislower}{RGB}{113, 55, 200}
-                                    \else
-                                        % red
-                                        \edef\tempp{red}
-                                        \ifx \temp \tempp
-                                            \definecolor{fopbot@tmp@tetrisborder}{RGB}{255, 128, 128}
-                                            \definecolor{fopbot@tmp@tetrisupper}{RGB}{255, 64, 64}
-                                            \definecolor{fopbot@tmp@tetrislower}{RGB}{255, 0, 0}
-                                        \else
-                                            % yellow
-                                            \edef\tempp{yellow}
-                                            \ifx \temp \tempp
-                                                \definecolor{fopbot@tmp@tetrisborder}{RGB}{255, 230, 128}
-                                                \definecolor{fopbot@tmp@tetrisupper}{RGB}{255, 217, 64}
-                                                \definecolor{fopbot@tmp@tetrislower}{RGB}{255, 204, 0}
-                                            \else
-                                                \definecolor{fopbot@tmp@tetrisborder}{RGB}{255, 179, 128}
-                                                \definecolor{fopbot@tmp@tetrisupper}{RGB}{255, 143, 64}
-                                                \definecolor{fopbot@tmp@tetrislower}{RGB}{255, 103, 1}
-                                            \fi
-                                        \fi
-                                    \fi
-                                \fi
-                            \fi
-                        \fi
-                        \draw[draw=fopbot@tmp@tetrisborder, ultra thick, bottom color=fopbot@tmp@tetrislower, top color = fopbot@tmp@tetrisupper] ([xshift=.8pt,yshift=.8pt]-.425,-.425) rectangle ([xshift=-.8pt,yshift=-.8pt].425,.425);
-                        \draw[draw=fopbot@tmp@tetrisborder, thick,fill=white] (0,.1) circle (2mm);
-                        \draw[draw=none,fill=fopbot@tetris_gray] (0,.185) circle (.55mm);
-                    }},
+        pics/Tetrisbot/.style={
+            code={%
+                \str_case:nnF {##1} {
+                    {blue} {
+                        \definecolor{fopbot@tmp@tetrisborder}{RGB}{128, 179, 255}
+                        \definecolor{fopbot@tmp@tetrisupper}{RGB}{65, 141, 255}
+                        \definecolor{fopbot@tmp@tetrislower}{RGB}{0, 102, 255}
+                    }
+                    {aqua} {
+                        \definecolor{fopbot@tmp@tetrisborder}{RGB}{128, 230, 255}
+                        \definecolor{fopbot@tmp@tetrisupper}{RGB}{65, 217, 255}
+                        \definecolor{fopbot@tmp@tetrislower}{RGB}{0, 204, 255}
+                    }
+                    {green} {
+                        \definecolor{fopbot@tmp@tetrisborder}{RGB}{128, 234, 128}
+                        \definecolor{fopbot@tmp@tetrisupper}{RGB}{65, 223, 65}
+                        \definecolor{fopbot@tmp@tetrislower}{RGB}{0, 212, 0}
+                    }
+                    {purple} {
+                        \definecolor{fopbot@tmp@tetrisborder}{RGB}{184, 155, 228}
+                        \definecolor{fopbot@tmp@tetrisupper}{RGB}{149, 106, 214}
+                        \definecolor{fopbot@tmp@tetrislower}{RGB}{113, 55, 200}
+                    }
+                    {red} {
+                        \definecolor{fopbot@tmp@tetrisborder}{RGB}{255, 128, 128}
+                        \definecolor{fopbot@tmp@tetrisupper}{RGB}{255, 64, 64}
+                        \definecolor{fopbot@tmp@tetrislower}{RGB}{255, 0, 0}
+                    }
+                    {yellow} {
+                        \definecolor{fopbot@tmp@tetrisborder}{RGB}{255, 230, 128}
+                        \definecolor{fopbot@tmp@tetrisupper}{RGB}{255, 217, 64}
+                        \definecolor{fopbot@tmp@tetrislower}{RGB}{255, 204, 0}
+                    }
+                } {
+                    \definecolor{fopbot@tmp@tetrisborder}{RGB}{255, 179, 128}
+                    \definecolor{fopbot@tmp@tetrisupper}{RGB}{255, 143, 64}
+                    \definecolor{fopbot@tmp@tetrislower}{RGB}{255, 103, 1}
+                }
+                \draw[draw=fopbot@tmp@tetrisborder, ultra~thick, bottom~color=fopbot@tmp@tetrislower, top~color = fopbot@tmp@tetrisupper] ([xshift=.8pt,yshift=.8pt]-.425,-.425) rectangle ([xshift=-.8pt,yshift=-.8pt].425,.425);
+                \draw[draw=fopbot@tmp@tetrisborder, thick,fill=white] (0,.1) circle (2mm);
+                \draw[draw=none,fill=fopbot@tetris_gray] (0,.185) circle (.55mm);
+            }},
         pics/Tetrisbot/.default={orange},
     }
     %Layers
@@ -138,34 +148,43 @@
     \begin{tikzpicture}%[scale=#3, every node/.style={scale=#3}] %Scaling Planned for future release
         % Initialize world
         \begin{pgfonlayer}{board}
-            \foreach \x in {0,...,\the\numexpr\worldwidth - 1\relax}{
-                    \foreach \y in {0,...,\the\numexpr\worldheight - 1\relax}{
-                            \setcoin{\x}{\y}{0} % Reset Coins from previous worlds
-                            \node[draw=fopbot@dark_gray,fill=fopbot@lightgray,minimum width=\tilesize,minimum height=\tilesize, inner sep=0pt,anchor=center,very thick] (n-\x-\y) at (0cm + \tilesize * \x ,0cm + \tilesize * \y ){};
-                        }
+            \foreach \x in {0,...,\int_eval:n{\worldwidth - 1}}{
+                \foreach \y in {0,...,\int_eval:n{\worldheight - 1}}{
+                    \setcoin{\x}{\y}{0} % Reset Coins from previous worlds
+                    \node[
+                        draw=fopbot@dark_gray,
+                        fill=fopbot@lightgray,
+                        minimum~width=\tilesize,
+                        minimum~height=\tilesize,
+                        inner~sep=0pt,
+                        anchor=center,
+                        very~thick
+                    ] (n-\x-\y) at (0cm + \tilesize * \x ,0cm + \tilesize * \y ){};
                 }
+            }
         \end{pgfonlayer}
         }
         {%After
         % Finish World
         \begin{pgfonlayer}{coins}
-            \foreach \x in {0,...,\the\numexpr\worldwidth - 1\relax}{
-                    \foreach \y in {0,...,\the\numexpr\worldheight - 1\relax}{
-                            %\def\temp{\getcoin{\x}{\y}}
-                            \expandafter \ifx  \csname fopbot@C-\x-\y-\endcsname \relax
-                                % Do not draw Coin
-                            \else
-                                \ifnum  \csname fopbot@C-\x-\y-\endcsname > 0
-                                    \path (\x,\y) pic {Coin={ \csname fopbot@C-\x-\y-\endcsname}};
-                                \fi
-                            \fi
-
-                        }
+            \foreach \x in {0,...,\int_eval:n{\worldwidth - 1}} {
+                \foreach \y in {0,...,\int_eval:n{\worldheight - 1}} {
+                    \int_compare:nT {\getcoin{\x}{\y} > 0} {
+                        \path (\x,\y) pic {
+                            Coin={
+                                \getcoin{\x}{\y}
+                            }
+                        };
+                    }
                 }
+            }
         \end{pgfonlayer}
         %World Border
         \begin{pgfonlayer}{walls}
-            \draw[very thick] ([xshift=.6pt,yshift=.6pt]n-0-0.south west) rectangle ([xshift=-.6pt,yshift=-.6pt]n-\the\numexpr\worldwidth-1\relax-\the\numexpr\worldheight-1\relax.north east);
+            \draw[very~thick]
+            ([xshift=.6pt,yshift=.6pt]n-0-0.south~west)
+            rectangle
+            ([xshift=-.6pt,yshift=-.6pt]n-\int_eval:n{\worldwidth - 1}-\int_eval:n{\worldheight - 1}.north~east);
         \end{pgfonlayer}
     \end{tikzpicture}
 }
