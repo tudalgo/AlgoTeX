@@ -1,6 +1,6 @@
 \NeedsTeXFormat{LaTeX2e}
 \RequirePackage{expl3}
-\ProvidesExplPackage{algo-common}{2022/04/23}{1.0.4}{Common Definitions for all Algo templates - Based on rubos-common (https://github.com/Rdeisenroth/Rubos-TUDA-Template/blob/main/tex/rubos-common.sty)}
+\ProvidesExplPackage{algo-common}{2022/07/02}{1.0.5}{Common Definitions for all Algo templates - Based on rubos-common (https://github.com/Rdeisenroth/Rubos-TUDA-Template/blob/main/tex/rubos-common.sty)}
 % Package Made by Ruben Deisenroth, 2022
 % Available at https://github.com/Rdeisenroth/Rubos-TUDA-Template/blob/main/tex/rubos-common.sty
 
@@ -143,7 +143,7 @@
     % Set Property Command
     \exp_args:Ncf \DeclareDocumentCommand{#2}{om}{
         % \bool_if:NT #1 {
-            \tl_gset:cn {g_rubos_document_#2_description_tl} {##1}
+        \tl_gset:cn {g_rubos_document_#2_description_tl} {##1}
         % }
         \tl_gset:cn {g_rubos_document_#2_tl} {##2}
         \tl_if_empty:cF {g_rubos_document_#2_tl} {
@@ -187,6 +187,17 @@
 % Topic
 \DeclareDocumentProperty{topic}[][\textsf{\textbf{Themen:~}*}]
 
+% Author
+\DeclareDocumentCommand{\getAuthor}{}{
+    \@author
+}
+\DeclareDocumentCommand{\getTitle}{}{
+    \@title
+}
+\DeclareDocumentCommand{\getSubtitle}{}{
+    \@subtitle
+}
+
 %%--Blocks, Boxes and Environments--%%
 \def\rubos@boxarc{\prop_item:Nn \g_rubos_document_opts_prop {boxarc}} % Used for Code Blocks, Info boxes, etc.
 \@ifundefined{\string\color@accentcolor}{\definecolor{accentcolor}{RGB}{0, 157, 129}}{}
@@ -210,10 +221,10 @@
     enhanced, % Erlaubt uns, den ramen zu zeichnen
     fonttitle=\sffamily, % Titelschriftart auf
     overlay={ % Für Grauen Bereich links
-            \begin{tcbclipinterior}
-                \fill[gray] (frame.south~west) rectangle ([xshift=4pt]frame.north~west); % Zeilennummernbereich färben
-            \end{tcbclipinterior}
-        },
+        \begin{tcbclipinterior}
+            \fill[gray] (frame.south~west) rectangle ([xshift=4pt]frame.north~west); % Zeilennummernbereich färben
+        \end{tcbclipinterior}
+    },
     #1 % Weitere Argumente zulassen
 }
 
@@ -223,17 +234,17 @@
     colframe=accentcolor, % Randfarbe
     coltext=.,
     frame~hidden,
-    title~style=gray,
+    title~style=\IfDarkModeTF{accentcolor!60!black}{accentcolor},
     arc=\rubos@boxarc,
     boxrule=0pt,
     left=5pt, % Links Platz lassen
     enhanced, % Erlaubt uns, den ramen zu zeichnen
     fonttitle=\sffamily, % Titelschriftart auf
     overlay={ % Für Grauen Bereich links
-            \begin{tcbclipinterior}
-                \fill[accentcolor] (frame.south~west) rectangle ([xshift=4pt]frame.north~west); % Zeilennummernbereich färben
-            \end{tcbclipinterior}
-        },
+        \begin{tcbclipinterior}
+            \fill[accentcolor] (frame.south~west) rectangle ([xshift=4pt]frame.north~west); % Zeilennummernbereich färben
+        \end{tcbclipinterior}
+    },
     #1 % Weitere Argumente zulassen
 }
 
@@ -250,10 +261,10 @@
     enhanced, % Erlaubt uns, den ramen zu zeichnen
     fonttitle=\sffamily, % Titelschriftart auf
     overlay={ % Für Grauen Bereich links
-            \begin{tcbclipinterior}
-                \fill[accentcolor]~(frame.south~west) rectangle ([xshift=4pt]frame.north~west); % Zeilennummernbereich färben
-            \end{tcbclipinterior}
-        },
+        \begin{tcbclipinterior}
+            \fill[accentcolor]~(frame.south~west) rectangle ([xshift=4pt]frame.north~west); % Zeilennummernbereich färben
+        \end{tcbclipinterior}
+    },
     #1 % Weitere Argumente zulassen
 }
 
@@ -381,99 +392,99 @@
 \lstdefinelanguage{Racket}{%
     alsoletter=+-*/?\=<>!~\#,%
     morekeywords={%
-            empty, true, \#true, \#t, false, \#false, \#f%
-        },%
+        empty, true, \#true, \#t, false, \#false, \#f%
+    },%
     morekeywords={%
-            lambda, define-datatype, begin, begin0, set!, delay, shared, recur,%
-            case, match, when, unless%
-        },%
+        lambda, define-datatype, begin, begin0, set!, delay, shared, recur,%
+        case, match, when, unless%
+    },%
     morekeywords={%
-            local, letrec, let*, let, time, define, define-struct, cond, else, if,%
-            and, or, check-expect, check-random, check-satisfied, check-within,%
-            check-error, check-member-of, check-range, require%
-        },%
+        local, letrec, let*, let, time, define, define-struct, cond, else, if,%
+        and, or, check-expect, check-random, check-satisfied, check-within,%
+        check-error, check-member-of, check-range, require%
+    },%
     morekeywords={%
-            -, <, <=, =, >, >=, abs, acos, add1, angle, asin, atan, ceiling,%
-            complex?, conjugate, cos, cosh, current-seconds, denominator, e, even?,%
-            exact->inexact, exact?, exp, expt, floor, gcd, imag-part,%
-            inexact->exact, inexact?, integer->char, integer-sqrt, integer?, lcm,%
-            log, magnitude, make-polar, make-rectangular, max, min, modulo,%
-            negative?, number->string, number?, numerator, odd?, pi, positive?,%
-            quotient, random, rational?, real-part, real?, remainder, round, sgn,%
-            sin, sinh, sqr, sqrt, sub1, tan, zero?%
-        },%
+        -, <, <=, =, >, >=, abs, acos, add1, angle, asin, atan, ceiling,%
+        complex?, conjugate, cos, cosh, current-seconds, denominator, e, even?,%
+        exact->inexact, exact?, exp, expt, floor, gcd, imag-part,%
+        inexact->exact, inexact?, integer->char, integer-sqrt, integer?, lcm,%
+        log, magnitude, make-polar, make-rectangular, max, min, modulo,%
+        negative?, number->string, number?, numerator, odd?, pi, positive?,%
+        quotient, random, rational?, real-part, real?, remainder, round, sgn,%
+        sin, sinh, sqr, sqrt, sub1, tan, zero?%
+    },%
     morekeywords={%
-            boolean->string, boolean=?, boolean?, false?, not%
-        },%
+        boolean->string, boolean=?, boolean?, false?, not%
+    },%
     morekeywords={%
-            symbol->string, symbol=?, symbol%
-        },%
+        symbol->string, symbol=?, symbol%
+    },%
     morekeywords={%
-            append, assoc, assq, caaar, caadr, caar, cadar, cadddr, caddr, cadr,%
-            car, cdaar, cdadr, cdar, cddar, cdddr, cddr, cdr, cons, cons?, eighth,%
-            empty?, fifth, first, for-each, fourth, length, list, list*, list-ref,%
-            list?, make-list, member, member?, memq, memq?, memv, null, null?,%
-            range, remove, remove-all, rest, reverse, second, seventh, sixth, third%
-        },%
+        append, assoc, assq, caaar, caadr, caar, cadar, cadddr, caddr, cadr,%
+        car, cdaar, cdadr, cdar, cddar, cdddr, cddr, cdr, cons, cons?, eighth,%
+        empty?, fifth, first, for-each, fourth, length, list, list*, list-ref,%
+        list?, make-list, member, member?, memq, memq?, memv, null, null?,%
+        range, remove, remove-all, rest, reverse, second, seventh, sixth, third%
+    },%
     morekeywords={%
-            make-posn, posn-x, posn-y, posn?, set-posn-x!, set-posn-y!%
-        },%
+        make-posn, posn-x, posn-y, posn?, set-posn-x!, set-posn-y!%
+    },%
     morekeywords={%
-            char->integer, char-alphabetic?, char-ci<=?, char-ci<?, char-ci=?,%
-            char-ci>=?, char-ci>?, char-downcase, char-lower-case?, char-numeric?,%
-            char-upcase, char-upper-case?, char-whitespace?, char<=?, char<?,%
-            char=?, char>=?, char>?, char?%
-        },%
+        char->integer, char-alphabetic?, char-ci<=?, char-ci<?, char-ci=?,%
+        char-ci>=?, char-ci>?, char-downcase, char-lower-case?, char-numeric?,%
+        char-upcase, char-upper-case?, char-whitespace?, char<=?, char<?,%
+        char=?, char>=?, char>?, char?%
+    },%
     morekeywords={%
-            explode, format, implode, int->string, list->string, make-string,%
-            replicate, string, string->int, string->list, string->number,%
-            string->symbol, string-alphabetic?, string-contains-ci?,%
-            string-contains?, string-copy, string-downcase, string-ith,%
-            string-length, string-lower-case?, string-numeric?, string-ref,%
-            string-upcase, string-upper-case?, string-whitespace?, string?,%
-            substring%
-        },%
+        explode, format, implode, int->string, list->string, make-string,%
+        replicate, string, string->int, string->list, string->number,%
+        string->symbol, string-alphabetic?, string-contains-ci?,%
+        string-contains?, string-copy, string-downcase, string-ith,%
+        string-length, string-lower-case?, string-numeric?, string-ref,%
+        string-upcase, string-upper-case?, string-whitespace?, string?,%
+        substring%
+    },%
     morekeywords={%
-            image=?, image?%
-        },%
+        image=?, image?%
+    },%
     morekeywords={%
-            =~, current-milliseconds, eof, eof-object?, eq?, equal?, equal~?, eqv?,%
-            error, exit, force, gensym, identity, promise?, sleep, struct?, void,%
-            void?%
-        },%
+        =~, current-milliseconds, eof, eof-object?, eq?, equal?, equal~?, eqv?,%
+        error, exit, force, gensym, identity, promise?, sleep, struct?, void,%
+        void?%
+    },%
     morekeywords={%
-            +, *, /
-        },%
+        +, *, /
+    },%
     morekeywords={%
-            string-append, string-ci<=?, string-ci<?, string-ci=?, string-ci>=?,%
-            string-ci>?, string<=?, string<?, string=?, string>=?, string>?%
-        },%
+        string-append, string-ci<=?, string-ci<?, string-ci=?, string-ci>=?,%
+        string-ci>?, string<=?, string<?, string=?, string>=?, string>?%
+    },%
     morekeywords={%
-            posn%
-        },%
+        posn%
+    },%
     morekeywords={%
-            andmap, apply, argmax, argmin, build-list, build-string, compose,%
-            filter, foldl, foldr, map, memf, ormap, procedure?, quicksort, sort%
-        },%
+        andmap, apply, argmax, argmin, build-list, build-string, compose,%
+        filter, foldl, foldr, map, memf, ormap, procedure?, quicksort, sort%
+    },%
     morekeywords={%
-            display, newline, pretty-print, print, printf, read,%
-            with-input-from-file, with-input-from-string, with-output-to-file,%
-            with-output-to-string, write%
-        },%
+        display, newline, pretty-print, print, printf, read,%
+        with-input-from-file, with-input-from-string, with-output-to-file,%
+        with-output-to-string, write%
+    },%
     morekeywords={%
-            build-vector, list->vector, make-vector, vector, vector->list,%
-            vector-length, vector-ref, vector-set!, vector?%
-        },%
+        build-vector, list->vector, make-vector, vector, vector->list,%
+        vector-length, vector-ref, vector-set!, vector?%
+    },%
     morekeywords={%
-            box, box?, set-box!, unbox
-        },%
+        box, box?, set-box!, unbox
+    },%
     morekeywords={%
-            hash-copy, hash-count, hash-eq?, hash-equal?, hash-eqv?, hash-for-each,%
-            hash-has-key?, hash-map, hash-ref, hash-ref!, hash-remove,%
-            hash-remove!, hash-set, hash-set!, hash-update, hash-update!, hash?,%
-            make-hash, make-hasheq, make-hasheqv, make-immutable-hash,%
-            make-immutable-hasheq, make-immutable-hasheqv
-        },%
+        hash-copy, hash-count, hash-eq?, hash-equal?, hash-eqv?, hash-for-each,%
+        hash-has-key?, hash-map, hash-ref, hash-ref!, hash-remove,%
+        hash-remove!, hash-set, hash-set!, hash-update, hash-update!, hash?,%
+        make-hash, make-hasheq, make-hasheqv, make-immutable-hash,%
+        make-immutable-hasheq, make-immutable-hasheqv
+    },%
     morecomment=[l]{;},%
     morecomment=[s]{\#|}{|\#},%
     morestring=[b]{"}%
@@ -560,10 +571,10 @@ left=7.1mm, % Links Platz lassen
 enhanced, % Erlaubt uns, den ramen zu zeichnen
 fonttitle=\sffamily, % Titelschriftart auf
 overlay={ % Für Grauen Bereich links
-        \begin{tcbclipinterior}
-            \fill[black!70] (frame.south~west) rectangle ([xshift=5mm]frame.north~west); % Zeilennummernbereich färben
-        \end{tcbclipinterior}
-    },
+    \begin{tcbclipinterior}
+        \fill[black!70] (frame.south~west) rectangle ([xshift=5mm]frame.north~west); % Zeilennummernbereich färben
+    \end{tcbclipinterior}
+},
 #2 % Weitere Argumente zulassen
 }
 \newtcbinputlisting{\inputCode}[3][]{
@@ -593,10 +604,10 @@ left=7.1mm, % Links Platz lassen
 enhanced, % Erlaubt uns, den ramen zu zeichnen
 fonttitle=\sffamily, % Titelschriftart auf
 overlay={ % Für Grauen Bereich links
-        \begin{tcbclipinterior}
-            \fill[black!70] (frame.south~west) rectangle ([xshift=5mm]frame.north~west); % Zeilennummernbereich färben
-        \end{tcbclipinterior}
-    },
+    \begin{tcbclipinterior}
+        \fill[black!70] (frame.south~west) rectangle ([xshift=5mm]frame.north~west); % Zeilennummernbereich färben
+    \end{tcbclipinterior}
+},
 #2 % Weitere Argumente zulassen
 }
 }{
@@ -620,10 +631,10 @@ left=7.1mm, % Links Platz lassen
 enhanced, % Erlaubt uns, den ramen zu zeichnen
 fonttitle=\sffamily, % Titelschriftart auf
 overlay={ % Für Grauen Bereich links
-        \begin{tcbclipinterior}
-            \fill[black!70] (frame.south~west) rectangle ([xshift=5mm]frame.north~west); % Zeilennummernbereich färben
-        \end{tcbclipinterior}
-    },
+    \begin{tcbclipinterior}
+        \fill[black!70] (frame.south~west) rectangle ([xshift=5mm]frame.north~west); % Zeilennummernbereich färben
+    \end{tcbclipinterior}
+},
 #2 % Weitere Argumente zulassen
 }
 \newtcbinputlisting{\inputCode}[3][]{
@@ -645,10 +656,10 @@ left=7.1mm, % Links Platz lassen
 enhanced, % Erlaubt uns, den ramen zu zeichnen
 fonttitle=\sffamily, % Titelschriftart auf
 overlay={ % Für Grauen Bereich links
-        \begin{tcbclipinterior}
-            \fill[black!70] (frame.south~west) rectangle ([xshift=5mm]frame.north~west); % Zeilennummernbereich färben
-        \end{tcbclipinterior}
-    },
+    \begin{tcbclipinterior}
+        \fill[black!70] (frame.south~west) rectangle ([xshift=5mm]frame.north~west); % Zeilennummernbereich färben
+    \end{tcbclipinterior}
+},
 #2 % Weitere Argumente zulassen
 }
 }
@@ -656,6 +667,11 @@ overlay={ % Für Grauen Bereich links
 %%--Makros--%%
 \DeclareDocumentEnvironment{cpenumerate}{O{}}{
     \begin{enumerate}[nosep, #1]}{
+    \end{enumerate}
+}
+
+\DeclareDocumentEnvironment{steps}{o}{
+    \begin{enumerate}[label={\textsf{\arabic*. Schritt:~}}, leftmargin=2cm]}{
     \end{enumerate}
 }
 

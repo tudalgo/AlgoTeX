@@ -1,7 +1,7 @@
 % FoP and AuD Exercise template class
 % Author: Ruben Deisenroth
-\def\fileversion{2.2.3}
-\def\filedate{2022/04/23}
+\def\fileversion{2.2.4}
+\def\filedate{2022/07/02}
 
 % Sets the LaTeX version for the package to work.
 \NeedsTeXFormat{LaTeX2e}
@@ -111,14 +111,6 @@
 % \RequirePackage{pifont}
 
 %%--Document Properties--%%
-% Title
-\newcommand*{\getTitle}{
-    \@title
-}
-% Subtitle
-\newcommand*{\getSubtitle}{
-    \@subtitle
-}
 % Datesubject
 \tl_gclear_new:N \datename
 \tl_gset:Nn \datename {Datum}
@@ -128,10 +120,6 @@
     \tl_if_empty:NF \@date {\tl_gset:Nn \printDate {\textsf{\textbf{\datename{}:~}}\@date}}
 }
 
-% Author
-\newcommand*{\getAuthor}{
-    \@author
-}
 \tl_gclear_new:N \printAuthor
 \renewcommand*{\author}[1]{
     \seq_gset_split:Nnn \g_ptxcd_author_seq {\and} {#1}
