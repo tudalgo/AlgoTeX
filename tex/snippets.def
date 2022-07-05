@@ -40,6 +40,17 @@
     \UseSnippet{globalhints}
     Die für diese Hausübung in der Vorlage relevanten Verzeichnisse sind \texttt{src/main/h\getSheetnumber{}} und \texttt{src/test/h\getSheetnumber{}}.
 }
+\DeclareSnippet{exercise-introduction-fop-2223}{Globale Verbindliche Anforderungen und Hinweise}{
+    \begin{defBox}
+        \textbf{Beachten Sie die Seite \href{https://moodle.informatik.tu-darmstadt.de/mod/page/view.php?id=49598}{\emph{Verbindliche Anforderungen für alle Abgaben}} in unserem Moodle-Kurs.}\\     
+
+        Verstöße gegen verbindliche Anforderungen führen zu Punktabzügen und können die korrekte Bewertung Ihrer Abgabe beeinflussen.
+        Sofern vorhanden,
+        müssen die in der Vorlage mit \inlinejava{TODO} markierten \inlinejava{crash}-Aufrufe entfernt werden.
+        Andernfalls wird die jeweilige Aufgabe nicht bewertet.
+    \end{defBox}
+    Die für diese Hausübung in der Vorlage relevanten Verzeichnisse sind \texttt{src/main/h\getSheetnumber{}} und \texttt{src/test/h\getSheetnumber{}}.
+}
 \DeclareSnippet{tests-introduction}{Globale Hinweise für Tests}{
     \begin{hinweis}
         \bigskip
