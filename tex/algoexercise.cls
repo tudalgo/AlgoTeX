@@ -1,6 +1,6 @@
 % FoP and AuD Exercise template class
 % Author: Ruben Deisenroth
-\def\fileversion{2.2.5}
+\def\fileversion{2.2.6}
 \def\filedate{2022/07/29}
 
 % Sets the LaTeX version for the package to work.
@@ -559,19 +559,17 @@
 }
 
 % Stilistische Anpassungen der Task-Environments
-\renewcommand*{\taskformat}{\rmfamily\bfseries H\thetask{}} % Taskprefix
+\renewcommand*{\taskformat}{\rmfamily\bfseries \thetask{}} % Taskprefix
 \renewcommand*{\subtaskformat}{\thesubtask\enskip} % This looks way cleaner
 \renewcommand*{\thetask}{%
-    \texorpdfstring{}{H}%
-    \arabic{task}%
+    H\arabic{task}%
 }
 \renewcommand*{\thesubtask}{%
-    \texorpdfstring{}{H\arabic{task}.}%
-    \arabic{subtask}%
+    H\arabic{task}.\arabic{subtask}%
 }
 % Point Formating
 \renewcommand*{\creditformat}[1]{\hfill#1}
-\renewcommand*{\subtaskformat}{H\thetask{}.\thesubtask :\enskip}
+\renewcommand*{\subtaskformat}{\thesubtask{} :\enskip}
 
 % Section Fonts
 \setkomafont{section}{\large\bfseries\sffamily}
@@ -619,3 +617,10 @@
 % Description-list styling.
 \SetLabelAlign{parright}{\parbox[t]{\labelwidth}{\raggedleft#1}}
 \setlist[description]{style = multiline, leftmargin = 4cm, align = parright,font=\mdseries}
+
+\DeclareDocumentEnvironment{subtask*}{om}{
+	% \begingroup
+	\IfNoValueF{#1}{\keys_set:nn {ptxcd/subtask}{#1}}
+	\@subtask{#2}
+	% \endgroup
+}{}
