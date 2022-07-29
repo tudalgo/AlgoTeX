@@ -1,7 +1,7 @@
 % FoP and AuD Exercise template class
 % Author: Ruben Deisenroth
-\def\fileversion{2.2.4}
-\def\filedate{2022/07/02}
+\def\fileversion{2.2.5}
+\def\filedate{2022/07/29}
 
 % Sets the LaTeX version for the package to work.
 \NeedsTeXFormat{LaTeX2e}
@@ -16,8 +16,6 @@
 \RequirePackage[minted_workaround,caption_workaround]{algo-common}
 
 % Packages that need to be loaded before TUDA-Exercise Class
-\RequirePackage[table, dvipsnames]{xcolor} % Option has to be set before loading TuDaExercise
-\RequirePackage{pagecolor} % Used for dark Mode
 \PassOptionsToPackage{bookmarksnumbered}{hyperref} % Nummerierte Bookmarks
 
 \prop_new:N \g_algo_ex_opts_prop
