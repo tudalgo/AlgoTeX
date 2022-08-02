@@ -1,0 +1,19 @@
+{
+    "latex-workshop.latexindent.args": [
+        "-c",
+        "%DIR%/",
+        "%TMPFILE%",
+        "-l %WORKSPACE_FOLDER%/latexindent.yaml",
+        // "-m",
+        "-y=defaultIndent: '%INDENT%'"
+    ],
+    "files.associations": {
+        "*.sty": "latex-expl3",
+        "*.cls": "latex-expl3",
+        "*.def": "latex",
+        "*.aux": "latex",
+        "*.toc": "latex",
+        "*.pygstyle": "latex",
+        "*.pygtex": "latex"
+    },
+}
