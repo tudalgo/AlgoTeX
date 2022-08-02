@@ -176,15 +176,15 @@
 %%--Templates--%%
 \str_case_e:nnTF {\prop_item:Nn \g_algo_ex_opts_prop {template}} {
     {fop} {
-            % \setkomavar{subject}[Funktionale~und~objektorientierte~Programmierkonzepte]{FoP}
-            \fach[Funktionale~und~objektorientierte~Programmierkonzepte]{FoP}
-            \tl_gset:Nn \g_algo_ex_title_prefix_tl {\getFach*{}}
-        }
-        {aud} {
-            % \setkomavar{subject}[Algorithmen~und~Datenstrukturen]{AuD}
-            \fach[Algorithmen~und~Datenstrukturen]{AuD}
-            \tl_gset:Nn \g_algo_ex_title_prefix_tl {\getFach*{}}
-        }
+        % \setkomavar{subject}[Funktionale~und~objektorientierte~Programmierkonzepte]{FoP}
+        \fach[Funktionale~und~objektorientierte~Programmierkonzepte]{FoP}
+        \tl_gset:Nn \g_algo_ex_title_prefix_tl {\getFach*{}}
+    }
+    {aud} {
+        % \setkomavar{subject}[Algorithmen~und~Datenstrukturen]{AuD}
+        \fach[Algorithmen~und~Datenstrukturen]{AuD}
+        \tl_gset:Nn \g_algo_ex_title_prefix_tl {\getFach*{}}
+    }
 } {%⟨true code ⟩
     \bool_if:NF \g_algo_ex_corporate_design_bool  {
         \RequirePackage[
@@ -291,11 +291,11 @@
                             \bool_if:NF \g_ptxcd_ex_compatibility_bool
                             {
                                 {\ifx
-                                            \@subtitle\@empty
-                                        \else
-                                            \usekomafont{subtitle}\@subtitle\par
-                                        \fi
-                                    }%
+                                        \@subtitle\@empty
+                                    \else
+                                        \usekomafont{subtitle}\@subtitle\par
+                                    \fi
+                                }%
                                 \gdef\@subtitle{}
                                 \vskip .5em
                             }
@@ -349,8 +349,8 @@
                             {
                                 \str_case_e:nnF {\g_ptxcd_ex_term_style_tl} {
                                     {manual} {
-                                            \g_ptxcd_ex_term_tl
-                                        }
+                                        \g_ptxcd_ex_term_tl
+                                    }
                                 }{
                                     \def\ptxcd_nextsep{}
                                     \bool_gset_true:N \g_tmpa_left_bool
@@ -358,23 +358,23 @@
                                         % Process different term Styles
                                         \str_case_e:nnF {\g_ptxcd_ex_term_style_tl} {
                                             {left} {
-                                                    \tl_if_empty:cF {##1} {
-                                                        \seq_put_right:cn {\bool_if:nTF \g_tmpa_left_bool {g_ptxcd_term_left_seq} {g_ptxcd_term_right_seq}} {\use:c {##1}}
-                                                    }
+                                                \tl_if_empty:cF {##1} {
+                                                    \seq_put_right:cn {\bool_if:nTF \g_tmpa_left_bool {g_ptxcd_term_left_seq} {g_ptxcd_term_right_seq}} {\use:c {##1}}
                                                 }
-                                                {center} {
-                                                    \tl_if_empty:cF {##1} {
-                                                        \seq_put_right:cn {\bool_if:nTF \g_tmpa_left_bool {g_ptxcd_term_left_seq} {g_ptxcd_term_right_seq}} {\use:c {##1}}
-                                                    }
+                                            }
+                                            {center} {
+                                                \tl_if_empty:cF {##1} {
+                                                    \seq_put_right:cn {\bool_if:nTF \g_tmpa_left_bool {g_ptxcd_term_left_seq} {g_ptxcd_term_right_seq}} {\use:c {##1}}
                                                 }
-                                                {left-right} {
-                                                    \tl_if_empty:cF {##1} {
-                                                        \seq_put_right:cn {\bool_if:nTF \g_tmpa_left_bool {g_ptxcd_term_left_seq} {g_ptxcd_term_right_seq}} {\use:c {##1}}\bool_set:Nn \g_tmpa_left_bool {!\g_tmpa_left_bool}
-                                                    }
+                                            }
+                                            {left-right} {
+                                                \tl_if_empty:cF {##1} {
+                                                    \seq_put_right:cn {\bool_if:nTF \g_tmpa_left_bool {g_ptxcd_term_left_seq} {g_ptxcd_term_right_seq}} {\use:c {##1}}\bool_set:Nn \g_tmpa_left_bool {!\g_tmpa_left_bool}
                                                 }
-                                                {left-right-manual} {
-                                                    % Do Nothing lol
-                                                }
+                                            }
+                                            {left-right-manual} {
+                                                % Do Nothing lol
+                                            }
                                         }
                                         {
                                             \ClassError{rubos_tuda_template}{Unknown Term style Option: \use:c {\g_ptxcd_ex_term_style_tl}}{Available options are: left, center, left-right (default)}
@@ -584,20 +584,20 @@
 % #3 Gesamtpunktzahl
 % #4 Optional: Punktzahlformat (* wird mit Gesamtpuntzahl replaced)
 \DeclareDocumentCommand{\hue}{mmmO{
-            Gesamt:~*~\fp_compare:nTF {*=1}{
-                \PointName
-            } {
-                \PointsName
-            }
-        }}{
+        Gesamt:~*~\fp_compare:nTF {*=1}{
+            \PointName
+        } {
+            \PointsName
+        }
+    }}{
     \tl_clear_new:N \l_algo_ex_hue_totpoints_fp
     \tl_set:Nn \l_algo_ex_hue_totpoints_fp {#3}
     \tl_set:Nn \l_algo_ex_hue_pointformat_tl {#4}
     \regex_replace_all:nnN {\*} {\u{l_algo_ex_hue_totpoints_fp}} \l_algo_ex_hue_pointformat_tl
     \unskip\section*{
-      #1\hfill \l_algo_ex_hue_pointformat_tl
-      \\\textrm{\textit{#2}}
-     }
+		    #1\hfill \l_algo_ex_hue_pointformat_tl
+		    \\\textrm{\textit{#2}}
+	    }
 }
 
 % Compatibility with old Sheets
@@ -619,8 +619,12 @@
 \setlist[description]{style = multiline, leftmargin = 4cm, align = parright,font=\mdseries}
 
 \DeclareDocumentEnvironment{subtask*}{om}{
-	% \begingroup
-	\IfNoValueF{#1}{\keys_set:nn {ptxcd/subtask}{#1}}
-	\@subtask{#2}
-	% \endgroup
+    \IfTudaciVersionBetweenTF{3.0}{3.26}{
+        \begingroup
+        \IfNoValueF{#1}{\keys_set:nn {ptxcd/subtask}{#1}}
+        \@subtask{#2}
+        \tl_gset_eq:NN \g_tmpa_tl \@currentlabel
+        \endgroup
+        \tl_set_eq:NN \@currentlabel \g_tmpa_tl
+    }{}
 }{}
