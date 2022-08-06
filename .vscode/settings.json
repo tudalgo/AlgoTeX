@@ -3,7 +3,7 @@
         "-c",
         "%DIR%/",
         "%TMPFILE%",
-        "-l %WORKSPACE_FOLDER%/latexindent.yaml",
+        "-l=%WORKSPACE_FOLDER%/latexindent.yaml",
         // "-m",
         "-y=defaultIndent: '%INDENT%'"
     ],

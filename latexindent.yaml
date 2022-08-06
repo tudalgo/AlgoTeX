@@ -137,7 +137,7 @@ lookForPreamble:
 preambleCommandsBeforeEnvironments: 0
 
 # default value of indentation
-defaultIndent: "\t"
+defaultIndent: "    "
 
 # remove trailing whitespace from all lines
 removeTrailingWhitespace:
@@ -156,12 +156,24 @@ lookForAlignDelims:
       spacesAfterAmpersand: 1
       justification: left
       alignFinalDoubleBackSlash: 1
-      dontMeasure: 0
+      dontMeasure: 1
       delimiterRegEx: '(?<!\\)(&)'
       delimiterJustification: left
       lookForChildCodeBlocks: 1
    tabularx:
       delims: 1
+      alignDoubleBackSlash: 1
+      spacesBeforeDoubleBackSlash: 1
+      multiColumnGrouping: 1
+      alignRowsWithoutMaxDelims: 1
+      spacesBeforeAmpersand: 1
+      spacesAfterAmpersand: 1
+      justification: left
+      alignFinalDoubleBackSlash: 1
+      dontMeasure: 1
+      delimiterRegEx: '(?<!\\)(&)'
+      delimiterJustification: left
+      lookForChildCodeBlocks: 1
    longtable: 1
    tabu: 1
    array: 1
@@ -481,9 +493,9 @@ modifyLineBreaks:
     preserveBlankLines: 1
     condenseMultipleBlankLinesInto: 1
     oneSentencePerLine:
-        manipulateSentences: 0
-        removeSentenceLineBreaks: 0
-        textWrapSentences: 0
+        manipulateSentences: 1
+        removeSentenceLineBreaks: 1
+        textWrapSentences: 1
         sentenceIndent: ""
         sentencesFollow:
             par: 1
@@ -505,7 +517,7 @@ modifyLineBreaks:
             questionMark: 1
             other: 0
     textWrapOptions:
-        columns: 0
+        columns: 130
         huge: overflow    # forbid mid-word line breaks
         separator: ""
         perCodeBlockBasis: 0
@@ -553,11 +565,11 @@ modifyLineBreaks:
         BodyStartsOnOwnLine: 1
         EndStartsOnOwnLine: 1
         EndFinishesWithLineBreak: 1
-        equation*:
-            BeginStartsOnOwnLine: 1
-            BodyStartsOnOwnLine: 1
-            EndStartsOnOwnLine: 1
-            EndFinishesWithLineBreak: 1
+        # equation*:
+        #     BeginStartsOnOwnLine: 1
+        #     BodyStartsOnOwnLine: 1
+        #     EndStartsOnOwnLine: 1
+        #     EndFinishesWithLineBreak: 1
     ifElseFi:
         IfStartsOnOwnLine: 1
         BodyStartsOnOwnLine: 1
