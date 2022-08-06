@@ -158,7 +158,7 @@
     Zusätzlich zu den bekannten Dokumenteneigenschaften (wie \verb+\date{}+,\verb+\author{}+,.
     ..) bietet die Vorlage noch weitere
     Konstanten.
-    Jede Konstante lässt sich mit dem Befehl \verb+\<Konstantenname>{}+ setzen und mit dem Befehl \verb+get<Konstantenname>{}+
+    Jede Konstante lässt sich mit dem Befehl \verb+\<Konstantenname>{}+ setzen und mit dem Befehl \verb+\get<Konstantenname>{}+
     abrufen (der Erste Buchstabe des Konstantennamen ist hierbei immer groß).
     Außerdem hat jede Eigenschaft einen print-Befehl \verb+\print<Konstantenname>{}+ (der Erste Buchstabe des Konstantennamen ist
     hierbei immer groß), welcher bestimmt, wie der Befehl im Term angezeigt werden soll.
@@ -170,7 +170,7 @@
         \end{itemize}
     \end{beispiel}
     Hier ist eine vollständige Liste der relevanten Konstanten:
-    \begin{description}[leftmargin=2.5cm]
+    \begin{description}[leftmargin=2.5cm,itemsep=-.5ex]
         \item[title] \sloppy{}Der Titel
             des Übungsblattes, steht in der ersten Zeile.
             Der Titel hat keinen print-Befehl.
@@ -220,15 +220,16 @@
 
     Das erste, was nach dem Command \verb+\maketitle{}+ kommen sollte, ist die Hausübungsleiste.
     Die Hausübungsleiste kommt noch daher, dass früher auf jedem Blatt sowohl Vorübungen (V) als auch Hausübungen (H) standen.
-    Die Hausübungsleiste lässt sich mit dem
-    \verb+\hue{<hausübungsnummer>}{<hausübungstitel>}{<gesamtpunktzahl>}[<punktzahlformat>]+-Command erstellen.
+    Die Hausübungsleiste lässt sich mit dem command:\\
+    \verb+\hue{<hausübungsnummer>}{<hausübungstitel>}{<gesamtpunktzahl>}[<punktzahlformat>]+\\
+    erstellen.
     Das vierte, optionale Argument ist dabei nur dann notwendig, wenn das Standartpunkteformat überschrieben werden muss.
     Beim Punktzahlformat wird statt der Punktzahl einfach ein * als Platzhalter geschrieben.
 
     \begin{beispiele}
         \begin{itemize}
-            \item \verb+\hue{Hausübung \getSheetnumber{}}{\getShorttitle{}}{\getPointsTotal{}}+
-            \item \verb+\hue{FOP Projekt}{Pizza-Liefersevice}{\getPointsTotal{}}[Gesamt Teil A: * Punkte]+
+            \item\verb+\hue{Hausübung \getSheetnumber{}}{\getShorttitle{}}{\getPointsTotal{}}+
+            \item\verb+\hue{FOP Projekt}{Pizza-Liefersevice}{\getPointsTotal{}}[Gesamt Teil A: * Punkte]+%
         \end{itemize}
     \end{beispiele}
     \vspace{-1em}
@@ -254,6 +255,7 @@
             \end{subtask*}
         \end{task}
     \end{codeBlock}
+    \vspace*{-1cm}\vspace*{\fill}
 
     Wie man in dem Schema erkennen kann, sollte jede Aufgabe, die keine Teilaufgaben besitzt, eine festgelegte Punktzahl haben.
     Sobald ein Task mindestens einen Subtask besitzt, wird die Punktzahl des Tasks (n) mit \verb+auto+ automatisch aufsummiert und
@@ -266,13 +268,14 @@
     Weitere Details gibt es in der
     \href{http://mirrors.ctan.org/macros/latex/contrib/tuda-ci/doc/DEMO-TUDaExercise.pdf}{Dokumentation von \texttt{tudaexercise}}.
     % \begin{noindent}% \begin{noindent}
+
+    \clearpage
     \subsection{Kästen und Boxen}\label{boxes}
     \vspace{-1em}
     Ein wichtiger Bestandteil des Designs der Algorithmik-Übungsblätter sind die vordefinierten Boxen und environments.
     Es gibt drei Arten von Boxen:
 
-    \begin{figure}[ht!
-        ]
+    \begin{figure}[ht!]
         \begin{subfigure}[t]{\textwidth/3-1ex}
             \mbox{}\centering
             \begin{defBox}
@@ -389,7 +392,7 @@
         \end{subfigure}
         \begin{subfigure}[t]{\textwidth}
             \centering
-            \begin{codeBlock}[]{minted language=latex,title=\faCode\hfill Example Java Code-Block\hfill\faCode}
+            \begin{codeBlock}[]{minted language=latex,title=\codeBlockTitle{Example Java Code-Block}}
                     \begin{@codeBlock@}[]{minted language=java, title=\codeBlockTitle{Fibonacci}}
                         public static int fibRec(int n) {
                             return n < 2 ? n : fibRec(n - 1) + fibRec(n - 2);
@@ -402,10 +405,13 @@
         \label{fig:code-block-example}
         \caption{Beispiel Code-Block}
     \end{figure}
+
+    Alternativ gibt es auch den command \verb+\inputCode[<minted args>]{<tcolorbox args>}{<file>}+ kann der Code auch aus einer Externen Datei geladen werden (hierbei bietet sich z.B. an, Root- oder Student-Repo als Submodule einzubinden). Beispiel (siehe quellcode der Anleitung für Kontext):
+    \inputCode[firstline=244,lastline=246]{minted language=bash,title=\codeBlockTitle{Minted-Section of Gitignore File}}{../.gitignore}
     \subsection{Kopfzeilen}
     Neben den Kopfzeilen der TU-Vorlage werden durch \verb+algoexercise+ noch weitere Kopfzeilen definiert.
     Hier ist eine vollständige Liste der vordefinierten Kopfzeilen:
-    \begin{description}[leftmargin=3cm]
+    \begin{description}[leftmargin=3cm,itemsep=-1em]
         \item[title-name-id] Eine
             Kopfzeile mit dem Kurztitel, sowie namens- und Matrikelnummerfelder
         \item[title-name] Eine Kopfzeile mit dem Kurztitel und
