@@ -23,13 +23,13 @@
 
 \tl_gclear_new:N \g_algoexercise_keys_tl
 \tl_gset:Nn \g_algoexercise_keys_tl {
-    boxarc .code:n = \PassOptionsToPackage{\CurrentOption}{rubos-common},
-    dark_mode .code:n = \PassOptionsToPackage{\CurrentOption}{rubos-common},
+    boxarc .code:n = \PassOptionsToPackage{\CurrentOption}{algo-common},
+    dark_mode .code:n = \PassOptionsToPackage{\CurrentOption}{algo-common},
     load_common .bool_gset:N = \g_algo_ex_load_common_bool,
     load_common .initial:n = false,
     load_common . default:n = true,
-    fancy_row_color .code:n = \PassOptionsToPackage{\CurrentOption}{rubos-common},
-    shell_escape .code:n = \PassOptionsToPackage{\CurrentOption}{rubos-common},
+    fancy_row_color .code:n = \PassOptionsToPackage{\CurrentOption}{algo-common},
+    shell_escape .code:n = \PassOptionsToPackage{\CurrentOption}{algo-common},
     manual_term .bool_gset:N = \g_manual_term_bool,
     manual_term .initial:n = false,
     manual_term .default:n = true,
@@ -568,7 +568,20 @@
     H\arabic{task}.\arabic{subtask}%
 }
 % Point Formating
-\renewcommand*{\creditformat}[1]{\hfill#1}
+\cs_set_eq:NN \__old_pointformat \pointformat
+\renewcommand*{\pointformat}[1]{
+    \bool_if:NTF \g_algo_ex_show_points_bool {
+        \__old_pointformat{#1}
+    }{
+        \bool_if:NTF \l__ptxcd_points_auto_bool
+        \creditformatsum
+        \creditformat
+        {
+            ??\space\PointsName
+        }
+    }
+}
+\renewcommand*{\creditformat}[1]{#1}
 \renewcommand*{\subtaskformat}{\thesubtask{} :\enskip}
 
 % Section Fonts
@@ -584,11 +597,7 @@
 % #3 Gesamtpunktzahl
 % #4 Optional: Punktzahlformat (* wird mit Gesamtpuntzahl replaced)
 \DeclareDocumentCommand{\hue}{mmmO{
-        Gesamt:~*~\fp_compare:nTF {*=1}{
-            \PointName
-        } {
-            \PointsName
-        }
+        Gesamt:~\pointformat{*}
     }}{
     \tl_clear_new:N \l_algo_ex_hue_totpoints_fp
     \tl_set:Nn \l_algo_ex_hue_totpoints_fp {#3}
@@ -628,3 +637,32 @@
         \tl_set_eq:NN \@currentlabel \g_tmpa_tl
     }{}
 }{}
+
+
+\renewcommand*\sectionlinesformat[4]{%
+    \parbox{\linewidth}{
+        \bool_if:cT {g__ptxcd_ruled_#1_bool} {
+            \rule[5\g_ptxcd_titlerule_dim]{\linewidth}{\g_ptxcd_titlerule_dim}\par\nointerlineskip
+        }
+        \@hangfrom{%
+            \hskip #2#3}{
+            \tl_if_eq:nnT {#1} {task} {
+                \exp_args:No \tl_if_empty:nF {#4}
+                {:~}
+                \bool_if:NT \l__ptxcd_points_auto_bool {
+                    \exp_args:NNx \prop_get:NnN \g__ptxcd_loaded_points_prop {\thetask} \l_ptxcd_tmp_tl
+                    \quark_if_no_value:NF \l_ptxcd_tmp_tl {
+                        \fp_set:Nn \l_ptxcd_ex_task_points_fp {\l_ptxcd_tmp_tl}
+                    }
+                }
+            }
+            #4
+            \tl_if_in:nnT {#1} {task} {
+                \hfill\tl_if_empty:cTF{l_ptxcd_ex_#1_credit_tl}
+                {\pointformat{\fp_to_decimal:c {l_ptxcd_ex_#1_points_fp}}}
+                {\creditformat{\tl_use:c {l_ptxcd_ex_#1_credit_tl}}}
+            }
+            \rule[-\dp\strutbox]{0pt}{\dp\strutbox}\par}\nointerlineskip
+        \skip_vertical:n {\ptxcd_titlerule_sep: -\dp\strutbox}
+        \bool_if:cT {g__ptxcd_ruled_#1_bool} {\smash{\rule{\linewidth}{\g_ptxcd_titlerule_dim}}}
+    }}
