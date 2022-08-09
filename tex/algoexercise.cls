@@ -13,6 +13,9 @@
 \ProvidesExplClass{algoexercise}{\filedate}
 {\fileversion}{Exercise sheet template class for FoP and AuD}
 
+% Used by CI/CD to inject options
+\IfFileExists{options.cfg}{\input{options.cfg}}{}
+
 \RequirePackage[minted_workaround,caption_workaround]{algo-common}
 
 % Packages that need to be loaded before TUDA-Exercise Class
@@ -51,6 +54,12 @@
     hidepoints .bool_gset_inverse:N = \g_algo_ex_show_points_bool,
     hidepoints .initial:n = false,
     hidepoints .default:n = true,
+    showtotalpoints .bool_gset:N = \g_algo_ex_show_total_points_bool,
+    showtotalpoints .initial:n = true,
+    showtotalpoints .default:n = true,
+    hidetotalpoints .bool_gset_inverse:N = \g_algo_ex_show_total_points_bool,
+    hidetotalpoints .initial:n = false,
+    hidetotalpoints .default:n = true,
     titleprefix .tl_gset:N = \g_algo_ex_title_prefix_tl,
     titleprefix .default:n = {},
     titleprefix .initial:n = {},
@@ -68,9 +77,6 @@
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{tudaexercise}}
 \ProcessOptions\relax
 % \ProcessKeysOptions{algo/exercise}
-
-% Used by CI/CD to inject options
-\IfFileExists{options.cfg}{\input{options.cfg}}{}
 
 \bool_if:NTF \g_algo_ex_corporate_design_bool {
     \LoadClass[
@@ -569,9 +575,9 @@
 }
 % Point Formating
 \cs_set_eq:NN \__old_pointformat \pointformat
-\renewcommand*{\pointformat}[1]{
-    \bool_if:NTF \g_algo_ex_show_points_bool {
-        \__old_pointformat{#1}
+\DeclareDocumentCommand{\pointformat}{O{\g_algo_ex_show_points_bool}m}{
+    \bool_if:nTF {#1} {
+        \__old_pointformat{#2}
     }{
         \bool_if:NTF \l__ptxcd_points_auto_bool
         \creditformatsum
@@ -597,7 +603,7 @@
 % #3 Gesamtpunktzahl
 % #4 Optional: Punktzahlformat (* wird mit Gesamtpuntzahl replaced)
 \DeclareDocumentCommand{\hue}{mmmO{
-        Gesamt:~\pointformat{*}
+        Gesamt:~\pointformat[\g_algo_ex_show_total_points_bool]{*}
     }}{
     \tl_clear_new:N \l_algo_ex_hue_totpoints_fp
     \tl_set:Nn \l_algo_ex_hue_totpoints_fp {#3}
