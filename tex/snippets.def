@@ -73,3 +73,11 @@
         Sie können vom Leitfaden abweichen und dabei mindestens genauso aussagekräftige Testergebnisse erzeugen.
     \end{hinweis}
 }
+\DeclareSnippet{note-remove-crash}{Globale Verbindliche Anforderungen und Hinweise}{
+    \begin{erinnerung}
+        \bigskip
+        Beachten Sie bei \textit{jedem} Übungsblatt,
+        dass nach Bearbeitung einer Aufgabe die jeweiligen mit \inlinejava{// TODO} markierten Aufrufe von \inlinejava{crash} entfernt werden müssen.
+        Andernfalls funktioniert Ihre Implementation nicht korrekt und die jeweiligen Teile Ihres Quelltextes werden \textit{nicht} bewertet!
+    \end{erinnerung}
+}
