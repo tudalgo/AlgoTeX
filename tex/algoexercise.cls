@@ -1,7 +1,7 @@
 % FoP and AuD Exercise template class
 % Author: Ruben Deisenroth
-\def\fileversion{2.2.6}
-\def\filedate{2022/07/29}
+\def\fileversion{2.2.7}
+\def\filedate{2022/08/27}
 
 % Sets the LaTeX version for the package to work.
 \NeedsTeXFormat{LaTeX2e}
@@ -633,8 +633,8 @@
 \SetLabelAlign{parright}{\parbox[t]{\labelwidth}{\raggedleft#1}}
 \setlist[description]{style = multiline, leftmargin = 4cm, align = parright,font=\mdseries}
 
-\DeclareDocumentEnvironment{subtask*}{om}{
-    \IfTudaciVersionBetweenTF{3.0}{3.26}{
+\IfTudaciVersionBetweenTF{3.0}{3.26}{
+    \DeclareDocumentEnvironment{subtask*}{om}{
         \begingroup
         \IfNoValueF{#1}{\keys_set:nn {ptxcd/subtask}{#1}}
         \@subtask{#2}
