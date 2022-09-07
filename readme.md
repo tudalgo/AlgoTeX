@@ -1,5 +1,5 @@
 # AlgoTeX - Die LaTeX-Vorlage der FOP und AUD
-
+[![Build](https://github.com/tudalgo/AlgoTeX/actions/workflows/build.yml/badge.svg)](https://github.com/tudalgo/AlgoTeX/actions/workflows/build.yml)
 ## Voraussetzungen
 - Latex-Installation (z.B. MikTex oder TexLive)
 - Installation der [TU-Template](https://github.com/tudace/tuda_latex_templates) und der verwendeten Plugins
@@ -36,8 +36,20 @@ Die Vorlage wurde für LuaLaTeX geschrieben, ist aber dank des Latex3-Kernels au
 Für Arch-basierende Linux-Distributionen wird das Paket [`algotex-git`](https://aur.archlinux.org/packages/algotex-git) im [`AUR`](https://aur.archlinux.org/) bereitgestellt.
 
 ### Manuell
-Der [`tex`](tex/)-Ordner der Vorlage muss im TeX-Path existieren.
-Diesen findet man mit dem Befehl:
+#### l3build
+Da es aktuell noch keine Vollständige Dokumentation gibt, ist das Paket nicht auf CTAN erhältlich. Das Paket kann durch den folgenden Befehl installiert werden:
+```sh
+l3build install --full
+```
+Alternativ ohne Dokumentation auch durch:
+```sh
+l3build install
+```
+
+#### komplett manuell
+Falls `l3build` nicht verfügbar ist (z.B. bei Overleaf oder Sharelatex) kann der Inhalt des [`tex`](tex/)-Ordners der Vorlage in das Arbeitsverzeichnis kopiert werden, oder per .latexmkrc eingebunden werden.
+
+Den lokalen TeX-Path findet man mit dem Befehl:
 ```sh
 kpsewhich -var-value=TEXMFHOME
 ```
