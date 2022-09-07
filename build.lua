@@ -36,8 +36,8 @@ function update_tag(file, content, tagname, tagdate)
         )
         -- \ProvidesPackage{<name>}[<date> <description>]
         temp = string.gsub(temp,
-            "\\ProvidesPackage%{([^}]*)%}%{%d%d%d%d.%d%d.%d%d ([^}]*)%}",
-            "\\ProvidesPackage{%1}{" .. tagdate .. " %2}"
+            "\\ProvidesPackage%{([^}]*)%}%[%d%d%d%d.%d%d.%d%d ([^}]*)%]",
+            "\\ProvidesPackage{%1}[" .. tagdate .. " %2]"
         )
         -- \ProvidesExplClass{<name>}{<date>}{<version>}{<description>}
         return temp.gsub(temp,
