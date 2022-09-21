@@ -50,10 +50,11 @@
 \LoadClass[]{tudabeamer}
 
 %Includes
-\RequirePackage[ngerman]{babel}
+\RequirePackage{babel}
 \RequirePackage{float}
 \RequirePackage{fontawesome5}
-\RequirePackage[babel]{csquotes}
+\PassOptionsToPackage{babel}{csquotes}
+\RequirePackage{csquotes}
 \RequirePackage{media9}
 \RequirePackage{animate}
 \RequirePackage[overlay]{textpos}
