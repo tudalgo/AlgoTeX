@@ -439,6 +439,8 @@
         \item[title] überschreibt den angezeigten Text
         \item[ref] Spezifischere Referenz (z.B. auf eine Bestimmte Methode, Attribut oder Konstruktor)
     \end{description}
+
+    \vspace{-2em}
     \paragraph{Beispiele}\mbox{}
 
     \begin{minipage}{0.3\textwidth}
@@ -450,17 +452,17 @@
         \end{codeBlock}
     \end{minipage}
 
-    \begin{minipage}{0.3\textwidth}
+    \begin{minipage}{0.4\textwidth}
         \refJavaDoc[jdk=11,ref={add(int,E)}]{java.util.ArrayList}
     \end{minipage}%
-    \begin{minipage}{.7\textwidth}
+    \begin{minipage}{.6\textwidth}
         \begin{codeBlock}[]{minted language=latex}
-            \refJavaDoc[jdk=11,ref={add(int,E)}]{java.util.ArrayList}
+            \refJavaDoc[jdk=11, ref={add(int,E)}]{java.util.ArrayList}
         \end{codeBlock}
     \end{minipage}
 
     \begin{minipage}{0.3\textwidth}
-        \refJavaDoc[jdk=11,title=Methode \inlinejava{size} von \inlinejava{ArrayList},ref=size()]{java.util.ArrayList}
+        \refJavaDoc[jdk=11,title=Methode \inlinejava{size} von \inlinejava{ArrayList}, ref=size()]{java.util.ArrayList}
     \end{minipage}%
     \begin{minipage}{.7\textwidth}
         \begin{codeBlock}[]{minted language=latex}
@@ -468,12 +470,14 @@
         \end{codeBlock}
     \end{minipage}
 
+    \vspace{-2em}
+
     \subsection{Folien-Referenzen}
     Um die Foliensätze der FOP zu referenzieren, ist die folgende Syntax zu verwenden:
     \begin{codeBlock}[]{minted language=latex}
-        \fopSlideRef[<first>][<last>]{<pdf-name>}
+        \fopSlideRef[<first>][<last>][<title overwrite>]{<pdf-name>}
     \end{codeBlock}
-
+    \vspace{-2em}
     \paragraph{Beispiele}\mbox{}
 
     \begin{minipage}{0.3\textwidth}
@@ -500,6 +504,15 @@
     \begin{minipage}{.7\textwidth}
         \begin{codeBlock}[]{minted language=latex}
             \fopSlideRef{Folien 06 Generics}
+        \end{codeBlock}
+    \end{minipage}
+
+    \begin{minipage}{0.3\textwidth}
+        Die \fopSlideRef[1][3][relevanten Folien]{Folien 06 Generics}.
+    \end{minipage}%
+    \begin{minipage}{.7\textwidth}
+        \begin{codeBlock}[]{minted language=latex}
+            Die \fopSlideRef[1][3][relevanten Folien]{Folien 06 Generics}.
         \end{codeBlock}
     \end{minipage}
 

@@ -864,12 +864,16 @@ overlay={ % Für Grauen Bereich links
 }
 
 % #1
-\DeclareDocumentCommand{\fopSlideRef}{O{1}ov}{
-    \regex_extract_once:nnN { Folien\ (\d{1,2}[a-z]{0,1})\ (.*)(\.pdf){0,1} } { #3 } \l_foo_seq
-    \href{\prop_item:Nn \g_rubos_document_opts_prop {fopslides} #3.pdf\#page=#1}{
-        Kapitel~\seq_item:Nn \l_foo_seq {2}
-        \IfNoValueTF{#2}{\tl_if_eq:nnTF{#1}{1}{~}{,~ab~Folie~#1~}}{,~Folien~#1-#2~}
-        der~FOP
+\DeclareDocumentCommand{\fopSlideRef}{O{1}oov}{
+    \regex_extract_once:nnN { Folien\ (\d{1,2}[a-z]{0,1})\ (.*)(\.pdf){0,1} } { #4 } \l_foo_seq
+    \href{\prop_item:Nn \g_rubos_document_opts_prop {fopslides} #4.pdf\#page=#1}{
+        \tl_if_novalue:nTF {#3} {
+            Kapitel~\seq_item:Nn \l_foo_seq {2}
+            \tl_if_novalue:nTF {#2} {
+                \tl_if_eq:nnTF{#1}{1}{~}{,~ab~Folie~#1~}
+            } {,~Folien~#1-#2~}
+            der~FOP
+        } {#3}
     }
 }
 
