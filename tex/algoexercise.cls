@@ -517,15 +517,15 @@
                     \StudentName
                 },
                 #1 / algo .code:n = \tl_gset:cn {g_ptxcd_ex_headline_#1_tl} {
-                    \textbf{\getFach{}\space{}}
+                    \textsf{\textbf{\getFach{}\space{}}
                     im\space\fatsf{\getSemester{}}\space{}
                     bei\space\fatsf{\getDozent{}}\hfill\fatsf{\@title}~--~\g_ptxcd_shorttitle_tl\par
-                    \StudentName\StudentID
+                    \StudentName\StudentID}
                 },
                 #1 / algo-min .code:n = \tl_gset:cn {g_ptxcd_ex_headline_#1_tl} {
-                    \textbf{\getFach{}\space{}}
+                    \textsf{\textbf{\getFach{}\space{}}
                     im\space\fatsf{\getSemester{}}\space{}
-                    bei\space\fatsf{\getDozent{}}\hfill\fatsf{\@title}~--~\g_ptxcd_shorttitle_tl
+                    bei\space\fatsf{\getDozent{}}\hfill\fatsf{\@title}~--~\g_ptxcd_shorttitle_tl}
                 },
                 % Backwards Compatibility
                 #1 / aud .meta:n = {#1 / algo = ##1},
@@ -549,11 +549,11 @@
                 #1 / name-id .code:n = \tl_gset:cn {g_TUDa_ex_headline_#1_tl} {\StudentName\StudentID},
                 #1 / name .code:n = \tl_gset:cn {g_TUDa_ex_headline_#1_tl} {\StudentName},
                 #1 / algo .code:n= \tl_gset:cn {g_TUDa_ex_headline_#1_tl} {
-                    \textbf{\usekomavar{subject}\space{}}im\space\fatsf{\getSemester{}}\space{}bei\space\fatsf{\getDozent}\hfill \@title - \g_TUDa_shorttitle_tl\par
-                    \StudentName\StudentID
+                    \textsf{\textbf{\usekomavar{subject}\space{}}im\space\fatsf{\getSemester{}}\space{}bei\space\fatsf{\getDozent}\hfill \@title - \g_TUDa_shorttitle_tl\par
+                    \StudentName\StudentID}
                 },
                 #1 / algo-min .code:n= \tl_gset:cn {g_TUDa_ex_headline_#1_tl} {
-                    \textbf{\usekomavar{subject}\space{}}im\space\fatsf{\getSemester{}}\space{}bei\space\fatsf{\getDozent}\hfill \@title - \g_TUDa_shorttitle_tl
+                    \textsf{\textbf{\usekomavar{subject}\space{}}im\space\fatsf{\getSemester{}}\space{}bei\space\fatsf{\getDozent}\hfill \@title - \g_TUDa_shorttitle_tl}
                 },
                 % Backwards Compatibility
                 #1 / aud .meta:n = {#1 / algo = ##1},
