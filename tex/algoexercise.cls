@@ -518,14 +518,14 @@
                 },
                 #1 / algo .code:n = \tl_gset:cn {g_ptxcd_ex_headline_#1_tl} {
                     \textsf{\textbf{\getFach{}\space{}}
-                    im\space\fatsf{\getSemester{}}\space{}
-                    bei\space\fatsf{\getDozent{}}\hfill\fatsf{\@title}~--~\g_ptxcd_shorttitle_tl\par
-                    \StudentName\StudentID}
+                        im\space\fatsf{\getSemester{}}\space{}
+                        bei\space\fatsf{\getDozent{}}\hfill\fatsf{\@title}~--~\g_ptxcd_shorttitle_tl\par
+                        \StudentName\StudentID}
                 },
                 #1 / algo-min .code:n = \tl_gset:cn {g_ptxcd_ex_headline_#1_tl} {
                     \textsf{\textbf{\getFach{}\space{}}
-                    im\space\fatsf{\getSemester{}}\space{}
-                    bei\space\fatsf{\getDozent{}}\hfill\fatsf{\@title}~--~\g_ptxcd_shorttitle_tl}
+                        im\space\fatsf{\getSemester{}}\space{}
+                        bei\space\fatsf{\getDozent{}}\hfill\fatsf{\@title}~--~\g_ptxcd_shorttitle_tl}
                 },
                 % Backwards Compatibility
                 #1 / aud .meta:n = {#1 / algo = ##1},
@@ -550,7 +550,7 @@
                 #1 / name .code:n = \tl_gset:cn {g_TUDa_ex_headline_#1_tl} {\StudentName},
                 #1 / algo .code:n= \tl_gset:cn {g_TUDa_ex_headline_#1_tl} {
                     \textsf{\textbf{\usekomavar{subject}\space{}}im\space\fatsf{\getSemester{}}\space{}bei\space\fatsf{\getDozent}\hfill \@title - \g_TUDa_shorttitle_tl\par
-                    \StudentName\StudentID}
+                        \StudentName\StudentID}
                 },
                 #1 / algo-min .code:n= \tl_gset:cn {g_TUDa_ex_headline_#1_tl} {
                     \textsf{\textbf{\usekomavar{subject}\space{}}im\space\fatsf{\getSemester{}}\space{}bei\space\fatsf{\getDozent}\hfill \@title - \g_TUDa_shorttitle_tl}
@@ -610,9 +610,9 @@
     \tl_set:Nn \l_algo_ex_hue_pointformat_tl {#4}
     \regex_replace_all:nnN {\*} {\u{l_algo_ex_hue_totpoints_fp}} \l_algo_ex_hue_pointformat_tl
     \unskip\section*{
-		    #1\hfill \l_algo_ex_hue_pointformat_tl
-		    \\\textrm{\textit{#2}}
-	    }
+            #1\hfill \l_algo_ex_hue_pointformat_tl
+            \\\textrm{\textit{#2}}
+        }
 }
 
 % Compatibility with old Sheets

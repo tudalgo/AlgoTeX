@@ -91,8 +91,8 @@ node~distance .default:n = {1cm},
         }
         }{
         \node[listnode, on chain,join=by {listedge}](rubos@linkedlist@curr){%
-                \nodepart[text width=.5cm]{one}\ifEmptySublistTF{\linkedListItem}{$\varnothing$}{\linkedListItem}%
-            };
+            \nodepart[text width=.5cm]{one}\ifEmptySublistTF{\linkedListItem}{$\varnothing$}{\linkedListItem}%
+        };
         }
         \ifnum\linkedListIndex=0%
             % \expandafter\ifx\csname g_audutils_linked_list_mark_head_bool\endcsname%
@@ -114,17 +114,17 @@ node~distance .default:n = {1cm},
         \def\blockwidth{3.5em} % Cell width
         % draw Array
         \foreach [count=\pos from 1] \x/\y in {#1}{%
-                \node[
-                    draw,very thick,             % Node with the cell content
-                    minimum height=\blockheight,
-                    minimum width=\blockwidth,
-                    inner sep=0pt, outer sep=0pt,
-                ] (n\pos) at (\pos*\blockwidth,0) {\x};%
-                \node[                                   % Node with the cell title
-                    minimum height=0.75*\blockheight,
-                    minimum width=\blockwidth,
-                    inner sep=0pt, outer sep=0pt,
-                    anchor=south] at (n\pos.north) {\y};
-            }
+            \node[
+                draw,very thick,             % Node with the cell content
+                minimum height=\blockheight,
+                minimum width=\blockwidth,
+                inner sep=0pt, outer sep=0pt,
+            ] (n\pos) at (\pos*\blockwidth,0) {\x};%
+            \node[                                   % Node with the cell title
+                minimum height=0.75*\blockheight,
+                minimum width=\blockwidth,
+                inner sep=0pt, outer sep=0pt,
+                anchor=south] at (n\pos.north) {\y};
+        }
     \end{tikzpicture}%
 }%
