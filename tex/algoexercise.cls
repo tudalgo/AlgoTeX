@@ -130,18 +130,30 @@
     \seq_if_empty:NF \g_ptxcd_author_seq {\tl_gset:Nn \printAuthor {\int_compare:nTF{\seq_count:N \g_ptxcd_author_seq > 1}{Übungsblattbetreuer}{Übungsblattbetreuer}:~\hfill\seq_use:Nnnn \g_ptxcd_author_seq {~\authorandname{}~} {,~} {~\authorandname{}~}\par}}
 }
 
-\renewcommand*{\sheetnumber}[1]{\tl_gset:Nx \g_ptxcd_ex_sheetnum_tl {#1}}
-% Sheet number
-\newcommand*{\getSheetnumber}{
-    \padzeroes{
+\DeclareDocumentCommand{\sheetnumber}{s O{2} m}{
+    \bool_if:nTF {#1} {
         \IfTudaciVersionAtLeastTF{3.0}{
-            \g_ptxcd_ex_sheetnum_tl
+            \tl_gset:Nx \g_ptxcd_ex_sheetnum_tl {#3}
         }{
-            \g_TUDa_ex_sheetnum_tl
+            \tl_gset:Nx \g_TUDa_ex_sheetnum_tl {#3}
+        }
+    }{
+        \IfTudaciVersionAtLeastTF{3.0}{
+            \tl_gset:Nx \g_ptxcd_ex_sheetnum_tl {\padzeroes[#2]{#3}}
+        }{
+            \tl_gset:Nx \g_TUDa_ex_sheetnum_tl {\padzeroes[#2]{#3}}
         }
     }
 }
-\newcommand*{\printSheetNumber}{\tl_if_empty:NF \g_ptxcd_ex_sheetnum_tl {\sffamily\textbf{Übungsblatt\space{}Nummer:}\space\padzeroes{\getSheetnumber}}}
+% Sheet number
+\newcommand*{\getSheetnumber}{
+    \IfTudaciVersionAtLeastTF{3.0}{
+        \g_ptxcd_ex_sheetnum_tl
+    }{
+        \g_TUDa_ex_sheetnum_tl
+    }
+}
+\newcommand*{\printSheetNumber}{\tl_if_empty:NF \g_ptxcd_ex_sheetnum_tl {\sffamily\textbf{Übungsblatt\space{}Nummer:}\space\getSheetnumber}}
 
 % Sheet Version
 \DeclareDocumentProperty{version}[1.0][v*]
