@@ -81,3 +81,13 @@
         Andernfalls funktioniert Ihre Implementation nicht korrekt und die jeweiligen Teile Ihres Quelltextes werden \textit{nicht} bewertet!
     \end{erinnerung}
 }
+\DeclareSnippet{fop-2223-dokumentation-verpflichtend}{}{
+    \begin{defBox}
+        \textbf{Verbindliche Anforderungen: Dokumentieren Ihres Quellcodes}
+        \medskip\\
+        Alle von Ihnen deklarierten Klassen, Interfaces und Methoden (inklusive Konstruktoren) müssen mittels JavaDoc dokumentiert werden.
+
+        Beachten Sie hierzu das Informationsblatt zum \href{https://moodle.informatik.tu-darmstadt.de/mod/resource/view.php?id=51923}{\textit{Dokumentieren von Quellcode mittels JavaDoc}} in unserem Moodle-Kurs.
+        Sie verlieren für jede deklarierte aber nicht dokumentierte Methode einen Punkt Abzug.
+    \end{defBox}
+}
