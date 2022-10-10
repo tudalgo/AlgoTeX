@@ -91,3 +91,12 @@
         Sie verlieren für jede deklarierte aber nicht dokumentierte Methode einen Punkt Abzug.
     \end{defBox}
 }
+\DeclareSnippet{matrikelnummer-eintragen}{}{
+    \begin{hinweis}
+        In unserem Studierenden-Guide finden Sie im Abschnitt \href{https://wiki.tudalgo.org/preparation/matriculation-number}{\textit{Vorbereitung $\rightarrow$ Eintragen Ihrer Matrikelnummer}} eine Anleitung dazu,
+        wie Sie Ihre Matrikelnummer in Moodle eintragen.
+
+        \textbf{Wenn Sie Ihre Matrikelnummer nicht oder nicht korrekt in Moodle hinterlegt haben,
+        kann Ihre Zulassung und Ihr Bonus unter Umständen nicht korrekt verbucht werden!}
+    \end{hinweis}
+}
