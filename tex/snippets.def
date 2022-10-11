@@ -125,3 +125,10 @@
         Andernfalls wird die jeweilige Aufgabe nicht automatisiert bewertet.
     \end{grayInfoBox}
 }
+\DeclareSnippet{notation-naming-cartesian}{}{
+    \begin{grayInfoBox}
+        Auf diesem Übungsblatt werden Aufzählungen überschneidender Namen verkürzt dargestellt,
+        indem nur disjunkte Teile von Namen in geschweiften Klammern aufgezählt werden.
+        Bei mehreren disjunkten Teilen in Namen ergeben sich die Namen aus dem kartesischen Produkt. Beispiel: \texttt{set\{X,Y\}For\{A,B\}} ist die Abkürzung für die Namen \texttt{setXForA}, \texttt{setXForB}, \texttt{setYForA} und \texttt{setYForB}.
+    \end{grayInfoBox}
+}
