@@ -100,3 +100,10 @@
         kann Ihre Zulassung und Ihr Bonus unter Umständen nicht korrekt verbucht werden!}
     \end{hinweis}
 }
+\DeclareSnippet{plagiarismus}{}{
+    \begin{defBox}
+        \textbf{Wir verfolgen \enquote{Abschreiben} und andere Arten von Täuschungsversuchen!}
+        \par
+        Disziplinarische Maßnahmen treffen nicht nur die, die abschreiben, sondern auch die, die abschreiben lassen! Beachten Sie die Seite \href{https://www.informatik.tu-darmstadt.de/studium_fb20/im_studium/studienbuero/plagiarismus/index.de.jsp}{\textit{Grundregeln der Wissenschaftsethik}} des Fachbereichs Informatik.
+    \end{defBox}
+}
