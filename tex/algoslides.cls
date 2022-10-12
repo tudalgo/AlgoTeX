@@ -133,7 +133,7 @@
 \IfDarkModeT{
     \cs_if_exist:NT \setbeamercolor {
         \setbeamercolor*{smallrule}{bg=.}
-        \setbeamercolor*{normal~text}{bg=,fg=.}
+        \setbeamercolor*{normal~text}{bg=\thepagecolor,fg=.}
         \setbeamercolor*{background~canvas}{parent=normal~text}
         \setbeamercolor*{section~in~toc}{parent=normal~text}
         \setbeamercolor*{subsection~in~toc}{parent=normal~text,fg=.}
