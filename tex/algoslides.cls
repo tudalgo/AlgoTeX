@@ -11,6 +11,9 @@
 \ProvidesExplClass{algoslides}{\filedate}
 {\fileversion}{FoP and AuD Beamer Presentation Template}
 
+% Used by CI/CD to inject options
+\IfFileExists{options.cfg}{\input{options.cfg}}{}
+
 \RequirePackage[minted_workaround,caption_workaround]{algo-common}
 \RequirePackage{xr-hyper}
 
