@@ -1,4 +1,4 @@
-% FoP and AuD Exercise template class
+% FOP and AuD Exercise template class
 % Author: Ruben Deisenroth
 \def\fileversion{2.2.7}
 \def\filedate{2022/08/27}
@@ -11,7 +11,7 @@
 
 % Identification of the class and its date and version.
 \ProvidesExplClass{algoexercise}{\filedate}
-{\fileversion}{Exercise sheet template class for FoP and AuD}
+{\fileversion}{Exercise sheet template class for FOP and AuD}
 
 % Used by CI/CD to inject options
 \IfFileExists{options.cfg}{\input{options.cfg}}{}
@@ -194,8 +194,8 @@
 %%--Templates--%%
 \str_case_e:nnTF {\prop_item:Nn \g_algo_ex_opts_prop {template}} {
     {fop} {
-        % \setkomavar{subject}[Funktionale~und~objektorientierte~Programmierkonzepte]{FoP}
-        \fach[Funktionale~und~objektorientierte~Programmierkonzepte]{FoP}
+        % \setkomavar{subject}[Funktionale~und~objektorientierte~Programmierkonzepte]{FOP}
+        \fach[Funktionale~und~objektorientierte~Programmierkonzepte]{FOP}
         \tl_gset:Nn \g_algo_ex_title_prefix_tl {\getFach*{}}
     }
     {aud} {
