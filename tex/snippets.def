@@ -85,10 +85,10 @@
     \begin{defBox}
         \textbf{Verbindliche Anforderungen: Dokumentieren Ihres Quellcodes}
         \medskip\\
-        Alle von Ihnen deklarierten Klassen, Interfaces und Methoden (inklusive Konstruktoren) müssen mittels JavaDoc dokumentiert werden.
+        Alle von Ihnen deklarierten Klassen, Interfaces und Methoden (inklusive Konstruktoren) \textit{müssen} für diese Hausübung mittels JavaDoc dokumentiert werden.
+        Für jede korrekte Deklaration ohne Dokumentation verlieren Sie jeweils einen Punkt.
 
-        Beachten Sie hierzu das Informationsblatt zum \href{https://moodle.informatik.tu-darmstadt.de/mod/resource/view.php?id=51923}{\textit{Dokumentieren von Quellcode mittels JavaDoc}} in unserem Moodle-Kurs.
-        Sie verlieren für jede deklarierte aber nicht dokumentierte Methode einen Punkt Abzug.
+        Beachten Sie die Seite \href{https://wiki.tudalgo.org/exercises/documentation/}{\textit{Hausübungen} $\rightarrow$ \textit{Dokumentieren von Quellcode}} im Studierenden-Guide.
     \end{defBox}
 }
 \DeclareSnippet{matrikelnummer-eintragen}{}{
