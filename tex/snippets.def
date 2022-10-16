@@ -83,12 +83,12 @@
 }
 \DeclareSnippet{fop-2223-dokumentation-verpflichtend}{}{
     \begin{defBox}
-        \textbf{Verbindliche Anforderungen: Dokumentieren Ihres Quellcodes}
+        \textbf{Verbindliche Anforderung: Dokumentieren Ihres Quelltexts}
         \medskip\\
         Alle von Ihnen deklarierten Klassen, Interfaces und Methoden (inklusive Konstruktoren) \textit{müssen} für diese Hausübung mittels JavaDoc dokumentiert werden.
         Für jede korrekte Deklaration ohne Dokumentation verlieren Sie jeweils einen Punkt.
 
-        Beachten Sie die Seite \href{https://wiki.tudalgo.org/exercises/documentation/}{\textit{Hausübungen} $\rightarrow$ \textit{Dokumentieren von Quellcode}} im Studierenden-Guide.
+        Beachten Sie \href{https://wiki.tudalgo.org/exercises/documentation/}{\textit{Hausübungen} $\rightarrow$ \textit{Dokumentieren von Quelltext}} im Studierenden-Guide.
     \end{defBox}
 }
 \DeclareSnippet{matrikelnummer-eintragen}{}{
