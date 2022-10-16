@@ -53,7 +53,6 @@
 }
 \DeclareSnippet{tests-introduction}{Globale Hinweise für Tests}{
     \begin{hinweis}
-        \medskip
         Auch wenn Sie für das Erstellen von Tests keine Punkte erhalten:
         Das Teilen jeglicher Tests zur Hausübung
         (auch solcher,
@@ -75,7 +74,6 @@
 }
 \DeclareSnippet{note-remove-crash}{Globale Verbindliche Anforderungen und Hinweise}{
     \begin{erinnerung}
-        \medskip
         Beachten Sie bei \textit{jedem} Übungsblatt,
         dass nach Bearbeitung einer Aufgabe die jeweiligen mit \inlinejava{// TODO} markierten Aufrufe von \inlinejava{crash} entfernt werden müssen.
         Andernfalls funktioniert Ihre Implementation nicht korrekt und die jeweiligen Teile Ihres Quelltextes werden \textit{nicht} bewertet!
@@ -97,7 +95,7 @@
         wie Sie Ihre Matrikelnummer in Moodle eintragen.
 
         \textbf{Wenn Sie Ihre Matrikelnummer nicht oder nicht korrekt in Moodle hinterlegt haben,
-        kann Ihre Zulassung und Ihr Bonus unter Umständen nicht korrekt verbucht werden!}
+            kann Ihre Zulassung und Ihr Bonus unter Umständen nicht korrekt verbucht werden!}
     \end{hinweis}
 }
 \DeclareSnippet{plagiarismus}{}{
