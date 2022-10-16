@@ -4,7 +4,7 @@
 % #4: snippet
 \DeclareSnippet{globalvanforderungen}{Globale Verbindliche Anforderungen}{
     \begin{vanforderungenahu}
-        \bigskip
+        \medskip
         Das Dokumentieren und Kommentieren Ihres Quelltextes ist nicht verbindlich,
         wird zum besseren Verständnis \mbox{Ihrer} Lösung jedoch empfohlen.
         Alle zur Bewertung dieser Hausübung relevanten Deklarationen von Klassen, Methoden (hierzu zählen auch Konstruktoren) und Attributen sind bereits in der Quelltext-Vorlage enthalten
@@ -19,7 +19,7 @@
         wenn Aufrufe von in der Vorlage deklarierten Methoden
         (auch von solchen, welche von Ihnen implementiert werden)
         durch andere, korrekte Implementationen ersetzt werden.
-        \par\bigskip
+        \par\medskip
         Der Verstoß gegen verbindliche Anforderungen führt zu Punktabzügen und kann die korrekte Bewertung Ihrer Abgabe unter Umständen beeinflussen.
         Die Implementation einer in der Quelltext-Vorlage deklarierten Methode wird nur bewertet,
         wenn der mit \texttt{TODO} markierte Exception-Wurf entfernt wird.
@@ -28,10 +28,10 @@
 \DeclareSnippet{globalhints}{Globale Hinweise}{
     \begin{infoBox}
         \fatsf{Hinweise für alle Hausübungen:}
-        \bigskip\\
+        \medskip\\
         Die zu verwendenen Zugriffsmodifizierer sind in der Vorlage bereits gegeben und werden auf dem Übungsblatt nicht immer angegeben.
         Beachten Sie die Informationen im Moodle-Abschnitt \href{https://moodle.informatik.tu-darmstadt.de/course/view.php?id=1169\#technisches}{\textit{Technisches und Probe-Übungsblatt}}.
-        \par\bigskip
+        \par\medskip
         Bei Fragen stehen wir Ihnen vorzugsweise im Moodle-Kurs und in den Sprechstunden zur Verfügung.
     \end{infoBox}
 }
@@ -53,7 +53,7 @@
 }
 \DeclareSnippet{tests-introduction}{Globale Hinweise für Tests}{
     \begin{hinweis}
-        \bigskip
+        \medskip
         Auch wenn Sie für das Erstellen von Tests keine Punkte erhalten:
         Das Teilen jeglicher Tests zur Hausübung
         (auch solcher,
@@ -61,21 +61,21 @@
         ist nicht erlaubt.
         Unser Ziel ist,
         die Verbreitung fehlerhafter Tests in Ihrem Sinne zu verhindern.
-        \par\bigskip
+        \par\medskip
         Die von uns bereitgestellten Public Tests überprüfen nur einen kleinen Teil Ihrer Implementation.
         Erfüllt Ihre Lösung nicht alle Public Tests,
         erhalten Sie auf keinen Fall die volle Punktzahl.
         Im Umkehrschluss bedeutet dies aber nicht,
         dass Sie die volle Punktzahl erhalten,
         wenn Ihre Lösung alle Public Tests besteht.
-        \par\bigskip
+        \par\medskip
         Der folgende Leitfaden dient als Unterstützung zum Aufbau Ihrer eigenen Tests.
         Sie können vom Leitfaden abweichen und dabei mindestens genauso aussagekräftige Testergebnisse erzeugen.
     \end{hinweis}
 }
 \DeclareSnippet{note-remove-crash}{Globale Verbindliche Anforderungen und Hinweise}{
     \begin{erinnerung}
-        \bigskip
+        \medskip
         Beachten Sie bei \textit{jedem} Übungsblatt,
         dass nach Bearbeitung einer Aufgabe die jeweiligen mit \inlinejava{// TODO} markierten Aufrufe von \inlinejava{crash} entfernt werden müssen.
         Andernfalls funktioniert Ihre Implementation nicht korrekt und die jeweiligen Teile Ihres Quelltextes werden \textit{nicht} bewertet!
