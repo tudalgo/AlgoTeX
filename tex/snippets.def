@@ -113,16 +113,17 @@
         nur eben nicht den Quelltext oder eine übersetzte Variante des Quelltexts!
     \end{hinweis}
 }
+\DeclareSnippet{correct-identifiers}{}{
+    \begin{grayInfoBox}
+        Verwenden Sie in Ihrem Quelltext 1:1 die auf diesem Übungsblatt gewählten Identifier!
+        Andernfalls wird die jeweilige Aufgabe nicht automatisiert bewertet.
+    \end{grayInfoBox}
+}
 \DeclareSnippet{dateien-fuer-typen}{}{
     \begin{grayInfoBox}
         Wenn die Rede davon ist,
-        dass eine Klasse, ein Interface oder eine Enumeration \inlinejava{Foo}
-        \textit{erstellt} werden soll,
-        muss für diese Hausübung zunächst die dazugehörige Datei \texttt{Foo.java} erstellt werden.
-
-        \textbf{Achten Sie darauf, in Ihrem Quelltext 1:1 die auf diesem Übungsblatt gewählten Identifier zu verwenden!}
-
-        Andernfalls wird die jeweilige Aufgabe nicht automatisiert bewertet.
+        dass eine Klasse, ein Interface oder eine Enumeration \textit{erstellt} werden soll,
+        muss für diese Hausübung zunächst die dazugehörige Datei erstellt werden.
     \end{grayInfoBox}
 }
 \DeclareSnippet{notation-naming-cartesian}{}{
