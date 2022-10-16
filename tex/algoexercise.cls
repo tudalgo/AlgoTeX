@@ -103,6 +103,7 @@
 \RequirePackage{subcaption}
 \RequirePackage{nameref}
 \RequirePackage{fontawesome5}
+\RequirePackage{regexpatch}
 
 \ifPDFTeX
     \RequirePackage[utf8]{inputenc}
@@ -688,3 +689,40 @@
             \bool_if:cT {g__ptxcd_ruled_#1_bool} {\smash{\rule{\linewidth}{\g_ptxcd_titlerule_dim}}}
         }}
 }{}
+
+\AtBeginDocument{
+    \regex_match:nVT {SNAPSHOT} \g_rubos_document_version_tl {
+        % Make all points red
+        \DeclareDocumentCommand{\pointformat}{O{\g_algo_ex_show_points_bool}m}{
+            \textcolor{red}{
+                \bool_if:nTF {#1} {
+                    \__old_pointformat{#2}
+                }{
+                    \bool_if:NTF \l__ptxcd_points_auto_bool
+                    \creditformatsum
+                    \creditformat
+                    {
+                        ??\space\PointsName
+                    }
+                }
+            }
+        }
+        % Add (SNAPSHOT) to the title
+        %\tl_clear_new:N \l_old_title_tl
+        %\tl_set:Nn \l_old_title_tl {\getTitle}
+        %\exp_args:Nf \title[\getShortTitle{}]{\tl_use:c{l_old_title_tl}~\textcolor{red}{(Entwurf)}}
+        % DARK_MODE environment check (enable if DARK_MODE=1)
+        \sys_get_shell:nnN { kpsewhich ~ --var-value ~ CI_RUN } { } \l_ci_run_env_var_tl
+        \tl_trim_spaces:N \l_ci_run_env_var_tl
+        \tl_if_eq:NnT \l_ci_run_env_var_tl {1} {
+            \appto\@maketitle{
+                \box_clear_new:N \l_entwurf_box
+                \vbox_set:Nn \l_entwurf_box {
+                    \UseSnippet{entwurf-nicht-abgeben}
+                }
+                \vspace{-\box_ht:N \l_entwurf_box}
+                \box_use:N \l_entwurf_box
+            }
+        }
+    }
+}

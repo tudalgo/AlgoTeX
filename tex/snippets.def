@@ -97,7 +97,7 @@
         wie Sie Ihre Matrikelnummer in Moodle eintragen.
 
         \textbf{Wenn Sie Ihre Matrikelnummer nicht oder nicht korrekt in Moodle hinterlegt haben,
-        kann Ihre Zulassung und Ihr Bonus unter Umständen nicht korrekt verbucht werden!}
+            kann Ihre Zulassung und Ihr Bonus unter Umständen nicht korrekt verbucht werden!}
     \end{hinweis}
 }
 \DeclareSnippet{plagiarismus}{}{
@@ -131,4 +131,9 @@
         indem nur disjunkte Teile von Namen in geschweiften Klammern aufgezählt werden.
         Bei mehreren disjunkten Teilen in Namen ergeben sich die Namen aus dem kartesischen Produkt. Beispiel: \texttt{set\{X,Y\}For\{A,B\}} ist die Abkürzung für die Namen \texttt{setXForA}, \texttt{setXForB}, \texttt{setYForA} und \texttt{setYForB}.
     \end{grayInfoBox}
+}
+\DeclareSnippet{entwurf-nicht-abgeben}{}{
+    \begin{defBox}[title={\centering\textcolor{red}{Entwurf}}]
+        \textcolor{red}{\textbf{Achtung:} Dieses Dokument ist ein Entwurf und ist noch nicht zur Bearbeitung/Abgabe freigegeben. Es kann zu Änderungen kommen, die für die Abgabe relevant sind. Es ist möglich, dass sich \textbf{alle} Aufgaben noch grundlegend ändern. Es gibt keine Garantie, dass die Aufgaben auch in der endgültigen Version überhaupt noch vorkommen und es wird keine Rücksicht auf bereits abgegebene Lösungen genommen, die nicht die Vorgaben der endgültigen Version erfüllen.}
+    \end{defBox}
 }
