@@ -4,7 +4,7 @@
 % #4: snippet
 \DeclareSnippet{globalvanforderungen}{Globale Verbindliche Anforderungen}{
     \begin{vanforderungenahu}
-        \bigskip
+        \medskip
         Das Dokumentieren und Kommentieren Ihres Quelltextes ist nicht verbindlich,
         wird zum besseren Verständnis \mbox{Ihrer} Lösung jedoch empfohlen.
         Alle zur Bewertung dieser Hausübung relevanten Deklarationen von Klassen, Methoden (hierzu zählen auch Konstruktoren) und Attributen sind bereits in der Quelltext-Vorlage enthalten
@@ -19,7 +19,7 @@
         wenn Aufrufe von in der Vorlage deklarierten Methoden
         (auch von solchen, welche von Ihnen implementiert werden)
         durch andere, korrekte Implementationen ersetzt werden.
-        \par\bigskip
+        \par\medskip
         Der Verstoß gegen verbindliche Anforderungen führt zu Punktabzügen und kann die korrekte Bewertung Ihrer Abgabe unter Umständen beeinflussen.
         Die Implementation einer in der Quelltext-Vorlage deklarierten Methode wird nur bewertet,
         wenn der mit \texttt{TODO} markierte Exception-Wurf entfernt wird.
@@ -28,10 +28,10 @@
 \DeclareSnippet{globalhints}{Globale Hinweise}{
     \begin{infoBox}
         \fatsf{Hinweise für alle Hausübungen:}
-        \bigskip\\
+        \medskip\\
         Die zu verwendenen Zugriffsmodifizierer sind in der Vorlage bereits gegeben und werden auf dem Übungsblatt nicht immer angegeben.
         Beachten Sie die Informationen im Moodle-Abschnitt \href{https://moodle.informatik.tu-darmstadt.de/course/view.php?id=1169\#technisches}{\textit{Technisches und Probe-Übungsblatt}}.
-        \par\bigskip
+        \par\medskip
         Bei Fragen stehen wir Ihnen vorzugsweise im Moodle-Kurs und in den Sprechstunden zur Verfügung.
     \end{infoBox}
 }
@@ -42,7 +42,7 @@
 }
 \DeclareSnippet{exercise-introduction-fop-2223}{Globale Verbindliche Anforderungen und Hinweise}{
     \begin{defBox}
-        \textbf{Beachten Sie die Seite \href{https://moodle.informatik.tu-darmstadt.de/mod/page/view.php?id=49598}{\emph{Verbindliche Anforderungen für alle Abgaben}} in unserem Moodle-Kurs.}
+        \textbf{Beachten Sie die Seite \href{https://moodle.informatik.tu-darmstadt.de/mod/page/view.php?id=49598}{\emph{Verbindliche Anforderungen für alle Abgaben}} im Moodle-Kurs.}
         \medskip\\
         Verstöße gegen verbindliche Anforderungen führen zu Punktabzügen und können die korrekte Bewertung Ihrer Abgabe beeinflussen.
         Sofern vorhanden,
@@ -53,7 +53,6 @@
 }
 \DeclareSnippet{tests-introduction}{Globale Hinweise für Tests}{
     \begin{hinweis}
-        \bigskip
         Auch wenn Sie für das Erstellen von Tests keine Punkte erhalten:
         Das Teilen jeglicher Tests zur Hausübung
         (auch solcher,
@@ -61,21 +60,20 @@
         ist nicht erlaubt.
         Unser Ziel ist,
         die Verbreitung fehlerhafter Tests in Ihrem Sinne zu verhindern.
-        \par\bigskip
+        \par\medskip
         Die von uns bereitgestellten Public Tests überprüfen nur einen kleinen Teil Ihrer Implementation.
         Erfüllt Ihre Lösung nicht alle Public Tests,
         erhalten Sie auf keinen Fall die volle Punktzahl.
         Im Umkehrschluss bedeutet dies aber nicht,
         dass Sie die volle Punktzahl erhalten,
         wenn Ihre Lösung alle Public Tests besteht.
-        \par\bigskip
+        \par\medskip
         Der folgende Leitfaden dient als Unterstützung zum Aufbau Ihrer eigenen Tests.
         Sie können vom Leitfaden abweichen und dabei mindestens genauso aussagekräftige Testergebnisse erzeugen.
     \end{hinweis}
 }
 \DeclareSnippet{note-remove-crash}{Globale Verbindliche Anforderungen und Hinweise}{
     \begin{erinnerung}
-        \bigskip
         Beachten Sie bei \textit{jedem} Übungsblatt,
         dass nach Bearbeitung einer Aufgabe die jeweiligen mit \inlinejava{// TODO} markierten Aufrufe von \inlinejava{crash} entfernt werden müssen.
         Andernfalls funktioniert Ihre Implementation nicht korrekt und die jeweiligen Teile Ihres Quelltextes werden \textit{nicht} bewertet!
@@ -83,12 +81,12 @@
 }
 \DeclareSnippet{fop-2223-dokumentation-verpflichtend}{}{
     \begin{defBox}
-        \textbf{Verbindliche Anforderungen: Dokumentieren Ihres Quellcodes}
+        \textbf{Verbindliche Anforderung: Dokumentieren Ihres Quelltexts}
         \medskip\\
-        Alle von Ihnen deklarierten Klassen, Interfaces und Methoden (inklusive Konstruktoren) müssen mittels JavaDoc dokumentiert werden.
+        Alle von Ihnen deklarierten Klassen, Interfaces und Methoden (inklusive Konstruktoren) \textit{müssen} für diese Hausübung mittels JavaDoc dokumentiert werden.
+        Für jede korrekte Deklaration ohne Dokumentation verlieren Sie jeweils einen Punkt.
 
-        Beachten Sie hierzu das Informationsblatt zum \href{https://moodle.informatik.tu-darmstadt.de/mod/resource/view.php?id=51923}{\textit{Dokumentieren von Quellcode mittels JavaDoc}} in unserem Moodle-Kurs.
-        Sie verlieren für jede deklarierte aber nicht dokumentierte Methode einen Punkt Abzug.
+        Beachten Sie die Seite \href{https://wiki.tudalgo.org/exercises/documentation/}{\textit{Hausübungen} $\rightarrow$ \textit{Dokumentieren von Quelltext}} im Studierenden-Guide.
     \end{defBox}
 }
 \DeclareSnippet{matrikelnummer-eintragen}{}{
@@ -113,23 +111,25 @@
         nur eben nicht den Quelltext oder eine übersetzte Variante des Quelltexts!
     \end{hinweis}
 }
+\DeclareSnippet{correct-identifiers}{}{
+    \begin{grayInfoBox}
+        Verwenden Sie in Ihrem Quelltext 1:1 die auf diesem Übungsblatt gewählten Identifier!
+        Andernfalls wird die jeweilige Aufgabe nicht automatisiert bewertet.
+    \end{grayInfoBox}
+}
 \DeclareSnippet{dateien-fuer-typen}{}{
     \begin{grayInfoBox}
         Wenn die Rede davon ist,
-        dass eine Klasse, ein Interface oder eine Enumeration \inlinejava{Foo}
-        \textit{erstellt} werden soll,
-        muss für diese Hausübung zunächst die dazugehörige Datei \texttt{Foo.java} erstellt werden.
-
-        \textbf{Achten Sie darauf, in Ihrem Quelltext 1:1 die auf diesem Übungsblatt gewählten Identifier zu verwenden!}
-
-        Andernfalls wird die jeweilige Aufgabe nicht automatisiert bewertet.
+        dass eine Klasse, ein Interface oder eine Enumeration \textit{erstellt} werden soll,
+        muss für diese Hausübung zunächst die dazugehörige Datei erstellt werden.
     \end{grayInfoBox}
 }
 \DeclareSnippet{notation-naming-cartesian}{}{
     \begin{grayInfoBox}
-        Auf diesem Übungsblatt werden Aufzählungen überschneidender Namen verkürzt dargestellt,
-        indem nur disjunkte Teile von Namen in geschweiften Klammern aufgezählt werden.
-        Bei mehreren disjunkten Teilen in Namen ergeben sich die Namen aus dem kartesischen Produkt. Beispiel: \texttt{set\{X,Y\}For\{A,B\}} ist die Abkürzung für die Namen \texttt{setXForA}, \texttt{setXForB}, \texttt{setYForA} und \texttt{setYForB}.
+        Auf diesem Übungsblatt werden Aufzählungen überschneidender Namen verkürzt,
+        indem nur disjunkte Teile von Namen innerhalb geschweifter Klammern aufgezählt werden und
+        bei vorangegangener Aufzählungen einsetzbare Elemente durch \texttt{*} ersetzt werden.
+        Beispiel: \texttt{set\{X,Y\}For\{A,B\}} ist die Abkürzung für \texttt{setXForA}, \texttt{setXForB}, \texttt{setYForA} und \texttt{setYForB}. \texttt{set*For*} ist die Abkürzung für \texttt{set\{X,Y\}For\{A,B\}}.
     \end{grayInfoBox}
 }
 \DeclareSnippet{entwurf-nicht-abgeben}{}{
