@@ -120,8 +120,8 @@
 \DeclareSnippet{dateien-fuer-typen}{}{
     \begin{grayInfoBox}
         Wenn die Rede davon ist,
-        dass eine Klasse, ein Interface oder eine Enumeration \textit{erstellt} werden soll,
-        muss zunächst die dazugehörige Datei in in \texttt{src/main/java/h\getSheetnumber{}} (sofern nicht anders angegeben) erstellt werden.
+        dass Klassen, Interfaces oder Enumerationen \textit{erstellt} werden sollen,
+        müssen zuerst die dazugehörigen Dateien in \texttt{src/main/java/h\getSheetnumber{}} (sofern nicht anders angegeben) erstellt werden.
     \end{grayInfoBox}
 }
 \DeclareSnippet{notation-naming-cartesian}{}{
