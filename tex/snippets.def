@@ -137,3 +137,10 @@
         \textcolor{red}{\textbf{Achtung:} Dieses Dokument ist ein Entwurf und ist noch nicht zur Bearbeitung/Abgabe freigegeben. Es kann zu Änderungen kommen, die für die Abgabe relevant sind. Es ist möglich, dass sich \textbf{alle} Aufgaben noch grundlegend ändern. Es gibt keine Garantie, dass die Aufgaben auch in der endgültigen Version überhaupt noch vorkommen und es wird keine Rücksicht auf bereits abgegebene Lösungen genommen, die nicht die Vorgaben der endgültigen Version erfüllen.}
     \end{defBox}
 }
+\DeclareSnippet{racket-to-java}{}{
+    \begin{grayInfoBox}
+        Wenn die Rede davon ist,
+        dass eine Racket-Funktion 1:1 in Java umgesetzt werden soll,
+        können Sie sich bei der Umsetzung an den Beispielen aus den oben genannten Kapiteln orientieren.
+    \end{grayInfoBox}
+}
