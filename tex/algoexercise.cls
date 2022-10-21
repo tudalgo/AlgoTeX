@@ -16,6 +16,16 @@
 % Used by CI/CD to inject options
 \IfFileExists{options.cfg}{\input{options.cfg}}{}
 
+% Environment options
+% hidepoints
+\sys_get_shell:nnN { kpsewhich ~ --var-value ~ HIDE_POINTS } { } \l_hide_points_env_var_tl
+\tl_trim_spaces:N \l_hide_points_env_var_tl
+\tl_if_eq:NnT \l_hide_points_env_var_tl {1} {\PassOptionsToClass{hidepoints}{algoexercise}}
+% showtotalpoints
+\sys_get_shell:nnN { kpsewhich ~ --var-value ~ SHOW_TOTAL_POINTS } { } \l_show_total_points_env_var_tl
+\tl_trim_spaces:N \l_show_total_points_env_var_tl
+\tl_if_eq:NnT \l_show_total_points_env_var_tl {1} {\PassOptionsToClass{showtotalpoints}{algoexercise}}
+
 \RequirePackage[minted_workaround,caption_workaround]{algo-common}
 
 % Packages that need to be loaded before TUDA-Exercise Class
@@ -711,7 +721,7 @@
         %\tl_clear_new:N \l_old_title_tl
         %\tl_set:Nn \l_old_title_tl {\getTitle}
         %\exp_args:Nf \title[\getShortTitle{}]{\tl_use:c{l_old_title_tl}~\textcolor{red}{(Entwurf)}}
-        % DARK_MODE environment check (enable if DARK_MODE=1)
+        % CI_RUN environment check (enable if CI_RUN=1)
         \sys_get_shell:nnN { kpsewhich ~ --var-value ~ CI_RUN } { } \l_ci_run_env_var_tl
         \tl_trim_spaces:N \l_ci_run_env_var_tl
         \tl_if_eq:NnT \l_ci_run_env_var_tl {1} {
