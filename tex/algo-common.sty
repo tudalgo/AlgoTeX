@@ -9,7 +9,7 @@
 \RequirePackage{amsthm}
 \PassOptionsToPackage{table, dvipsnames, svgnames}{xcolor} % Option has to be set before loading TuDaExercise
 \RequirePackage{xcolor}
-\RequirePackage{pagecolor} % Used for dark Mode
+\RequirePackage{darkmode}
 \RequirePackage{tcolorbox}
 \tcbuselibrary{skins}
 \RequirePackage{tikz}
@@ -32,7 +32,7 @@
     audslides .code:n = \prop_gput:Nnn \g_rubos_document_opts_prop {audslides} {#1},
     audslides .initial:n = {https://moodle.informatik.tu-darmstadt.de/pluginfile.php/203990/mod_folder/content/0/},
     audslides .default:n = {https://moodle.informatik.tu-darmstadt.de/pluginfile.php/203990/mod_folder/content/0/},
-    dark_mode .bool_gset:N = \g_rubos_dark_mode_bool,
+    dark_mode .code:n = {\PassOptionsToPackage{enable=#1}{darkmode}},
     dark_mode .initial:n = false,
     dark_mode .default:n = true,
     fancy_row_color .bool_gset:N = \g_ptxcd_ex_fancy_rowcolor_bool,
@@ -71,22 +71,6 @@
 \definecolor{tableyellow}{RGB}{255, 250, 193}
 \colorlet{fgcolor}{black}
 
-%%-- Dark-Mode--%%
-\prg_new_conditional:Nnn \__rubos_if_dark_mode: {T,F,TF} {
-    \bool_if:NTF \g_rubos_dark_mode_bool
-    {\prg_return_true:}
-    {\prg_return_false:}
-}
-
-\cs_set_eq:NN\IfDarkModeT \__rubos_if_dark_mode:T
-\cs_set_eq:NN\IfDarkModeF \__rubos_if_dark_mode:F
-\cs_set_eq:NN\IfDarkModeTF \__rubos_if_dark_mode:TF
-
-\IfDarkModeT {
-    \pagecolor{rubos@anthrazitgrau}\color{white}\selectcolormodel{RGB}
-    \colorlet{fgcolor}{white}
-}
-
 \prg_new_conditional:Nnn \__rubos_if_shell_escape: {T,F,TF} {
     \bool_if:NTF \g_rubos_shell_escape_bool
     {\sys_if_shell_unrestricted:TF
@@ -99,6 +83,13 @@
 \cs_set_eq:NN\IfShellEscapeT \__rubos_if_shell_escape:T
 \cs_set_eq:NN\IfShellEscapeF \__rubos_if_shell_escape:F
 \cs_set_eq:NN\IfShellEscapeTF \__rubos_if_shell_escape:TF
+
+% DARK_MODE environment check (enable if DARK_MODE=1)
+\sys_get_shell:nnN { kpsewhich ~ --var-value ~ DARK_MODE } { } \l_dark_mode_env_var_tl
+\tl_trim_spaces:N \l_dark_mode_env_var_tl
+\tl_if_eq:NnT \l_dark_mode_env_var_tl {1} {\enabledarkmode{}}
+\tl_if_eq:NnT \l_dark_mode_env_var_tl {2} {\enabledarkmode{}\pagecolor{black}}
+\tl_if_eq:NnT \l_dark_mode_env_var_tl {0} {\disabledarkmode{}}
 
 % Zero Padding (Pads Number with the wanted amount of zeros)
 \DeclareDocumentCommand{\padzeroes}{O{2}m}{
