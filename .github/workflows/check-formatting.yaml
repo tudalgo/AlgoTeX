@@ -11,7 +11,7 @@ jobs:
   check-formatting:
     runs-on: self-hosted
     container:
-      image: ubuntu-latest
+      image: ubuntu:latest
     steps:
     - name: Set up Git repository
       uses: actions/checkout@v3
