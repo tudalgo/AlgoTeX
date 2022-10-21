@@ -19,7 +19,7 @@ jobs:
   # This workflow contains a single job called "build_latex"
   l3build:
     # The type of runner that the job will run on
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     container:
       image: registry.gitlab.com/islandoftex/images/texlive:latest
 
