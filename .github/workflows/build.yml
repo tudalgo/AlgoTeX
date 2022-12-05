@@ -29,12 +29,6 @@ jobs:
       - name: Set up Git repository
         uses: actions/checkout@v3
 
-      # Link texmf folder to the current texmf home
-      - name: Link texmf folder to the current texmf home
-        run: |
-          ln -s /root/texmf $(kpsewhich -var-value=TEXMFHOME)
-          texhash --verbose
-
       # 5. Run l3build
       - name: Run l3build
         run: l3build ctan -H
