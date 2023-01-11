@@ -1,4 +1,5 @@
 FROM registry.gitlab.com/islandoftex/images/texlive:latest
+# Dependencies
 RUN apt-get update && apt-get install -y librsvg2-bin nodejs imagemagick ghostscript
 RUN sed -i "s/rights=\"none\" pattern=\"PDF\"/rights=\"read|write\" pattern=\"PDF\"/" /etc/ImageMagick-6/policy.xml
 RUN sed -i "s/rights=\"none\" pattern=\"PS\"/rights=\"read|write\" pattern=\"PS\"/" /etc/ImageMagick-6/policy.xml
@@ -8,7 +9,8 @@ RUN mkdir -p "$(kpsewhich -var-value=TEXMFDIST)/tex/latex/local" \
     && rsvg-convert -f pdf -o tuda_logo.pdf tuda_logo.svg \
     && mv tuda_logo.pdf "$(kpsewhich -var-value=TEXMFDIST)/tex/latex/local" \
     && texhash --verbose
-RUN git clone https://github.com/tudalgo/AlgoTeX.git
+# Install AlgoTeX
 WORKDIR /AlgoTeX
+COPY . .
 RUN l3build install --full
 WORKDIR /
