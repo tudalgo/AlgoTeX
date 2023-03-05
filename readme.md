@@ -3,6 +3,9 @@
 ## Voraussetzungen
 - Latex-Installation (z.B. MikTex oder TexLive)
 - Installation der [TU-Template](https://github.com/tudace/tuda_latex_templates) und der verwendeten Plugins
+    - Hinweise:
+        - Für die Installation des `tuda_logo`s [kann man sich an dem Dockerfile orientieren](https://github.com/tudalgo/AlgoTeX/blob/master/Dockerfile#L3-L11)
+        - Aktuell wird das [`darkmode`-Package](https://ctan.org/pkg/darkmode) nicht in TexLive Full 2022 mitgeliefert und muss ggf. manuell installiert werden. (z.B. mit `tlmgr install darkmode` bei TexLive)
 - Python-Installation mit pip und dem Plugin `pygments`  - wenn pip installiert ist, kann pygments wie folgt installiert werden:
 ```sh
 pip install pygments
