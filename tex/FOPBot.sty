@@ -1,6 +1,6 @@
 \NeedsTeXFormat{LaTeX2e}
 \RequirePackage{expl3}
-\ProvidesExplPackage{FOPBot}{2022-09-25}{2.3-Snapshot}{FOP-Bot LaTeX Package}
+\ProvidesExplPackage{FOPBot}{2023-05-23}{2.3-Snapshot}{FOP-Bot LaTeX Package}
 
 % Made by Ruben Deisenroth, created in 2020
 % Available at https://github.com/Rdeisenroth/FOPBot-Latex-Package
@@ -73,6 +73,9 @@
             }
         },
         pics/Coin/.default=1,
+        robotTurnedOn/.store~in=\robotTurnedOn,
+        robotTurnedOn=true,
+        robotTurnedOff/.style={robotTurnedOn=false},
         pics/Trianglebot/.style={
             code={%
                 %\draw (-.5,-.5) rectangle (.5,.5);
@@ -81,8 +84,15 @@
                 (-.38,-.2) coordinate (c1) --
                 (.38,-.2) coordinate (c2) --
                 (0, .45) coordinate (c3) -- cycle;
-                \draw[thick, fill=white,draw=fopbot@bot_dark_blue] (0,.03) circle (1.38mm) coordinate (cc);
-                \draw[thick, fill=fopbot@bot_dark_blue,draw=fopbot@bot_dark_blue] (cc) circle (1.28pt);
+                % Eye: \robotTurnedOn is a boolean that determines if the robot is turned on. If turned off it has an X instead of an eye
+                \str_if_eq:VnTF \robotTurnedOn {true} {
+                    \draw[thick, fill=white,draw=fopbot@bot_dark_blue] (0,.03) circle (1.38mm) coordinate (cc);
+                    \draw[thick, fill=fopbot@bot_dark_blue,draw=fopbot@bot_dark_blue] (cc) circle (1.28pt);
+                } {
+                    \draw[thick, top~color=##1!25,bottom~color=##1!50,draw=fopbot@bot_dark_blue] (0,.03) circle (1.38mm) coordinate (cc);
+                    \draw[thick, draw=fopbot@bot_dark_blue] (cc) ++(-.5mm,-.5mm) -- ++(1mm,1mm);
+                    \draw[thick, draw=fopbot@bot_dark_blue] (cc) ++(-.5mm,.5mm) -- ++(1mm,-1mm);
+                }
                 %Legs
                 \draw[thick, fill=white,draw=fopbot@triangleborder] (-.195,-.2) rectangle (-.06,-.29);
                 \draw[thick, fill=white,draw=fopbot@triangleborder] (-.195,-.29) rectangle (-.06,-.4);
