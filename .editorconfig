@@ -11,7 +11,7 @@ charset = utf-8
 trim_trailing_whitespace = true
 insert_final_newline = true
 
-[*.md]
+[*.{md,mf}]
 trim_trailing_whitespace = false
 
 [*.{yml,yaml}]
@@ -21,5 +21,5 @@ trim_trailing_whitespace = false
 [Makefile]
 indent_style = tab
 
-[COPYING]
+[{COPYING,LICENSE,NOTICE,*.{md,mf,xmp}}]
 indent_size = unset
