@@ -121,6 +121,54 @@
 \RequirePackage{csquotes}
 \RequirePackage[german, ngerman]{babel}
 
+\prg_new_conditional:Nnn \__ptxcd_if_corporatedesign: {T,F,TF} {
+    \bool_if:NTF \g_algo_ex_corporate_design_bool {
+        \prg_return_true:
+    } {
+        \prg_return_false:
+    }
+}
+
+\cs_set_eq:NN\IfCorporateDesignT \__ptxcd_if_corporatedesign:T
+\cs_set_eq:NN\IfCorporateDesignF \__ptxcd_if_corporatedesign:F
+\cs_set_eq:NN\IfCorporateDesignTF \__ptxcd_if_corporatedesign:TF
+
+\IfCorporateDesignT{
+    % Discover tudaci-Version
+    \exp_args:NNnx \seq_set_split:Nnn \g_tuda_version_seq { ~ } { \use:c {ver@tudaexercise.cls} }
+    \tl_set:Nx \g_tudaci_version_tl { \seq_item:Nn \g_tuda_version_seq { 2 } }
+    \tl_set:Nx \g_tudaci_version_tl {\tl_tail:N \g_tudaci_version_tl}
+    \regex_replace_once:nnN { [a-z] } { } \g_tudaci_version_tl
+
+    \newcommand{\getTudaciVersion}[1]{
+        \tl_use:N \g_tudaci_version_tl
+    }
+    \newcommand{\IfTudaciVersionAtLeastTF}[3]{
+        \fp_compare:nTF {\getTudaciVersion{} >= #1}{#2}{#3}
+    }
+    \newcommand{\IfTudaciVersionBetweenTF}[4]{
+        \fp_compare:nTF {#1<=\getTudaciVersion{}<=#2}{#3}{#4}
+    }
+
+    % Compatibility with newer TUDA-Versions
+    \IfTudaciVersionAtLeastTF{3.12}{
+        \clist_map_inline:nn {vues,vue,vueaufgabe,hue,hueaufgabe,hueteilaufgabe} {
+            \bool_new:c	{g__ptxcd_ruled_#1_bool}
+            \bool_gset_true:c {g__ptxcd_ruled_#1_bool}
+        }
+    }{}
+
+    \tl_gclear_new:N \g_tuda_pkg_prefix_tl
+    \IfTudaciVersionAtLeastTF{3.0}{
+        \tl_gset:Nn \g_tuda_pkg_prefix_tl {ptxcd}
+    }{
+        \tl_gset:Nn \g_tuda_pkg_prefix_tl {TUDa}
+    }
+    \DeclareDocumentCommand{\tudaPkgPrefix}{}{
+        \tl_use:N \g_tuda_pkg_prefix_tl
+    }
+}
+
 % \RequirePackage{parskip}
 
 % \RequirePackage{pifont}
@@ -137,45 +185,29 @@
 
 \tl_gclear_new:N \printAuthor
 \renewcommand*{\author}[1]{
-    \seq_gset_split:Nnn \g_ptxcd_author_seq {\and} {#1}
-    \seq_if_empty:NF \g_ptxcd_author_seq {\tl_gset:Nn \printAuthor {\int_compare:nTF{\seq_count:N \g_ptxcd_author_seq > 1}{Übungsblattbetreuer}{Übungsblattbetreuer}:~\hfill\seq_use:Nnnn \g_ptxcd_author_seq {~\authorandname{}~} {,~} {~\authorandname{}~}\par}}
+    \seq_gset_split:cnn {g_ \tudaPkgPrefix _author_seq} {\and} {#1}
+    \seq_if_empty:cF {g_ \tudaPkgPrefix _author_seq} {\tl_gset:Nn \printAuthor {\int_compare:nTF{\seq_count:c {g_ \tudaPkgPrefix _author_seq} > 1}{Übungsblattbetreuer}{Übungsblattbetreuer}:~\hfill\seq_use:cnnn {g_ \tudaPkgPrefix _author_seq} {~\authorandname{}~} {,~} {~\authorandname{}~}\par}}
 }
 
 \DeclareDocumentCommand{\sheetnumber}{s O{2} m}{
     \bool_if:nTF {#1} {
-        \IfTudaciVersionAtLeastTF{3.0}{
-            \tl_gset:Nx \g_ptxcd_ex_sheetnum_tl {#3}
-        }{
-            \tl_gset:Nx \g_TUDa_ex_sheetnum_tl {#3}
-        }
+        \tl_gset:cx { g_ \tudaPkgPrefix _ex_sheetnum_tl} {#3}
     }{
-        \IfTudaciVersionAtLeastTF{3.0}{
-            \tl_gset:Nx \g_ptxcd_ex_sheetnum_tl {\padzeroes[#2]{#3}}
-        }{
-            \tl_gset:Nx \g_TUDa_ex_sheetnum_tl {\padzeroes[#2]{#3}}
-        }
+        \tl_gset:cx { g_ \tudaPkgPrefix _ex_sheetnum_tl} {\padzeroes[#2]{#3}}
     }
 }
 % Sheet number
 \newcommand*{\getSheetnumber}{
-    \IfTudaciVersionAtLeastTF{3.0}{
-        \g_ptxcd_ex_sheetnum_tl
-    }{
-        \g_TUDa_ex_sheetnum_tl
-    }
+    \tl_use:c { g_ \tudaPkgPrefix _ex_sheetnum_tl }
 }
-\newcommand*{\printSheetNumber}{\tl_if_empty:NF \g_ptxcd_ex_sheetnum_tl {\sffamily\textbf{Übungsblatt\space{}Nummer:}\space\getSheetnumber}}
+\newcommand*{\printSheetNumber}{\tl_if_empty:cF {g_ \tudaPkgPrefix _ex_sheetnum_tl} {\sffamily\textbf{Übungsblatt\space{}Nummer:}\space\getSheetnumber}}
 
 % Sheet Version
 \DeclareDocumentProperty{version}[1.0][v*]
 
 % Short title
 \newcommand*{\getShorttitle}{
-    \IfTudaciVersionAtLeastTF{3.0}{
-        \g_ptxcd_shorttitle_tl
-    }{
-        \g_TUDa_shorttitle_tl
-    }
+    \tl_use:c {g_ \tudaPkgPrefix _shorttitle_tl}
 }
 
 % Semester
@@ -252,26 +284,26 @@
 \clist_gset:Nn \g_rubos_ex_term_order_clist {printSemester,printContributor,printVersion,quad,quad,printDate,printFachbereich}
 \newcommand*{\termOrder}[1]{\tl_gset:Nn \g_rubos_ex_term_order_clist {#1}}
 
-\tl_gclear_new:N \g_ptxcd_ex_term_style_tl
-\newcommand*{\termStyle}[1]{\tl_gset:Nn \g_ptxcd_ex_term_style_tl {#1}}
+\tl_gclear_new:c { g_ \tudaPkgPrefix _ex_term_style_tl }
+\newcommand*{\termStyle}[1]{\tl_gset:cn { g_ \tudaPkgPrefix _ex_term_style_tl } {#1}}
 \termStyle{left-right}
-\seq_gclear_new:N \g_ptxcd_term_left_seq
-\seq_gclear_new:N \g_ptxcd_term_right_seq
+\seq_gclear_new:c { g_ \tudaPkgPrefix _term_left_seq }
+\seq_gclear_new:c { g_ \tudaPkgPrefix _term_right_seq }
 \newcommand{\termLeft}[1]{
-    \clist_gclear_new:N \g_ptxcd_temp_clist
-    \tl_gset:Nn \g_ptxcd_temp_clist {#1}
-    \clist_map_inline:Nn \g_ptxcd_temp_clist {
+    \clist_gclear_new:c { g_ \tudaPkgPrefix _temp_clist }
+    \tl_gset:cn { g_ \tudaPkgPrefix _temp_clist } {#1}
+    \clist_map_inline:cn { g_ \tudaPkgPrefix _temp_clist } {
         \tl_if_empty:cF {##1} {
-            \seq_put_right:Nn \g_ptxcd_term_left_seq {\use:c {##1}}
+            \seq_put_right:cn { g_ \tudaPkgPrefix _term_left_seq } {\use:c {##1}}
         }
     }
 }
 \newcommand{\termRight}[1]{
-    \clist_gclear_new:N \g_ptxcd_temp_clist
-    \tl_gset:Nn \g_ptxcd_temp_clist {#1}
-    \clist_map_inline:Nn \g_ptxcd_temp_clist {
+    \clist_gclear_new:c { g_ \tudaPkgPrefix _temp_clist }
+    \tl_gset:cn { g_ \tudaPkgPrefix _temp_clist } {#1}
+    \clist_map_inline:cn { g_ \tudaPkgPrefix _temp_clist } {
         \tl_if_empty:cF {##1} {
-            \seq_put_right:Nn \g_ptxcd_term_right_seq {\use:c {##1}}
+            \seq_put_right:cn { g_ \tudaPkgPrefix _term_right_seq } {\use:c {##1}}
         }
     }
 }
@@ -294,7 +326,7 @@
     \setparsizes{\z@}{\z@}{\z@\@plus 1fil}\par@updaterelative
     \vspace*{-\dim_eval:n {
             \headheight
-            -\c_ptxcd_largerule_dim -\c_ptxcd_rulesep_dim
+            - \dim_use:c { c_ \tudaPkgPrefix _largerule_dim } - \dim_use:c { c_ \tudaPkgPrefix _rulesep_dim }
             +\headsep
             +\ht\strutbox
             +\p@
@@ -304,20 +336,22 @@
     \nointerlineskip
     \begingroup
     \setlength{\fboxsep}{\z@}
-    \bool_if:NT \g_ptxcd_colorback_bool {\colorbox{accentcolor}}{\parbox[t]{\linewidth}{
-            \rule{0pt}{\bool_if:NTF \g_ptxcd_smalltitle_bool {.25} {.5}\c_ptxcd_logoheight_dim}
+    \dim_zero_new:N \l_tmpa_logo_height_dim
+    \dim_set:Nn \l_tmpa_logo_height_dim {\dim_use:c { c_ \tudaPkgPrefix _logoheight_dim }}
+    \bool_if:cT {g_ \tudaPkgPrefix _colorback_bool} {\colorbox{accentcolor}}{\parbox[t]{\linewidth}{
+            \rule{0pt}{\bool_if:cTF {g_ \tudaPkgPrefix _smalltitle_bool} {.25} {.5}\l_tmpa_logo_height_dim}
             \par\nointerlineskip
             \raisebox{-\height}{%
-                \begin{minipage}[t]{\dimexpr\linewidth-2.2\c_ptxcd_logoheight_dim-1ex}
-                    \bool_if:NT \g_ptxcd_colorback_bool  {
+                \begin{minipage}[t]{\dimexpr\linewidth-2.2\l_tmpa_logo_height_dim-1ex}
+                    \bool_if:cT {g_ \tudaPkgPrefix _colorback_bool}  {
                         \begin{addmargin}{3mm}}
                             \raggedright
-                            \bool_if:NT \g_ptxcd_colorback_bool {\color{textonaccentcolor}}
+                            \bool_if:cT {g_ \tudaPkgPrefix _colorback_bool} {\color{textonaccentcolor}}
                             \tl_if_empty:NF \@titlehead {\usekomafont{titlehead}{\@titlehead\par}}
                             \leavevmode\usekomafont{title}%
-                            {\usekomafont{title}\bool_if:NTF \g_ptxcd_smalltitle_bool {\LARGE} {\huge} {\tl_if_blank:nF {\g_algo_ex_title_prefix_tl} {\g_algo_ex_title_prefix_tl\par}\@title\par}}%
+                            {\usekomafont{title}\bool_if:cTF {g_ \tudaPkgPrefix _smalltitle_bool} {\LARGE} {\huge} {\tl_if_blank:nF {\g_algo_ex_title_prefix_tl} {\g_algo_ex_title_prefix_tl\par}\@title\par}}%
                             \vskip 1em
-                            \bool_if:NF \g_ptxcd_ex_compatibility_bool
+                            \bool_if:cF {g_ \tudaPkgPrefix _ex_compatibility_bool}
                             {
                                 {\ifx
                                         \@subtitle\@empty
@@ -335,70 +369,70 @@
                             % }
                             % \usekomafont{author}Rückfragen~zu~diesem~Übungsblatt~vorzugsweise~im~\\~moodle-Forum~zu~diesem~Blatt!\par
                             \vskip .5em
-                            \bool_if:NTF \g_ptxcd_colorback_bool {
+                            \bool_if:cTF {g_ \tudaPkgPrefix _colorback_bool} {
                         \end{addmargin}
                     } {\par}
                 \end{minipage}
             }
-            \tl_if_empty:NF \g_ptxcd_logofile_tl {
+            \tl_if_empty:cF {g_ \tudaPkgPrefix _logofile_tl} {
                 \hfill\raisebox{\dim_eval:n {
-                        \bool_if:NTF \g_ptxcd_colorback_bool
+                        \bool_if:cTF {g_ \tudaPkgPrefix _colorback_bool}
                         {-\height}
-                        {-.9\c_ptxcd_logoheight_dim}
+                        {-.9\l_tmpa_logo_height_dim}
                     }}
                 [0pt]
                 [\dim_eval:n {
-                        \bool_if:NTF \g_ptxcd_smalltitle_bool
-                        {\bool_if:NTF \g_ptxcd_colorback_bool {1.15}{1}}
-                        {\bool_if:NTF \g_ptxcd_colorback_bool {1.5}{1.3}
-                        }\c_ptxcd_logoheight_dim}]
-                {\makebox[2.2\c_ptxcd_logoheight_dim][l]{\includegraphics[height=\c_ptxcd_logoheight_dim]{\g_ptxcd_logofile_tl}}}
+                        \bool_if:cTF {g_ \tudaPkgPrefix _smalltitle_bool}
+                        {\bool_if:cTF {g_ \tudaPkgPrefix _colorback_bool} {1.15}{1}}
+                        {\bool_if:cTF {g_ \tudaPkgPrefix _colorback_bool} {1.5}{1.3}
+                        }\l_tmpa_logo_height_dim}]
+                {\makebox[2.2\l_tmpa_logo_height_dim][l]{\includegraphics[height=\l_tmpa_logo_height_dim]{\tl_use:c {g_ \tudaPkgPrefix _logofile_tl}}}}
             }
             \par\medskip
         }
     }
     \par
     \nointerlineskip
-    \rule{\linewidth}{\g_ptxcd_titlerule_dim}
+    \rule{\linewidth}{\dim_use:c {g_ \tudaPkgPrefix _titlerule_dim}}
     % subtitle fields if not compat
-    \exp_args:Nf \tl_if_empty:nF {\seq_use:Nnnn \g_ptxcd_author_seq {~\authorandname{}~} {,~} {~\authorandname{}~}\seq_use:Nnnn \g_ptxcd_ex_sheetnum_tl\@date\g_ptxcd_ex_term_tl\use:c {@subsubtitle}\@subtitle}{
+    \exp_args:Nf \tl_if_empty:nF {\seq_use:cnnn {g_ \tudaPkgPrefix _author_seq} {~\authorandname{}~} {,~} {~\authorandname{}~}\tl_use:c {g_ \tudaPkgPrefix _ex_sheetnum_tl} \@date \tl_use:c {g_ \tudaPkgPrefix _ex_term_tl} \use:c {@subsubtitle} \@subtitle}{
         \par\nointerlineskip
-        \bool_if:NT \g_ptxcd_colorback_bool {\colorbox{accentcolor}}{
+        \bool_if:cT {g_ \tudaPkgPrefix _colorback_bool} {\colorbox{accentcolor}}{
             \parbox{\linewidth}{
                 \begin{minipage}{\linewidth}
-                    \bool_if:NT \g_ptxcd_colorback_bool {
+                    \bool_if:cT {g_ \tudaPkgPrefix _colorback_bool} {
                         \color{textonaccentcolor}
                         \begin{addmargin}{3mm}
                             }
                             \null\par
                             % Term
                             \bool_if:NTF \g_manual_term_bool{
-                                \g_ptxcd_ex_term_tl
+                                \tl_use:c {g_ \tudaPkgPrefix _ex_term_tl}
                             }
                             {
-                                \str_case_e:nnF {\g_ptxcd_ex_term_style_tl} {
+                                \str_case_e:nnF {\tl_use:c {g_ \tudaPkgPrefix _ex_term_style_tl}} {
                                     {manual} {
-                                        \g_ptxcd_ex_term_tl
+                                        \tl_use:c {g_ \tudaPkgPrefix _ex_term_tl}
                                     }
                                 }{
                                     \def\ptxcd_nextsep{}
                                     \bool_gset_true:N \g_tmpa_left_bool
                                     \clist_map_inline:Nn \g_rubos_ex_term_order_clist {
                                         % Process different term Styles
-                                        \str_case_e:nnF {\g_ptxcd_ex_term_style_tl} {
+                                        \str_case_e:nnF {\tl_use:c {g_ \tudaPkgPrefix _ex_term_style_tl}} {
                                             {left} {
                                                 \tl_if_empty:cF {##1} {
-                                                    \seq_put_right:cn {\bool_if:nTF \g_tmpa_left_bool {g_ptxcd_term_left_seq} {g_ptxcd_term_right_seq}} {\use:c {##1}}
+                                                    \seq_put_right:cn {\bool_if:nTF \g_tmpa_left_bool {g_ \tudaPkgPrefix _term_left_seq} {g_ \tudaPkgPrefix _term_right_seq}} {\use:c {##1}}
                                                 }
                                             }
                                             {center} {
                                                 \tl_if_empty:cF {##1} {
-                                                    \seq_put_right:cn {\bool_if:nTF \g_tmpa_left_bool {g_ptxcd_term_left_seq} {g_ptxcd_term_right_seq}} {\use:c {##1}}
+                                                    \seq_put_right:cn {\bool_if:nTF \g_tmpa_left_bool {g_ \tudaPkgPrefix _term_left_seq} {g_ \tudaPkgPrefix _term_right_seq}} {\use:c {##1}}
                                                 }
                                             }
                                             {left-right} {
                                                 \tl_if_empty:cF {##1} {
-                                                    \seq_put_right:cn {\bool_if:nTF \g_tmpa_left_bool {g_ptxcd_term_left_seq} {g_ptxcd_term_right_seq}} {\use:c {##1}}\bool_set:Nn \g_tmpa_left_bool {!\g_tmpa_left_bool}
+                                                    \seq_put_right:cn {\bool_if:nTF \g_tmpa_left_bool {g_ \tudaPkgPrefix _term_left_seq} {g_ \tudaPkgPrefix _term_right_seq}} {\use:c {##1}}\bool_set:Nn \g_tmpa_left_bool {!\g_tmpa_left_bool}
                                                 }
                                             }
                                             {left-right-manual} {
@@ -406,30 +440,30 @@
                                             }
                                         }
                                         {
-                                            \ClassError{rubos_tuda_template}{Unknown Term style Option: \use:c {\g_ptxcd_ex_term_style_tl}}{Available options are: left, center, left-right (default)}
+                                            \ClassError{rubos_tuda_template}{Unknown Term style Option: \tl_use:c {g_ \tudaPkgPrefix _ex_term_style_tl}}{Available options are: left, center, left-right (default)}
                                         }
                                     }
                                     % Left Side
-                                    \begin{minipage}[t]{\seq_if_empty:NF {\g_ptxcd_term_right_seq}{.6}\linewidth}
-                                        \str_if_eq:eeT{\g_ptxcd_ex_term_style_tl} {center} {\centering}
-                                        \seq_use:Nnnn \g_ptxcd_term_left_seq {\mbox{}\par} {\mbox{}\par} {\mbox{}\par}
+                                    \begin{minipage}[t]{\seq_if_empty:cF {g_ \tudaPkgPrefix _term_right_seq}{.6}\linewidth}
+                                        \str_if_eq:eeT{\tl_use:c {g_ \tudaPkgPrefix _ex_term_style_tl}} {center} {\centering}
+                                        \seq_use:cnnn {g_ \tudaPkgPrefix _term_left_seq} {\mbox{}\par} {\mbox{}\par} {\mbox{}\par}
                                         \gdef\ptxcd_nextsep{\par}
                                     \end{minipage}
-                                    \seq_if_empty:NF {\g_ptxcd_term_right_seq}{
+                                    \seq_if_empty:cF {g_ \tudaPkgPrefix _term_right_seq}{
                                         \begin{minipage}[t]{.4\linewidth}
                                             \raggedleft
                                             \begin{flushright}
-                                                \seq_use:Nnnn \g_ptxcd_term_right_seq {\mbox{}\par} {\mbox{}\par} {\mbox{}\par}
+                                                \seq_use:cnnn {g_ \tudaPkgPrefix _term_right_seq} {\mbox{}\par} {\mbox{}\par} {\mbox{}\par}
                                             \end{flushright}
                                             \gdef\ptxcd_nextsep{\par}
                                         \end{minipage}
                                     }
                                     % \vspace{-\abovedisplayskip}
-                                    \bool_if:nT { !\seq_if_empty_p:N \g_ptxcd_term_left_seq || !\seq_if_empty_p:N \g_ptxcd_term_right_seq } {
+                                    \bool_if:nT { !\seq_if_empty_p:c {g_ \tudaPkgPrefix _term_left_seq} || !\seq_if_empty_p:c {g_ \tudaPkgPrefix _term_right_seq} } {
                                         \vspace*{\lineskip}
                                         \par
                                     }
-                                    \tl_if_empty:NF \g_ptxcd_ex_term_tl {\g_ptxcd_ex_term_tl}
+                                    \tl_if_empty:cF {g_ \tudaPkgPrefix _ex_term_tl} {\tl_use:c {g_ \tudaPkgPrefix _ex_term_tl}}
                                     % \clist_map_inline:nn {@subtitle, @subsubtitle, g_ptxcd_ex_term_tl} {
                                     %   \tl_if_empty:cF {##1} {\ptxcd_nextsep\use:c {##1}\def\ptxcd_nextsep{\\}}
                                     % }
@@ -437,7 +471,7 @@
                                 }
                             }
 
-                            \bool_if:NT \g_ptxcd_colorback_bool {
+                            \bool_if:cT {g_ \tudaPkgPrefix _colorback_bool} {
                         \end{addmargin}
                     }
                 \end{minipage}
@@ -445,17 +479,17 @@
             }
         }
         \par\nointerlineskip
-        \rule{\linewidth}{\g_ptxcd_titlerule_dim}
+        \rule{\linewidth}{\dim_use:c {g_ \tudaPkgPrefix _titlerule_dim}}
     }
     \par
-    \bool_if:NT  \g_ptxcd_headontitle_bool {
+    \bool_if:cT  {g_ \tudaPkgPrefix _headontitle_bool} {
         \if@twoside
-            \box_use:N \g_ptxcd_ex_headline_odd_box
+            \box_use:c {g_ \tudaPkgPrefix _ex_headline_odd_box}
         \else
-            \box_use:N \g_ptxcd_ex_headline_oneside_box
+            \box_use:c {g_ \tudaPkgPrefix _ex_headline_oneside_box}
         \fi
         \par
-        \rule{\linewidth}{\g_ptxcd_titlerule_dim}
+        \rule{\linewidth}{\dim_use:c {g_ \tudaPkgPrefix _titlerule_dim}}
         \par
     }
     \endgroup
@@ -463,126 +497,53 @@
     \ConfigureHeadline{}
 }%
 
-\prg_new_conditional:Nnn \__ptxcd_if_corporatedesign: {T,F,TF} {
-    \bool_if:NTF \g_algo_ex_corporate_design_bool {
-        \prg_return_true:
-    } {
-        \prg_return_false:
-    }
-}
-
-\cs_set_eq:NN\IfCorporateDesignT \__ptxcd_if_corporatedesign:T
-\cs_set_eq:NN\IfCorporateDesignF \__ptxcd_if_corporatedesign:F
-\cs_set_eq:NN\IfCorporateDesignTF \__ptxcd_if_corporatedesign:TF
-
-\IfCorporateDesignT{
-    % Discover tudaci-Version
-    \exp_args:NNnx \seq_set_split:Nnn \g_tuda_version_seq { ~ } { \use:c {ver@tudaexercise.cls} }
-    \tl_set:Nx \g_tudaci_version_tl { \seq_item:Nn \g_tuda_version_seq { 2 } }
-    \tl_set:Nx \g_tudaci_version_tl {\tl_tail:N \g_tudaci_version_tl}
-    \regex_replace_once:nnN { [a-z] } { } \g_tudaci_version_tl
-
-    \newcommand{\getTudaciVersion}[1]{
-        \tl_use:N \g_tudaci_version_tl
-    }
-    \newcommand{\IfTudaciVersionAtLeastTF}[3]{
-        \fp_compare:nTF {\getTudaciVersion{} >= #1}{#2}{#3}
-    }
-    \newcommand{\IfTudaciVersionBetweenTF}[4]{
-        \fp_compare:nTF {#1<=\getTudaciVersion{}<=#2}{#3}{#4}
-    }
-
-    % Compatibility with newer TUDA-Versions
-    \IfTudaciVersionAtLeastTF{3.12}{
-        \clist_map_inline:nn {vues,vue,vueaufgabe,hue,hueaufgabe,hueteilaufgabe} {
-            \bool_new:c	{g__ptxcd_ruled_#1_bool}
-            \bool_gset_true:c {g__ptxcd_ruled_#1_bool}
-        }
-    }{}
-}
-
 \IfDarkModeT{
-    \IfTudaciVersionAtLeastTF{3.12}{
-        \IfFileExists{tuda_logo_inverted.pdf}{\tl_gset:Nn \g_ptxcd_logofile_tl {tuda_logo_inverted.pdf}}{}
-    }{
-        \IfFileExists{tuda_logo_inverted.pdf}{\tl_gset:Nn \g_TUDa_logofile_tl {tuda_logo_inverted.pdf}}{}
-    }
+    \IfFileExists{tuda_logo_inverted.pdf}{\tl_gset:cn {g_ \tudaPkgPrefix _logofile_tl} {tuda_logo_inverted.pdf}}{}
 }
 
 \IfCorporateDesignT{
     % Custom Headline Style
-    \IfTudaciVersionAtLeastTF{3.0}{
-        \clist_map_inline:nn {odd, even, oneside} {
-            \keys_define:nn {ptxcd/exercise/headline} {
-                #1 .choice:,
-                #1 / title-name-id .code:n = \tl_gset:cn {g_ptxcd_ex_headline_#1_tl} {
-                    \g_ptxcd_shorttitle_tl
-                    \par
-                    \StudentName
-                    \StudentID
-                },
-                #1 / title-name .code:n = \tl_gset:cn {g_ptxcd_ex_headline_#1_tl} {
-                    \g_ptxcd_shorttitle_tl\par
-                    \smallskip
-                    \StudentName
-                },
-                #1 / title .code:n = \tl_gset:cn {g_ptxcd_ex_headline_#1_tl} {\g_ptxcd_shorttitle_tl},
-                #1 / fulltitle-centered .code:n = \tl_gset:cn {g_ptxcd_ex_headline_#1_tl} {
-                    \centering
-                    \textbf{\textsf{\@title}
-                    }
-                },
-                #1 / name-id .code:n = \tl_gset:cn {g_ptxcd_ex_headline_#1_tl} {
-                    \StudentName
-                    \StudentID
-                },
-                #1 / name .code:n = \tl_gset:cn {g_ptxcd_ex_headline_#1_tl} {
-                    \StudentName
-                },
-                #1 / algo .code:n = \tl_gset:cn {g_ptxcd_ex_headline_#1_tl} {
-                    \textsf{\textbf{\getFach{}\space{}}
-                        im\space\fatsf{\getSemester{}}\space{}
-                        bei\space\fatsf{\getDozent{}}\hfill\fatsf{\@title}~--~\g_ptxcd_shorttitle_tl\par
-                        \StudentName\StudentID}
-                },
-                #1 / algo-min .code:n = \tl_gset:cn {g_ptxcd_ex_headline_#1_tl} {
-                    \textsf{\textbf{\getFach{}\space{}}
-                        im\space\fatsf{\getSemester{}}\space{}
-                        bei\space\fatsf{\getDozent{}}\hfill\fatsf{\@title}~--~\g_ptxcd_shorttitle_tl}
-                },
-                % Backwards Compatibility
-                #1 / aud .meta:n = {#1 / algo = ##1},
-                #1 / aud-min .meta:n = {#1 / algo-min = ##1},
-            }
-        }
-    }{
-        \clist_map_inline:nn {odd, even, oneside} {
-            \tl_gclear_new:c {g_TUDa_ex_headline_#1_tl}
-            \keys_define:nn {TUDa/exercise/headline} {
-                #1 .choice:,
-                #1 / title-name-id .code:n = \tl_gset:cn {g_TUDa_ex_headline_#1_tl} {
-                    \g_TUDa_shorttitle_tl\par
-                    \StudentName\StudentID},
-                #1 / title-name .code:n = \tl_gset:cn {g_TUDa_ex_headline_#1_tl} {
-                    \g_TUDa_shorttitle_tl\par
-                    \smallskip
-                    \StudentName},
-                #1 / title .code:n = \tl_gset:cn {g_TUDa_ex_headline_#1_tl} {\g_TUDa_shorttitle_tl},
-                #1 / fulltitle-centered .code:n = \tl_gset:cn {g_TUDa_ex_headline_#1_tl} {\centering\textbf{\textsf{\@title}}},
-                #1 / name-id .code:n = \tl_gset:cn {g_TUDa_ex_headline_#1_tl} {\StudentName\StudentID},
-                #1 / name .code:n = \tl_gset:cn {g_TUDa_ex_headline_#1_tl} {\StudentName},
-                #1 / algo .code:n= \tl_gset:cn {g_TUDa_ex_headline_#1_tl} {
-                    \textsf{\textbf{\usekomavar{subject}\space{}}im\space\fatsf{\getSemester{}}\space{}bei\space\fatsf{\getDozent}\hfill \@title - \g_TUDa_shorttitle_tl\par
-                        \StudentName\StudentID}
-                },
-                #1 / algo-min .code:n= \tl_gset:cn {g_TUDa_ex_headline_#1_tl} {
-                    \textsf{\textbf{\usekomavar{subject}\space{}}im\space\fatsf{\getSemester{}}\space{}bei\space\fatsf{\getDozent}\hfill \@title - \g_TUDa_shorttitle_tl}
-                },
-                % Backwards Compatibility
-                #1 / aud .meta:n = {#1 / algo = ##1},
-                #1 / aud-min .meta:n = {#1 / algo-min = ##1},
-                #1 / unknown .code:n = \tl_gset:cn {g_TUDa_ex_headline_#1_tl} {##1}
-            }
+    \clist_map_inline:nn {odd, even, oneside} {
+        \exp_args:Nf \keys_define:nn {\tudaPkgPrefix/exercise/headline} {
+            #1 .choice:,
+            #1 / title-name-id .code:n = \tl_gset:cn {g_ \tudaPkgPrefix _ex_headline_#1_tl} {
+                \getShorttitle
+                \par
+                \StudentName
+                \StudentID
+            },
+            #1 / title-name .code:n = \tl_gset:cn {g_ \tudaPkgPrefix _ex_headline_#1_tl} {
+                \getShorttitle\par
+                \smallskip
+                \StudentName
+            },
+            #1 / title .code:n = \tl_gset:cn {g_ \tudaPkgPrefix _ex_headline_#1_tl} {\getShorttitle},
+            #1 / fulltitle-centered .code:n = \tl_gset:cn {g_ \tudaPkgPrefix _ex_headline_#1_tl} {
+                \centering
+                \textbf{\textsf{\@title}
+                }
+            },
+            #1 / name-id .code:n = \tl_gset:cn {g_ \tudaPkgPrefix _ex_headline_#1_tl} {
+                \StudentName
+                \StudentID
+            },
+            #1 / name .code:n = \tl_gset:cn {g_ \tudaPkgPrefix _ex_headline_#1_tl} {
+                \StudentName
+            },
+            #1 / algo .code:n = \tl_gset:cn {g_ \tudaPkgPrefix _ex_headline_#1_tl} {
+                \textsf{\textbf{\getFach{}\space{}}
+                    im\space\fatsf{\getSemester{}}\space{}
+                    bei\space\fatsf{\getDozent{}}\hfill\fatsf{\@title}~--~\getShorttitle\par
+                    \StudentName\StudentID}
+            },
+            #1 / algo-min .code:n = \tl_gset:cn {g_ \tudaPkgPrefix _ex_headline_#1_tl} {
+                \textsf{\textbf{\getFach{}\space{}}
+                    im\space\fatsf{\getSemester{}}\space{}
+                    bei\space\fatsf{\getDozent{}}\hfill\fatsf{\@title}~--~\getShorttitle}
+            },
+            % Backwards Compatibility
+            #1 / aud .meta:n = {#1 / algo = ##1},
+            #1 / aud-min .meta:n = {#1 / algo-min = ##1},
         }
     }
 }
@@ -602,7 +563,7 @@
     \bool_if:nTF {#1} {
         \__old_pointformat{#2}
     }{
-        \bool_if:NTF \l__ptxcd_points_auto_bool
+        \bool_if:cTF {l__ \tudaPkgPrefix _points_auto_bool}
         \creditformatsum
         \creditformat
         {
@@ -708,7 +669,7 @@
                 \bool_if:nTF {#1} {
                     \__old_pointformat{#2}
                 }{
-                    \bool_if:NTF \l__ptxcd_points_auto_bool
+                    \bool_if:cTF {l__ \tudaPkgPrefix _points_auto_bool}
                     \creditformatsum
                     \creditformat
                     {

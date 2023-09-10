@@ -1,6 +1,6 @@
 \NeedsTeXFormat{LaTeX2e}
 \RequirePackage{expl3}
-\ProvidesExplPackage{algo-common}{2022-09-25}{2.3-Snapshot}{Common Definitions for all Algo templates - Based on rubos-common (https://github.com/Rdeisenroth/Rubos-TUDA-Template/blob/main/tex/rubos-common.sty)}
+\ProvidesExplPackage{algo-common}{2023-09-10}{2.3-Snapshot}{Common Definitions for all Algo templates - Based on rubos-common (https://github.com/Rdeisenroth/Rubos-TUDA-Template/blob/main/tex/rubos-common.sty)}
 % Package Made by Ruben Deisenroth, 2022
 % Available at https://github.com/Rdeisenroth/Rubos-TUDA-Template/blob/main/tex/rubos-common.sty
 
@@ -200,7 +200,7 @@
 }
 
 % A Gray Info Box (gray bar on the Left+ light gray background)
-\newtcolorbox{grayInfoBox}[1][]{
+\NewTColorBox{grayInfoBox}{O{}}{
     colback=\IfDarkModeTF{white!10!\thepagecolor}{gray!10}, %Hintergrundfarbe
     % colback=fgcolor!10!\thepagecolor, %Hintergrundfarbe
     coltext=.,
@@ -225,7 +225,7 @@
 }
 
 % A Normal Information Box (Accentcolor bar on the left)
-\newtcolorbox{infoBox}[1][]{
+\NewTColorBox{infoBox}{O{}}{
     colback=\thepagecolor, %Hintergrundfarbe
     colframe=accentcolor, % Randfarbe
     coltext=.,
@@ -249,7 +249,7 @@
 }
 
 % An Important Information Box (Accentcolor bar on the left+ light Accentcolor BG)
-\newtcolorbox{defBox}[1][]{
+\NewTColorBox{defBox}{O{}}{
     colback=\IfDarkModeTF{accentcolor!20!\thepagecolor}{accentcolor!10!\thepagecolor}, %Hintergrundfarbe
     colframe=accentcolor, % Randfarbe
     coltext=.,
@@ -273,7 +273,7 @@
 }
 
 % Box like The one Used for Code Blocks, just without Code Block
-\newtcolorbox{normalBox}[1][]{%
+\NewTColorBox{normalBox}{O{}}{%
     colback=fgcolor!10!\thepagecolor, %Hintergrundfarbe
     colframe=black!70, % Randfarbe
     coltext=.,
@@ -557,7 +557,7 @@
 \renewcommand{\theFancyVerbLine}{\tikz{\coordinate(a);\node[text~width=5mm,inner~sep=0pt,align=center]{\ttfamily\textcolor{white}{\scriptsize\arabic{FancyVerbLine}}};}}
 
 % Environment für meinen Code-Style (Arg 1 = minted Options, Arg 2 = tcolorbox Options)
-\newtcblisting{codeBlock}[2][]{
+\NewTCBListing{codeBlock}{ O{} m }{
 listing~engine=minted, % Minted verwenden
 colback=\IfDarkModeTF{codebg}{black!10!\thepagecolor}, %Hintergrundfarbe
 colframe=black!70, % Randfarbe
@@ -590,7 +590,7 @@ overlay={ % Für Grauen Bereich links
 },
 #2 % Weitere Argumente zulassen
 }
-\newtcbinputlisting{\inputCode}[3][]{
+\NewTCBInputListing{\inputCode}{ O{} m m }{
 listing~engine=minted, % Minted verwenden
 listing~file={#3},
 colback=\IfDarkModeTF{codebg}{black!10!\thepagecolor}, %Hintergrundfarbe
@@ -627,7 +627,7 @@ overlay={ % Für Grauen Bereich links
 }{
 \tcbuselibrary{listingsutf8}
 % Environment für meinen Code-Style (Arg 1 = minted Options, Arg 2 = tcolorbox Options)
-\newtcblisting{codeBlock}[2][]{
+\NewTCBListing{codeBlock}{ O{} m }{
 listing~engine=listings, % Minted verwenden
 colback=\IfDarkModeTF{codebg}{black!10!\thepagecolor}, %Hintergrundfarbe
 colframe=black!70, % Randfarbe
@@ -651,7 +651,7 @@ overlay={ % Für Grauen Bereich links
 },
 #2 % Weitere Argumente zulassen
 }
-\newtcbinputlisting{\inputCode}[3][]{
+\NewTCBInputListing{\inputCode}{ O{} m m }{
 listing~engine=listings, % Minted verwenden
 listing~file={#3},
 colback=\IfDarkModeTF{codebg}{black!10!\thepagecolor}, %Hintergrundfarbe
