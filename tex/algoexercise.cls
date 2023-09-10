@@ -551,11 +551,18 @@
 % Stilistische Anpassungen der Task-Environments
 \renewcommand*{\taskformat}{\rmfamily\bfseries \thetask{}} % Taskprefix
 \renewcommand*{\subtaskformat}{\thesubtask\enskip} % This looks way cleaner
+\tl_gclear_new:c { g_algo_ex_taskgroup_prefix_tl }
+\tl_gset:cn { g_algo_ex_taskgroup_prefix_tl } {H}
+\int_gzero_new:N \g_algo_ex_taskoffset_int
+\DeclareExpandableDocumentCommand{\nextTaskGroup}{m}{
+    \tl_gset:cn { g_algo_ex_taskgroup_prefix_tl } {#1}
+    \int_gset:Nn \g_algo_ex_taskoffset_int {\value{task}}
+}
 \renewcommand*{\thetask}{%
-    H\arabic{task}%
+    \tl_use:c {g_algo_ex_taskgroup_prefix_tl} \int_eval:n {\value{task} - \g_algo_ex_taskoffset_int}
 }
 \renewcommand*{\thesubtask}{%
-    H\arabic{task}.\arabic{subtask}%
+    \tl_use:c {g_algo_ex_taskgroup_prefix_tl} \int_eval:n {\value{task} - \g_algo_ex_taskoffset_int}.\arabic{subtask}%
 }
 % Point Formating
 \cs_set_eq:NN \__old_pointformat \pointformat
@@ -582,6 +589,18 @@
 \setkomafont{task}{\normalfont\large\bfseries}
 \setkomafont{subtask}{\normalfont\bfseries}
 
+
+\fp_gzero_new:c {l_algo_ex_vue_max_difficulty_fp}
+\fp_gset:Nn \l_algo_ex_vue_max_difficulty_fp {5}
+\DeclareDocumentCommand{\vue}{m}{
+    \nextTaskGroup{V}
+    \fp_gset:Nn \l_algo_ex_vue_max_difficulty_fp {#1}
+    \unskip\section*{
+            Vorbereitende~Übungen\hfill %\textmd{\textrm{(Bearbeitung~ist~freiwillig)}}
+            %\textmd{max.~\fp_to_decimal:c {l_algo_ex_vue_max_difficulty_fp}~Punkte}
+        }
+}
+
 % #1 Hausübungsnummer
 % #2 Hausübungstitel
 % #3 Gesamtpunktzahl
@@ -589,6 +608,7 @@
 \DeclareDocumentCommand{\hue}{mmmO{
         Gesamt:~\pointformat[\g_algo_ex_show_total_points_bool]{*}
     }}{
+    \nextTaskGroup{H}
     \tl_clear_new:N \l_algo_ex_hue_totpoints_fp
     \tl_set:Nn \l_algo_ex_hue_totpoints_fp {#3}
     \tl_set:Nn \l_algo_ex_hue_pointformat_tl {#4}
@@ -643,7 +663,7 @@
                     \exp_args:No \tl_if_empty:nF {#4}
                     {:~}
                     \bool_if:NT \l__ptxcd_points_auto_bool {
-                        \exp_args:NNx \prop_get:NnN \g__ptxcd_loaded_points_prop {\thetask} \l_ptxcd_tmp_tl
+                        \exp_args:NNf \prop_get:NnN \g__ptxcd_loaded_points_prop {\thetask} \l_ptxcd_tmp_tl
                         \quark_if_no_value:NF \l_ptxcd_tmp_tl {
                             \fp_set:Nn \l_ptxcd_ex_task_points_fp {\l_ptxcd_tmp_tl}
                         }
@@ -654,6 +674,12 @@
                     \hfill\tl_if_empty:cTF{l_ptxcd_ex_#1_credit_tl}
                     {\pointformat{\fp_to_decimal:c {l_ptxcd_ex_#1_points_fp}}}
                     {\creditformat{\tl_use:c {l_ptxcd_ex_#1_credit_tl}}}
+                    \fp_compare:nT {\l_algo_ex_vue_difficulty_fp >= 0} {
+                        \quad{}\textbf{
+                            %Schwierigkeit:~
+                            \starrating{\l_algo_ex_vue_difficulty_fp}{\l_algo_ex_vue_max_difficulty_fp}
+                        }
+                    }
                 }
                 \rule[-\dp\strutbox]{0pt}{\dp\strutbox}\par}\nointerlineskip
             \skip_vertical:n {\ptxcd_titlerule_sep: -\dp\strutbox}
@@ -696,4 +722,14 @@
             }
         }
     }
+}
+
+% Difficulty
+\keys_define:nn {ptxcd/task}{
+    difficulty .choice:,
+    difficulty / max .meta:n ={difficulty=\l_algo_ex_vue_max_difficulty_fp},
+    difficulty / min .meta:n ={difficulty=0},
+    difficulty / unknown .code:n = \fp_set:Nn \l_algo_ex_vue_difficulty_fp {#1},
+    difficulty .initial:n = {-1},
+    difficulty .default:n = {-1},
 }

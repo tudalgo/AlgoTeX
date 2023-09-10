@@ -214,7 +214,6 @@
     \section{Aufgabenstellungen, Teilaufgaben und Punktesystem}\label{Exercises}
     \vspace{-1em}
     \subsection{Übungsblatttitel und Gesamtpunktzahl}\label{totalpoints_and_sheet_title}
-    \vspace{-1em}
     Jedes Übungsblatt braucht einen Kurzen Titel, der Beschreibt um was es geht.
     Dieser kann zwar gleich den Topics sein, aber kreative Titel sind immer willkommen.
     Um den Übungsblatttitel anzugeben, eignet sich am Besten das Optionale Kurztitelargument des \verb+\title[]{}+-Commands (siehe
@@ -222,6 +221,11 @@
 
     Das erste, was nach dem Command \verb+\maketitle{}+ kommen sollte, ist die Hausübungsleiste.
     Die Hausübungsleiste kommt noch daher, dass früher auf jedem Blatt sowohl Vorübungen (V) als auch Hausübungen (H) standen.
+
+    Die Vorübungsleiste lässt sich mit dem command:\\
+    \verb+\vue{<maxdifficulty>}+\\
+    erstellen. Dabei ist \verb+<maxdifficulty>+ die maximale Anzahl an Sternen, die die Schwierigkeitsskala anzeigen soll (default: 3). Bei den tasks kann dann mit dem optionalen Argument \verb+[difficulty=<n>]+ die Schwierigkeit der Aufgabe angegeben werden. Beispielsweise liefert \verb+[difficulty=2.5]+ bei einer \verb+maxdifficulty+ von \verb+5+: \starrating{2.5}{5}. Übrigens kann der \verb+\starrating{<n>}{<max>}+ command auch außerhalb der Hausübungsleiste verwendet werden.
+
     Die Hausübungsleiste lässt sich mit dem command:\\
     \verb+\hue{<hausübungsnummer>}{<hausübungstitel>}{<gesamtpunktzahl>}[<punktzahlformat>]+\\
     erstellen.
@@ -234,9 +238,7 @@
             \item\verb+\hue{FOP Projekt}{Pizza-Liefersevice}{\getPointsTotal{}}[Gesamt Teil A: * Punkte]+%
         \end{itemize}
     \end{beispiele}
-    \vspace{-1em}
     \subsection{Tasks und Subtasks}\label{tasksAndSubtasks}
-    \vspace{-1em}
     Genau wie bei der TU-Vorlage \verb+tudaexercise+ nutzen wir \verb+task+- und \verb+subtask+-Environments.
     Um einen einheitlicheren Syntax zu haben, nutzen wir meistens die gesternte Variante des \verb+subtask+-Environments:
     \begin{codeBlock}[]{minted language=latex, title=\codeBlockTitle{Beispielschema für Tasks und Subtasks}}
@@ -257,7 +259,6 @@
             \end{subtask*}
         \end{task}
     \end{codeBlock}
-    \vspace*{-1cm}\vspace*{\fill}
 
     Wie man in dem Schema erkennen kann, sollte jede Aufgabe, die keine Teilaufgaben besitzt, eine festgelegte Punktzahl haben.
     Sobald ein Task mindestens einen Subtask besitzt, wird die Punktzahl des Tasks (n) mit \verb+auto+ automatisch aufsummiert und
@@ -271,7 +272,7 @@
     \href{http://mirrors.ctan.org/macros/latex/contrib/tuda-ci/doc/DEMO-TUDaExercise.pdf}{Dokumentation von \texttt{tudaexercise}}.
     % \begin{noindent}% \begin{noindent}
 
-    \clearpage
+    %\clearpage
     \subsection{Kästen und Boxen}\label{boxes}
     \vspace{-1em}
     Ein wichtiger Bestandteil des Designs der Algorithmik-Übungsblätter sind die vordefinierten Boxen und environments.
