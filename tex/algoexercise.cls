@@ -25,6 +25,10 @@
 \sys_get_shell:nnN { kpsewhich ~ --var-value ~ SHOW_TOTAL_POINTS } { } \l_show_total_points_env_var_tl
 \tl_trim_spaces:N \l_show_total_points_env_var_tl
 \tl_if_eq:NnT \l_show_total_points_env_var_tl {1} {\PassOptionsToClass{showtotalpoints}{algoexercise}}
+% solution
+\sys_get_shell:nnN { kpsewhich ~ --var-value ~ SOLUTION } { } \l_solution_env_var_tl
+\tl_trim_spaces:N \l_solution_env_var_tl
+\tl_if_eq:NnT \l_solution_env_var_tl {1} {\PassOptionsToClass{solution=true}{algoexercise}}
 
 \RequirePackage[minted_workaround,caption_workaround]{algo-common}
 
