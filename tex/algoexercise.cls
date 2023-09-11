@@ -737,3 +737,12 @@
     difficulty .initial:n = {-1},
     difficulty .default:n = {-1},
 }
+
+\keys_define:nn {ptxcd/subtask}{
+    difficulty .choice:,
+    difficulty / max .meta:n ={difficulty=\l_algo_ex_vue_max_difficulty_fp},
+    difficulty / min .meta:n ={difficulty=0},
+    difficulty / unknown .code:n = \fp_set:Nn \l_algo_ex_vue_difficulty_fp {#1},
+    difficulty .initial:n = {-1},
+    difficulty .default:n = {-1},
+}
