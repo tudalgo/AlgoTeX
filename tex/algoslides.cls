@@ -124,7 +124,13 @@
     \leavevmode\box_use:N \l_listings_boxed_box
 }
 
-\newcommand{\slidehead}{\frametitle{\insertsectionhead} \framesubtitle{\insertsubsectionhead\int_compare:nF {\exp_args:No \str_count_ignore_spaces:n {\insertsubsubsectionhead}<1} {~---~\insertsubsubsectionhead}}\vspace{3mm}}
+\DeclareDocumentCommand{\slidehead}{s}{
+    \bool_if:nTF {#1} {
+        \frametitle{\insertsection} \framesubtitle{\insertsubsection\int_compare:nF {\exp_args:No \str_count_ignore_spaces:n {\insertsubsubsection}<1} {~---~\insertsubsubsectionhead}}\vspace{3mm}
+    } {
+        \frametitle{\insertsectionhead} \framesubtitle{\insertsubsectionhead\int_compare:nF {\exp_args:No \str_count_ignore_spaces:n {\insertsubsubsectionhead}<1} {~---~\insertsubsubsectionhead}}\vspace{3mm}
+    }
+}
 \newcommand{\tocslide}{
     \begin{frame}[t]\frametitle{Inhaltsverzeichnis}\vspace{3mm}{\small\tableofcontents[subsectionstyle=shaded]}
     \end{frame}
