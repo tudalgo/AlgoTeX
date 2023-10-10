@@ -534,6 +534,22 @@
             entsprechende Aufgabe)
     \end{itemize}
     \section{snippets}
-    \UseSnippet{exercise-introduction}
-    \clearpage{}
+    Snippets können mit dem Befehl \verb+\UseSnippet{<snippet-name>}+ eingefügt werden. Hier ist eine Liste aller Snippets:
+    \ExplSyntaxOn
+    % \tl_to_str:N \g_algo_snippets_visible_seq
+    \seq_map_indexed_inline:Nn \g_algo_snippets_visible_seq {
+        \seq_clear_new:N \l_snippet_args_seq
+        \tl_set:Nn \l_snippet_args_seq {#2}
+        \tl_clear_new:N \l_snippet_name_tl
+        \tl_clear_new:N \l_snippet_description_tl
+        \tl_clear_new:N \l_snippet_code_tl
+        \tl_set:Nn \l_snippet_name_tl {\seq_item:Nn \l_snippet_args_seq {1}}
+        \tl_set:Nn \l_snippet_description_tl {\seq_item:Nn \l_snippet_args_seq {2}}
+        \tl_set:Nn \l_snippet_code_tl {\seq_item:Nn \l_snippet_args_seq {3}}
+        \bool_set:Nn \l_snippet_hidden_bool {\seq_item:Nn \l_snippet_args_seq {4}}
+        \paragraph{#1 .~Snippet~\enquote{\l_snippet_name_tl :}}\mbox{}\par
+        \UseSnippet{\l_snippet_name_tl}
+        \par
+    }
+    \ExplSyntaxOff
 \end{document}

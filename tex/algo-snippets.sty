@@ -9,7 +9,6 @@
 \ExplSyntaxOn
 
 \seq_gclear_new:N \g_algo_snippets_visible_seq
-% \prop_gclear_new:N \g_algo_snippets_visible_prop
 % seq: name, description, params, snippet, visible
 
 %% Command that is used to declare snippets
@@ -21,24 +20,20 @@
     \exp_args:Nc \DeclareDocumentCommand{__algo_snipets_snippet_#2}{m} {
         #4
     }
-    % \seq_gclear_new:c {l_algo_snippets_curr_snipet_#2_seq}
-    % \seq_gput_right:cn {l_algo_snippets_curr_snipet_#2_seq} {#2}
-    % \seq_gput_right:cn {l_algo_snippets_curr_snipet_#2_seq} {#3}
-    % \seq_gput_right:cn {l_algo_snippets_curr_snipet_#2_seq} {#4}
-    % \seq_gput_right:cn {l_algo_snippets_curr_snipet_#2_seq} {#1}
-    % \exp_args:Nnf \seq_gput_right:cn {g_algo_snippets_visible_seq} {\use:c {l_algo_snippets_curr_snipet_#2_seq}}
-    % \prop_gput:Nnc \g_algo_snippets_visible_prop {#2} {l_algo_snippets_curr_snipet_#2_seq}
+    \seq_gclear_new:c {l_algo_snippets_curr_snipet_#2_seq}
+    \seq_gput_right:cn {l_algo_snippets_curr_snipet_#2_seq} {#2}
+    \seq_gput_right:cn {l_algo_snippets_curr_snipet_#2_seq} {#3}
+    \seq_gput_right:cn {l_algo_snippets_curr_snipet_#2_seq} {#4}
+    \seq_gput_right:cn {l_algo_snippets_curr_snipet_#2_seq} {#1}
+    \exp_args:Nnf \seq_gput_right:cn {g_algo_snippets_visible_seq} {\use:c {l_algo_snippets_curr_snipet_#2_seq}}
 }
+
 %% Command that is used to declare snippets
 % #1: starred or not - starred snippets are not included in the list of snippets
 % #2: name of the snippet
 % #3: arguments
 \DeclareDocumentCommand{\UseSnippet}{smo}{
     \use:c{__algo_snipets_snippet_#2}{#3}
-    % \tl_clear_new:N \l_tmpx_tl
-    % \tl_set:Nf \l_tmpx_tl {\prop_item:cn {g_algo_snippets_visible_prop} {#2}}
-    % % \seq_item:Nn \l_tmpx_tl {1}
-    % \tl_to_str:N \l_tmpx_tl
 }
 
 \IfFileExists{snippets.def}{
