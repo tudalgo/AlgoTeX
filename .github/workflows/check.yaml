@@ -16,7 +16,7 @@ jobs:
     - name: Set up Git repository
       uses: actions/checkout@v3
     - name: Hack container for local development
-      if: ${{ env.ACT }}
-      run: apt-get update && apt install -y nodejs
+      #if: ${{ env.ACT }}
+      run: apt-get update && apt install -y nodejs git
     - name: Execute Pre-commit Hooks
       uses: pre-commit/action@v3.0.0
