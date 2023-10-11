@@ -189,7 +189,7 @@
 
 \tl_gclear_new:N \printAuthor
 \renewcommand*{\author}[1]{
-    \seq_gset_split:cnn {g_ \tudaPkgPrefix _author_seq} {\and} {#1}
+    \exp_args:Nc \seq_gset_split:Nnn {g_ \tudaPkgPrefix _author_seq} {\and} {#1}
     \seq_if_empty:cF {g_ \tudaPkgPrefix _author_seq} {\tl_gset:Nn \printAuthor {\int_compare:nTF{\seq_count:c {g_ \tudaPkgPrefix _author_seq} > 1}{Übungsblattbetreuer}{Übungsblattbetreuer}:~\hfill\seq_use:cnnn {g_ \tudaPkgPrefix _author_seq} {~\authorandname{}~} {,~} {~\authorandname{}~}\par}}
 }
 
