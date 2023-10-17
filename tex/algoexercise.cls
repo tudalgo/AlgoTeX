@@ -595,7 +595,10 @@
 
 
 \fp_gzero_new:c {l_algo_ex_vue_max_difficulty_fp}
-\fp_gset:Nn \l_algo_ex_vue_max_difficulty_fp {5}
+\newcommand*{\setmaxdifficulty}[1]{
+    \fp_gset:Nn \l_algo_ex_vue_max_difficulty_fp {#1}
+}
+\setmaxdifficulty{5}
 \DeclareDocumentCommand{\vue}{m}{
     \nextTaskGroup{V}
     \fp_gset:Nn \l_algo_ex_vue_max_difficulty_fp {#1}
@@ -724,6 +727,17 @@
                 \vspace{-\box_ht:N \l_entwurf_box}
                 \box_use:N \l_entwurf_box
             }
+        }
+        % Make stars red
+        \tikzset{
+            scorestar/.style={
+                draw=red,
+                star,
+                star~points=5,
+                star~point~ratio=2.25,
+                inner~sep=1.3pt,
+                anchor=outer~point~3,
+            },
         }
     }
 }
