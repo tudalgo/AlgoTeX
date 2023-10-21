@@ -34,5 +34,6 @@
       devShells.${system}.default = pkgs.mkShell {
         buildInputs = [ pkgs.python311Packages.pygments patched-latex ];
       };
+      packages.${system}.default = patched-latex;
     };
 }
