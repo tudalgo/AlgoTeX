@@ -31,9 +31,8 @@
           inherit algotex;
         };
     in {
-      devShells.${system}.default = with pkgs; mkShell {
-        buildInputs = [ python311Packages.pygments patched-latex ];
-      };
+      devShells.${system}.default = with pkgs;
+        mkShell { buildInputs = [ python311Packages.pygments patched-latex ]; };
       packages.${system}.default = patched-latex;
     };
 }
