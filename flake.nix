@@ -22,7 +22,7 @@
           installPhase = ''
             mkdir -p $out/tex/latex/algotex
             cp -t $out/tex/latex/algotex/ $src/tex/*
-            mv $out/tex/latex/algotex/FOPBot.sty $out/tex/latex/algotex/fopbot.sty
+            cp $out/tex/latex/algotex/FOPBot.sty $out/tex/latex/algotex/fopbot.sty
           '';
         });
       patched-latex = with pkgs.texlive;
