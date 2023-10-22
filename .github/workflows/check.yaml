@@ -19,4 +19,6 @@ jobs:
       #if: ${{ env.ACT }}
       run: apt-get update && apt install -y nodejs git
     - name: Execute Pre-commit Hooks
-      uses: pre-commit/action@v3.0.0
+      run: |
+        pip install pre-commit
+        pre-commit run --a

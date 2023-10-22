@@ -18,6 +18,9 @@ trim_trailing_whitespace = false
 indent_size = 2
 trim_trailing_whitespace = false
 
+[flake.{lock,nix}]
+indent_size = 2
+
 [Makefile]
 indent_style = tab
 
