@@ -36,6 +36,14 @@ Die Vorlage wurde für LuaLaTeX geschrieben, ist aber dank des Latex3-Kernels au
 ## Installation
 
 ### Automatisch
+#### Nix
+Für Nutzer des Paketmanagers Nix und/oder der Distribution NixOS wird eine `flake.nix`-Datei bereitgestellt.
+
+Diese enthält eine `default`-Shell, welche alle benötigten Abhängigkeiten enthält und über den Befehl `nix develop` gestartet werden kann. Beachten Sie, dass hierfür Nix-Flakes [aktiviert](https://nixos.wiki/wiki/Flakes#Enable_flakes) sein müssen.
+
+Über den `packages.x86_64-linux.default`-Output kann über eine `nixpkgs.texlive.combined.scheme-full-`Derivation verfügt werden, die zusätzlich die AlgoTeX-Vorlage enthält. Bitte beachten Sie, dass das Paket `nixpkgs.python311Packages.pygments` o.Ä. zusätzlich benötigt wird.
+
+#### Arch-basierende Linux-Distributionen
 Für Arch-basierende Linux-Distributionen wird das Paket [`algotex-git`](https://aur.archlinux.org/packages/algotex-git) im [`AUR`](https://aur.archlinux.org/) bereitgestellt.
 
 ### Manuell
@@ -65,7 +73,7 @@ Dazu kann man den [`tex`](tex/)-Ordner verlinken:
 git clone https://github.com/TUDalgo/AlgoTeX.git
 cd AlgoTeX
 mkdir -p "$(kpsewhich -var-value=TEXMFHOME)/tex/latex/AlgoTeX"
-# Ordner Verlinkrn
+# Verzeichnis verlinken
 ln -s "$(pwd)/tex" "$(kpsewhich -var-value=TEXMFHOME)/tex/latex/AlgoTeX"
 sudo texhash "$(kpsewhich -var-value=TEXMFHOME)"
 ```
