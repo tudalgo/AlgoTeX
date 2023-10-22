@@ -11,13 +11,17 @@ jobs:
   check:
     runs-on: self-hosted
     container:
-      image: python:latest
+      image: ubuntu:latest
     steps:
     - name: Set up Git repository
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
     - name: Hack container for local development
-      #if: ${{ env.ACT }}
-      run: apt-get update && apt install -y nodejs git
+      if: ${{ env.ACT }}
+      run: apt-get update && apt install -y nodejs git python3 pip
+    # - name: Install Python
+    #   uses: actions/setup-python@v4
+    #   with:
+    #     python-version: "3.10"
     - name: Execute Pre-commit Hooks
       run: |
         pip install pre-commit
