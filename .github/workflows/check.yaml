@@ -16,7 +16,7 @@ jobs:
     - name: Set up Git repository
       uses: actions/checkout@v4
     - name: Hack container for local development
-      if: ${{ env.ACT }}
+      # if: ${{ env.ACT }}
       run: apt-get update && apt install -y nodejs git python3 pip
     # - name: Install Python
     #   uses: actions/setup-python@v4
