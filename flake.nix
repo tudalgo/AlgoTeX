@@ -19,6 +19,7 @@
             tlType = "run";
             tlDeps = with texlive; [ latex ];
           };
+          buildInputs = [ librsvg ];
           installPhase = ''
             mkdir -p $out/tex/latex/algotex
             cp -t $out/tex/latex/algotex/ $src/tex/*
