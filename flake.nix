@@ -42,7 +42,17 @@
         };
     in {
       devShells.${system}.default = with pkgs;
-        mkShell { buildInputs = [ python311Packages.pygments patched-latex ]; };
+        mkShell {
+          buildInputs = [
+            python311Packages.pygments
+            patched-latex
+            pre-commit
+            python310Packages.editorconfig
+          ];
+          shellHook = ''
+            pre-commit install
+          '';
+        };
       packages.${system}.default = patched-latex;
     };
 }
