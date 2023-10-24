@@ -39,9 +39,10 @@ Die Vorlage wurde für LuaLaTeX geschrieben, ist aber dank des Latex3-Kernels au
 #### Nix
 Für Nutzer des Paketmanagers Nix und/oder der Distribution NixOS wird eine `flake.nix`-Datei bereitgestellt.
 
-Diese enthält eine `default`-Shell, welche alle benötigten Abhängigkeiten enthält und über den Befehl `nix develop` gestartet werden kann. Beachten Sie, dass hierfür Nix-Flakes [aktiviert](https://nixos.wiki/wiki/Flakes#Enable_flakes) sein müssen.
+Diese enthält eine `default`-Shell, welche alle für das Kompilieren und Arbeiten benötigten Abhängigkeiten enthält und über den Befehl `nix develop` gestartet werden kann. Es werden automatisch `pre-commit`-Hooks installiert.<br>
+Beachten Sie, dass hierfür Nix-Flakes [aktiviert](https://nixos.wiki/wiki/Flakes#Enable_flakes) sein müssen.
 
-Über den `packages.x86_64-linux.default`-Output kann über eine `nixpkgs.texlive.combined.scheme-full-`Derivation verfügt werden, die zusätzlich die AlgoTeX-Vorlage enthält. Bitte beachten Sie, dass das Paket `nixpkgs.python311Packages.pygments` o.Ä. zusätzlich benötigt wird.
+Über den `packages.x86_64-linux.default`-Output kann über eine `nixpkgs.texlive.combined.scheme-full-`Derivation verfügt werden, die zusätzlich die AlgoTeX-Vorlage und die Logodatei enthält. Bitte beachten Sie, dass das Paket `nixpkgs.python311Packages.pygments` o.Ä. zusätzlich benötigt wird.
 
 #### Arch-basierende Linux-Distributionen
 Für Arch-basierende Linux-Distributionen wird das Paket [`algotex-git`](https://aur.archlinux.org/packages/algotex-git) im [`AUR`](https://aur.archlinux.org/) bereitgestellt.
