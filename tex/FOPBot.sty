@@ -170,8 +170,12 @@ pics/Tetrisbot/.style={
         % Apply user-specified options
         \pgfkeys{/tbotkeys/.cd,#1}
         \draw[draw=\fopbot@bordercolor, ultra~thick, bottom~color=\fopbot@secondarycolor, top~color = \fopbot@primarycolor] ([xshift=.8pt,yshift=.8pt]-.425,-.425) rectangle ([xshift=-.8pt,yshift=-.8pt].425,.425);
-        \draw[draw=\fopbot@bordercolor, thick,fill=white] (0,.1) circle (2mm);
-        \draw[draw=none,fill=\fopbot@eyecolor] (0,.185) circle (.7mm);
+        \iffopbot@turned@on
+            \draw[draw=\fopbot@bordercolor, thick,fill=white] (0,.1) circle (2mm);
+            \draw[draw=none,fill=\fopbot@eyecolor] (0,.185) circle (.7mm);
+        \else
+            \draw[draw=\fopbot@bordercolor, thick,fill=\fopbot@bordercolor] (0,.1) circle (2mm);
+        \fi
     }},
 }
 
