@@ -27,7 +27,7 @@ jobs:
     steps:
       # 1. Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Set up Git repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       # 5. Run l3build
       - name: Run l3build
