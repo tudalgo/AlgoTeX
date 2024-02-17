@@ -35,7 +35,7 @@ jobs:
 
       # 6. Upload artifacts to GitHub
       - name: Upload artifacts to GitHub
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: CTAN Archives
           path: "*.zip"
