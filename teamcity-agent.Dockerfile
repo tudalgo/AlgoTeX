@@ -14,7 +14,7 @@ RUN apt-get update && \
     ghostscript \
     # for metafont (see #24)
     libsm6 \
-    python3 \
+    python3 python3-pip\
     # for gnuplot backend of pgfplots (see !13)
     gnuplot-nox \
     # algotex stuff
@@ -28,7 +28,7 @@ RUN apt-get update && \
 
 RUN git clone https://github.com/pygments/pygments
 WORKDIR pygments
-RUN pip install -e .
+RUN pip install .
 
 # Install TeX Live
 
