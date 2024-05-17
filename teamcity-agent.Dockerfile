@@ -42,7 +42,7 @@ RUN mv install-tl-* install-tl
 WORKDIR install-tl
 RUN perl ./install-tl --no-interaction --scheme=full --no-doc-install --no-src-install
 
-ENV PATH="${PATH}:/usr/local/texlive/2023/bin/x86_64-linux"
+ENV PATH="${PATH}:/usr/local/texlive/2024/bin/x86_64-linux"
 
 # Install AlgoTeX
 
