@@ -3,26 +3,26 @@ FROM jetbrains/teamcity-agent:2024.03.1
 USER root
 
 RUN apt-get update && \
-  # basic utilities for TeX Live installation
-  apt-get install -qy --no-install-recommends curl git unzip wget \
-  # miscellaneous dependencies for TeX Live tools
-  make fontconfig perl default-jre libgetopt-long-descriptive-perl \
-  libdigest-perl-md5-perl libncurses6 \
-  # for latexindent (see #13)
-  libunicode-linebreak-perl libfile-homedir-perl libyaml-tiny-perl \
-  # for eps conversion (see #14)
-  ghostscript \
-  # for metafont (see #24)
-  libsm6 \
-  python3 \
-  # for gnuplot backend of pgfplots (see !13)
-  gnuplot-nox \
-  # algotex stuff
-  librsvg2-bin nodejs imagemagick && \
-  rm -rf /var/lib/apt/lists/* && \
-  rm -rf /var/cache/apt/ && \
-  # bad fix for python handling
-  ln -s /usr/bin/python3 /usr/bin/python
+    # basic utilities for TeX Live installation
+    apt-get install -qy --no-install-recommends curl git unzip wget \
+    # miscellaneous dependencies for TeX Live tools
+    make fontconfig perl default-jre libgetopt-long-descriptive-perl \
+    libdigest-perl-md5-perl libncurses6 \
+    # for latexindent (see #13)
+    libunicode-linebreak-perl libfile-homedir-perl libyaml-tiny-perl \
+    # for eps conversion (see #14)
+    ghostscript \
+    # for metafont (see #24)
+    libsm6 \
+    python3 \
+    # for gnuplot backend of pgfplots (see !13)
+    gnuplot-nox \
+    # algotex stuff
+    librsvg2-bin nodejs imagemagick && \
+    rm -rf /var/lib/apt/lists/* && \
+    rm -rf /var/cache/apt/ && \
+    # bad fix for python handling
+    ln -s /usr/bin/python3 /usr/bin/python
 
 # Install newer version of pygments
 
