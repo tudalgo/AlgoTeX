@@ -18,7 +18,7 @@ RUN apt-get update && \
     # for gnuplot backend of pgfplots (see !13)
     gnuplot-nox \
     # algotex stuff
-    librsvg2-bin nodejs imagemagick && \
+    librsvg2-bin nodejs imagemagick inkscape && \
     rm -rf /var/lib/apt/lists/* && \
     rm -rf /var/cache/apt/ && \
     # bad fix for python handling
