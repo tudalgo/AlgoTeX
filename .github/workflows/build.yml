@@ -19,7 +19,7 @@ jobs:
   # This workflow contains a single job called "build_latex"
   build:
     # The type of runner that the job will run on
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     container:
       image: ghcr.io/tudalgo/algotex:latest
 
@@ -27,7 +27,7 @@ jobs:
     steps:
       # 1. Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Set up Git repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       # 5. Run l3build
       - name: Run l3build
@@ -35,7 +35,7 @@ jobs:
 
       # 6. Upload artifacts to GitHub
       - name: Upload artifacts to GitHub
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: CTAN Archives
           path: "*.zip"

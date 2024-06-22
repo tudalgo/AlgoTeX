@@ -7,6 +7,8 @@
 \RequirePackage{l3keys2e}
 \RequirePackage{amsmath}
 \RequirePackage{amsthm}
+\RequirePackage{xfp}
+\RequirePackage{xstring}
 \PassOptionsToPackage{table, dvipsnames, svgnames}{xcolor} % Option has to be set before loading TuDaExercise
 \RequirePackage{xcolor}
 \RequirePackage{tcolorbox}
@@ -92,15 +94,22 @@
 \tl_if_eq:NnT \l_dark_mode_env_var_tl {2} {\enabledarkmode{}\pagecolor{black}}
 \tl_if_eq:NnT \l_dark_mode_env_var_tl {0} {\disabledarkmode{}}
 
-% Zero Padding (Pads Number with the wanted amount of zeros)
-\DeclareDocumentCommand{\padzeroes}{O{2}m}{
-    \int_step_inline:nnnn {1} {1} {\int_eval:n {#1 - 1}} {
-        \int_compare:nT { #2 < \int_eval:n {##1 * 10}} {
-            0
-        }
+% Count the amount of zeroes needed
+\NewExpandableDocumentCommand{\__padzeroes_count:nn} {m m}
+{
+    \int_compare:nTF { #1 < 1 } { 0 } {
+        \int_compare:nTF { #2 < \fpeval { 10 ** ( #1 - 1 ) } }
+        { \fpeval{1 + \__padzeroes_count:nn { #1 - 1 } {#2} } }
+        { 0 }
     }
-    #2
 }
+
+% Zero Padding (Pads Number with the wanted amount of zeros)
+\NewExpandableDocumentCommand{\padzeroes}{O{2}m}
+{
+    \prg_replicate:nn { \__padzeroes_count:nn {#1} {#2} } {0} \fpeval{#2}
+}
+
 
 % Just a basic recursion test
 \DeclareDocumentCommand{\rubosfib}{m}{
