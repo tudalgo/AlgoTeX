@@ -201,8 +201,17 @@
     }
 }
 % Sheet number
-\newcommand*{\getSheetnumber}{
-    \tl_use:c { g_ \tudaPkgPrefix _ex_sheetnum_tl }
+\DeclareDocumentCommand{\getSheetnumber}{ s }{
+    \bool_if:nTF {#1} {
+        % check if sheet number is an integer
+        \IfInteger{ \tl_use:c { g_ \tudaPkgPrefix _ex_sheetnum_tl } }{
+            \padzeroes[1]{ \tl_use:c { g_ \tudaPkgPrefix _ex_sheetnum_tl } }
+        }{
+            \tl_use:c { g_ \tudaPkgPrefix _ex_sheetnum_tl }
+        }
+    }{
+        \tl_use:c { g_ \tudaPkgPrefix _ex_sheetnum_tl }
+    }
 }
 \newcommand*{\printSheetNumber}{\tl_if_empty:cF {g_ \tudaPkgPrefix _ex_sheetnum_tl} {\sffamily\textbf{Übungsblatt\space{}Nummer:}\space\getSheetnumber}}
 
@@ -563,10 +572,10 @@
     \int_gset:Nn \g_algo_ex_taskoffset_int {\value{task}}
 }
 \renewcommand*{\thetask}{%
-    \tl_use:c {g_algo_ex_taskgroup_prefix_tl} \int_eval:n {\value{task} - \g_algo_ex_taskoffset_int}
+    \tl_use:c {g_algo_ex_taskgroup_prefix_tl} \getSheetnumber*{}.\int_eval:n {\value{task} - \g_algo_ex_taskoffset_int}
 }
 \renewcommand*{\thesubtask}{%
-    \tl_use:c {g_algo_ex_taskgroup_prefix_tl} \int_eval:n {\value{task} - \g_algo_ex_taskoffset_int}.\arabic{subtask}%
+    \tl_use:c {g_algo_ex_taskgroup_prefix_tl} \getSheetnumber*{}.\int_eval:n {\value{task} - \g_algo_ex_taskoffset_int}.\arabic{subtask}%
 }
 % Point Formating
 \cs_set_eq:NN \__old_pointformat \pointformat
