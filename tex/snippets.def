@@ -113,6 +113,15 @@
         Beachten Sie die Seite \href{https://wiki.tudalgo.org/exercises/documentation/}{\textit{Hausübungen} $\rightarrow$ \textit{Dokumentieren von Quelltext}} im Studierenden-Guide.
     \end{defBox}
 }
+\DeclareSnippet{fop-2425-dokumentation-erstes-mal}{Verpflichtende Dokumentation des Quelltexts (Einstieg)}{
+    \begin{defBox}
+        \fatsf{Verbindliche Anforderung: Dokumentieren Ihres Quelltexts}
+        \medskip\\
+        Alle von Ihnen deklarierten Klassen, Interfaces, Enumerationen und Methoden (inklusive Konstruktoren), die nicht \inlinejava{private} sind, \textit{müssen} für diese Hausübung mittels JavaDoc in Englisch oder alternativ Deutsch dokumentiert werden. Insgesamt können Sie auf diesem Übungsblatt bis zu \textbf{drei} Punkte für die Dokumentation erhalten (siehe Aufgabenstellung JavaDoc). Bei den kommenden Übungsblättern wird es für fehlende Dokumentation Punktabzüge geben.
+
+        Beachten Sie die Seite \href{https://wiki.tudalgo.org/exercises/documentation/}{\textit{Hausübungen} $\rightarrow$ \textit{Dokumentieren von Quelltext}} im Studierenden-Guide.
+    \end{defBox}
+}
 \DeclareSnippet{matrikelnummer-eintragen}{}{
     \begin{hinweis}
         In unserem Studierenden-Guide finden Sie im Abschnitt \href{https://wiki.tudalgo.org/preparation/matriculation-number}{\textit{Vorbereitung $\rightarrow$ Eintragen Ihrer Matrikelnummer}} eine Anleitung dazu,
