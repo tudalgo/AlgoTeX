@@ -13,4 +13,5 @@ RUN mkdir -p "$(kpsewhich -var-value=TEXMFDIST)/tex/latex/local" \
 WORKDIR /AlgoTeX
 COPY . .
 RUN l3build install --full --texmfhome="$(kpsewhich -var-value=TEXMFDIST)"
+RUN texhash --verbose
 WORKDIR /
