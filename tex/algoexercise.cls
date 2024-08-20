@@ -724,10 +724,10 @@
         %\tl_clear_new:N \l_old_title_tl
         %\tl_set:Nn \l_old_title_tl {\getTitle}
         %\exp_args:Nf \title[\getShortTitle{}]{\tl_use:c{l_old_title_tl}~\textcolor{red}{(Entwurf)}}
-        % CI_RUN environment check (enable if CI_RUN=1)
-        \sys_get_shell:nnN { kpsewhich ~ --var-value ~ CI_RUN } { } \l_ci_run_env_var_tl
-        \tl_trim_spaces:N \l_ci_run_env_var_tl
-        \tl_if_eq:NnT \l_ci_run_env_var_tl {1} {
+        % CI environment check (enable if CI=true)
+        \sys_get_shell:nnN { kpsewhich ~ --var-value ~ CI } { } \l_ci_env_var_tl
+        \tl_trim_spaces:N \l_ci_env_var_tl
+        \tl_if_eq:NnT \l_ci_env_var_tl {true} {
             \appto\@maketitle{
                 \box_clear_new:N \l_entwurf_box
                 \vbox_set:Nn \l_entwurf_box {
