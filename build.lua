@@ -19,7 +19,7 @@ typesetopts = "-interaction=nonstopmode --shell-escape -halt-on-error"
 packtdszip = true -- recommended for "tree" layouts
 
 -- Tagging
-tagfiles = {"tex/*.sty", "tex/*.cls"}
+tagfiles = {"tex/*.sty", "tex/*.cls", "doc/*.tex"}
 function tag_hook(tagname)
     -- os.execute('git commit -a -m "Step release tag"')
     -- os.execute('git tag -a -m "" ' .. tagname)
@@ -29,8 +29,18 @@ end
 function update_tag(file, content, tagname, tagdate)
     tagname = string.gsub(tagname, "^v", "")
     if string.match(file, ".*%.sty") or string.match(file, ".*%.cls") then
-        -- \ProvidesExplPackage{<name>}{<date>}{<version>}{<description>}
+        -- \def\fileversion{<name>}
         temp = string.gsub(content,
+            "\\def\\fileversion%{([^}]*)%}",
+            "\\def\\fileversion{" .. tagname .. "}"
+        )
+        -- \def\filedate{<date>}
+        temp = string.gsub(temp,
+            "\\def\\filedate%{([^}]*)%}",
+            "\\def\\filedate{" .. tagdate .. "}"
+        )
+        -- \ProvidesExplPackage{<name>}{<date>}{<version>}{<description>}
+        temp = string.gsub(temp,
             "\\ProvidesExplPackage%{([^}]*)%}%{([^}]*)%}%{([^}]*)%}%{([^}]*)%}",
             "\\ProvidesExplPackage{%1}{" .. tagdate .. "}{" .. tagname .. "}{%4}"
         )
@@ -43,6 +53,17 @@ function update_tag(file, content, tagname, tagdate)
         return temp.gsub(temp,
             "\\ProvidesExplClass%{([^}]*)%}%{([^}]*)%}%{([^}]*)%}%{([^}]*)%}",
             "\\ProvidesExplClass{%1}{" .. tagdate .. "}{" .. tagname .. "}{%4}"
+        )
+    elseif string.match(file, ".*%.tex") then
+        -- \version{<name>} %%<!-- version -->%%
+        temp = string.gsub(content,
+            "\\version%{([^}]*)%} %%%%<!%-%- version %-%->%%%%",
+            "\\version{" .. tagname .. "} %%%%<!-- version -->%%%%"
+        )
+        -- \date{<date>} %%<!-- date -->%%
+        return string.gsub(temp,
+            "\\date%{([^}]*)%} %%%%<!%-%- date %-%->%%%%",
+            "\\date{" .. tagdate .. "} %%%%<!-- date -->%%%%"
         )
     end
     return content
