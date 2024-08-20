@@ -27,22 +27,22 @@
     \str_range_ignore_spaces:nnn {#1}{2}{-2} % Remove first and last char
 }
 \newcommand{\audutils@setupLinkedList}[1]{
-% \str_clear_new:N \l_ptxcd_unknown_clsopts_str
-\tl_gclear_new:N \audutils@linkedlist@nodedistance
-\keys_define:nn { audutils/linkedList }
-{
-mark_head .bool_gset:N = \g_audutils_linked_list_mark_head_bool,
-mark_head .initial:n = true,
-mark_head .default:n = true,
-node~distance .code:n = {\tl_set:Nn \audutils@linkedlist@nodedistance {##1}},
-node~distance .initial:n = {.5cm},
-node~distance .default:n = {1cm},
-% unknown .code:n = {
-%     % \str_put_right:Nn \l_ptxcd_unknown_clsopts_str {}
-%     \str_put_right:Nx \l_ptxcd_unknown_clsopts_str {\l_keys_key_str\space =\space ##1}
-%     },
-}
-\keys_set:nn { audutils/linkedList } { #1 }
+    % \str_clear_new:N \l_ptxcd_unknown_clsopts_str
+    \tl_gclear_new:N \audutils@linkedlist@nodedistance
+    \keys_define:nn { audutils/linkedList }
+    {
+        mark_head .bool_gset:N = \g_audutils_linked_list_mark_head_bool,
+        mark_head .initial:n = true,
+        mark_head .default:n = true,
+        node~distance .code:n = {\tl_set:Nn \audutils@linkedlist@nodedistance {##1}},
+        node~distance .initial:n = {.5cm},
+        node~distance .default:n = {1cm},
+        % unknown .code:n = {
+        %     % \str_put_right:Nn \l_ptxcd_unknown_clsopts_str {}
+        %     \str_put_right:Nx \l_ptxcd_unknown_clsopts_str {\l_keys_key_str\space =\space ##1}
+        %     },
+    }
+    \keys_set:nn { audutils/linkedList } { #1 }
 }
 % \newcommand{\audutils@unknownLinkedListOptionHandler}[1]{
 %     \str_use:N \l_ptxcd_unknown_clsopts_str

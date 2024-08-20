@@ -2,16 +2,19 @@
 # See https://pre-commit.com/hooks.html for more hooks
 repos:
 -   repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.5.0
+    rev: v4.6.0
     hooks:
-    -   id: end-of-file-fixer
-    -   id: check-yaml
-    # -   id: check-added-large-files
--   repo: https://github.com/cmhughes/latexindent.pl.git
-    rev: V3.23.3
-    hooks:
-    -   id: latexindent
-        args: ["--overwriteIfDifferent", "--silent", "-l=latexindent.yaml"]
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: mixed-line-ending
+        args: [--fix=lf]
+- repo: https://github.com/cmhughes/latexindent.pl.git
+  rev: V3.24.2
+  hooks:
+    - id: latexindent
+      args: ["--overwriteIfDifferent", "--silent", "-l=latexindent.yaml"]
+      types: [file]
+      files: '\.(tex|sty|cls|bib|cfg|def|clo)$'
 -   repo: https://github.com/editorconfig-checker/editorconfig-checker.python
     rev: '2.7.3'  # pick a git hash / tag to point to
     hooks:
