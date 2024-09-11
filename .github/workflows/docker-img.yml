@@ -43,6 +43,9 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Build Dockerfile.logo
+        run: docker buildx build --output . -f Dockerfile.logo .
+
       - name: Extract metadata for Docker
         id: meta
         uses: docker/metadata-action@v5
