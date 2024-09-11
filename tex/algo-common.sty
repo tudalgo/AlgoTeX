@@ -98,9 +98,13 @@
 \NewExpandableDocumentCommand{\__padzeroes_count:nn} {m m}
 {
     \int_compare:nTF { #1 < 1 } { 0 } {
-        \int_compare:nTF { #2 < \fpeval { 10 ** ( #1 - 1 ) } }
-        { \fpeval{1 + \__padzeroes_count:nn { #1 - 1 } {#2} } }
-        { 0 }
+        \int_compare:nTF { #2 = 0 }
+        { \int_compare:nTF { #1 > 1 } { 1 } { 0 } }
+        {
+            \int_compare:nTF { #2 < \fpeval { 10 ** ( #1 - 1 ) } }
+            { \fpeval{1 + \__padzeroes_count:nn { #1 - 1 } {#2} } }
+            { 0 }
+        }
     }
 }
 
