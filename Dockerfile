@@ -4,9 +4,9 @@ WORKDIR /logo
 RUN pacman -Sy --needed --noconfirm inkscape librsvg
 # Build logo
 RUN curl -O https://www.tu-darmstadt.de/media/medien_stabsstelle_km/services/medien_cd/das_bild_der_tu_darmstadt.pdf \
-    && inkscape --version \
-    && inkscape das_bild_der_tu_darmstadt.pdf --export-filename=p1_i.svg --pages=1 \
+    && inkscape das_bild_der_tu_darmstadt.pdf --export-filename=p1_i.svg --export-dpi=300 --pages=1 \
     && sed -i 's/icc-color([^)]*)//g' p1_i.svg \
+    && sed -i 's/#000000/#1d1d1bff/g' p1_i.svg \
     && rsvg-convert -f pdf -o tuda_logo.pdf p1_i.svg --export-id=g23 \
     && rm das_bild_der_tu_darmstadt.pdf p1_i.svg
 
