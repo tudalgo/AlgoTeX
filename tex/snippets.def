@@ -65,7 +65,7 @@
 }
 \DeclareSnippet{exercise-introduction-fop-2425}{Globale Verbindliche Anforderungen und Hinweise}{
     \begin{defBox}
-        \fatsf{Beachten Sie die Seite \textbf{TODO} im Moodle-Kurs.}
+        \fatsf{Beachten Sie die Seite \href{https://moodle.informatik.tu-darmstadt.de/mod/page/view.php?id=68765}{\emph{Verbindliche Anforderungen für alle Abgaben}} im Moodle-Kurs.}
         \medskip\\
         Verstöße gegen verbindliche Anforderungen führen zu Punktabzügen und können die korrekte Bewertung Ihrer Abgabe beeinflussen.
         Sofern vorhanden,
