@@ -6,8 +6,6 @@
 
 \RequirePackage{l3keys2e}
 \RequirePackage{amsmath}
-\RequirePackage{caption}
-\RequirePackage{newfloat}
 \RequirePackage{amsthm}
 \RequirePackage{xfp}
 \RequirePackage{xstring}
@@ -409,6 +407,16 @@
     \rubosDeclareColorBoxEnvironment{vanforderungenhu}{defBox}{Verbindliche~Anforderungen~für~die~gesamte~Hausübung}
     \rubosDeclareColorBoxEnvironment{vanforderungahu}{defBox}{Verbindliche~Anforderung~für~alle~Hausübungen}
     \rubosDeclareColorBoxEnvironment{vanforderungenahu}{defBox}{Verbindliche~Anforderungen~für~alle~Hausübungen}
+
+    \RequirePackage{newfloat}
+    % FloatingEnvironment for Code Blocks
+    \DeclareFloatingEnvironment[
+        fileext=loc,
+        listname={List of Code Blocks},
+        name=Code Block,
+        placement=H,
+        within=section,
+    ]{codeblockfloat}
 }
 % \theoremstyle{fopTheorem}%
 % \newtheorem{hinweisT}{\textsf{Hinweis:}}%
@@ -562,15 +570,6 @@
 \lstnewenvironment{racket}[1][]{language=java,\lstset{style=racket, #1}}{}
 \lstnewenvironment{java}[1][]{language=racket,\lstset{style=java, #1}}{}
 
-% FloatingEnvironment for Code Blocks
-\DeclareFloatingEnvironment[
-    fileext=loc,
-    listname={List of Code Blocks},
-    name=Code Block,
-    placement=H,
-    within=section,
-]{codeblockfloat}
-
 \DeclareDocumentCommand{\listofcodeblocks}{}{
     \listof{codeblockfloat}{List~of~Code~Blocks}
 }
@@ -585,10 +584,11 @@
     \renewcommand{\theFancyVerbLine}{\tikz{\coordinate(a);\node[text~width=5mm,inner~sep=0pt,align=center]{\ttfamily\textcolor{white}{\scriptsize\arabic{FancyVerbLine}}};}}
 
     % Environment für meinen Code-Style
-    % $1 (optional): Minted Options
-    % $2:(optional): listing title for list of code blocks
-    % $3: Tcolorbox Options
-    \NewTCBListing{codeBlock}{ O{} O{} m }{
+    % $1 star: no float
+    % $2 (optional): Minted Options
+    % $3:(optional): listing title for list of code blocks
+    % $4: Tcolorbox Options
+    \NewTCBListing{codeBlock}{ s O{} O{} m }{
         listing~engine=minted, % Minted verwenden
         colback=\IfDarkModeTF{codebg}{black!10!\thepagecolor}, %Hintergrundfarbe
         colframe=black!70, % Randfarbe
@@ -609,7 +609,7 @@
             escapeinside=@@,
             breaklines,
             highlightcolor=\IfDarkModeTF{yellow!50!black}{yellow!80},
-            #1 % weitere optionen für Minted zulassen
+            #2 % weitere optionen für Minted zulassen
         },
         left=7.1mm, % Links Platz lassen
         enhanced, % Erlaubt uns, den ramen zu zeichnen
@@ -621,24 +621,25 @@
         },
         %\begin{noindent}
         before~upper={
-            \begin{codeblockfloat}\vspace{-\baselineskip}
+            \IfBooleanTF{#1}{\begin{codeblockfloat}\vspace{-\baselineskip}}{}
         },
         after~upper={
-        \hbox to 0cm{\captionlistentry[codeblockfloat]{\mbox{}\quad\tl_if_blank:eTF{#2}{\kvtcb@title}{#2}}}
-        \end{codeblockfloat}
-        \vspace{-2.5\baselineskip}
+            \IfBooleanTF{#1}{\hbox to 0cm{\captionlistentry[codeblockfloat]{\mbox{}\quad\tl_if_blank:eTF{#3}{\kvtcb@title}{#3}}}
+            \end{codeblockfloat}
+            \vspace{-2.5\baselineskip}}{}
         },
         %\end{noindent}
-        #3 % Weitere Argumente zulassen
+        #4 % Weitere Argumente zulassen
     }
     % Input Listing für Code-Style
-    % $1 (optional): Minted Options
-    % $2:(optional): listing title for list of code blocks
-    % $3: Tcolorbox Options
-    % $4: File Name
-    \NewTCBInputListing{\inputCode}{ O{} O{} m m }{
+    % $1 star: no float
+    % $2: (optional): Minted Options
+    % $3:(optional): listing title for list of code blocks
+    % $4: Tcolorbox Options
+    % $5: File Name
+    \NewTCBInputListing{\inputCode}{ s O{} O{} m m }{
         listing~engine=minted, % Minted verwenden
-        listing~file={#4},
+        listing~file={#5},
         colback=\IfDarkModeTF{codebg}{black!10!\thepagecolor}, %Hintergrundfarbe
         colframe=black!70, % Randfarbe
         coltext=.,
@@ -658,7 +659,7 @@
             escapeinside=@@,
             breaklines,
             highlightcolor=\IfDarkModeTF{yellow!50!black}{yellow!80},
-            #1 % weitere optionen für Minted zulassen
+            #2 % weitere optionen für Minted zulassen
         },
         left=7.1mm, % Links Platz lassen
         enhanced, % Erlaubt uns, den ramen zu zeichnen
@@ -670,23 +671,24 @@
         },
         %\begin{noindent}
         before~upper={
-            \begin{codeblockfloat}\vspace{-\baselineskip}
+            \IfBooleanTF{#1}{\begin{codeblockfloat}\vspace{-\baselineskip}}{}
         },
         after~upper={
-        \hbox to 0cm{\captionlistentry[codeblockfloat]{\mbox{}\quad\tl_if_blank:eTF{#2}{\kvtcb@title}{#2}}}
-        \end{codeblockfloat}
-        \vspace{-2.5\baselineskip}
+            \IfBooleanTF{#1}{\hbox to 0cm{\captionlistentry[codeblockfloat]{\mbox{}\quad\tl_if_blank:eTF{#3}{\kvtcb@title}{#3}}}
+            \end{codeblockfloat}
+            \vspace{-2.5\baselineskip}}{}
         },
         %\end{noindent}
-        #3 % Weitere Argumente zulassen
+        #4 % Weitere Argumente zulassen
     }
 }{
     \tcbuselibrary{listingsutf8}
     % Environment für meinen Code-Style
-    % $1 (optional): Minted Options
-    % $2:(optional): listing title for list of code blocks
-    % $3: Tcolorbox Options
-    \NewTCBListing{codeBlock}{ O{} O{} m }{
+    % $1 star: no float
+    % $2 (optional): Minted Options
+    % $3 (optional): listing title for list of code blocks
+    % $4: Tcolorbox Options
+    \NewTCBListing{codeBlock}{ s O{} O{} m }{
         listing~engine=listings, % Minted verwenden
         colback=\IfDarkModeTF{codebg}{black!10!\thepagecolor}, %Hintergrundfarbe
         colframe=black!70, % Randfarbe
@@ -710,24 +712,25 @@
         },
         %\begin{noindent}
         before~upper={
-            \begin{codeblockfloat}\vspace{-\baselineskip}
+            \IfBooleanTF{#1}{\begin{codeblockfloat}\vspace{-\baselineskip}}{}
         },
         after~upper={
-        \hbox to 0cm{\captionlistentry[codeblockfloat]{\mbox{}\quad\tl_if_blank:eTF{#2}{\kvtcb@title}{#2}}}
-        \end{codeblockfloat}
-        \vspace{-2.5\baselineskip}
+            \IfBooleanTF{#1}{\hbox to 0cm{\captionlistentry[codeblockfloat]{\mbox{}\quad\tl_if_blank:eTF{#3}{\kvtcb@title}{#3}}}
+            \end{codeblockfloat}
+            \vspace{-2.5\baselineskip}}{}
         },
         %\end{noindent}
-        #3 % Weitere Argumente zulassen
+        #4 % Weitere Argumente zulassen
     }
     % Input Listing für Code-Style
-    % $1 (optional): Minted Options
-    % $2:(optional): listing title for list of code blocks
-    % $3: Tcolorbox Options
-    % $4: File Name
-    \NewTCBInputListing{\inputCode}{ O{} O{} m m }{
+    % $1 star: no float
+    % $2 (optional): Minted Options
+    % $3(optional): listing title for list of code blocks
+    % $4: Tcolorbox Options
+    % $5: File Name
+    \NewTCBInputListing{\inputCode}{ s O{} O{} m m }{
         listing~engine=listings, % Minted verwenden
-        listing~file={#4},
+        listing~file={#5},
         colback=\IfDarkModeTF{codebg}{black!10!\thepagecolor}, %Hintergrundfarbe
         colframe=black!70, % Randfarbe
         coltext=.,
@@ -750,15 +753,15 @@
         },
         %\begin{noindent}
         before~upper={
-            \begin{codeblockfloat}\vspace{-\baselineskip}
+            \IfBooleanTF{#1}{\begin{codeblockfloat}\vspace{-\baselineskip}}{}
         },
         after~upper={
-        \hbox to 0cm{\captionlistentry[codeblockfloat]{\mbox{}\quad\tl_if_blank:eTF{#2}{\kvtcb@title}{#2}}}
-        \end{codeblockfloat}
-        \vspace{-2.5\baselineskip}
+            \IfBooleanTF{#1}{\hbox to 0cm{\captionlistentry[codeblockfloat]{\mbox{}\quad\tl_if_blank:eTF{#3}{\kvtcb@title}{#3}}}
+            \end{codeblockfloat}
+            \vspace{-2.5\baselineskip}}{}
         },
         %\end{noindent}
-        #3 % Weitere Argumente zulassen
+        #4 % Weitere Argumente zulassen
     }
 }
 
