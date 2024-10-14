@@ -6,6 +6,8 @@
 
 \RequirePackage{l3keys2e}
 \RequirePackage{amsmath}
+\RequirePackage{caption}
+\RequirePackage{newfloat}
 \RequirePackage{amsthm}
 \RequirePackage{xfp}
 \RequirePackage{xstring}
@@ -560,6 +562,19 @@
 \lstnewenvironment{racket}[1][]{language=java,\lstset{style=racket, #1}}{}
 \lstnewenvironment{java}[1][]{language=racket,\lstset{style=java, #1}}{}
 
+% FloatingEnvironment for Code Blocks
+\DeclareFloatingEnvironment[
+    fileext=loc,
+    listname={List of Code Blocks},
+    name=Code Block,
+    placement=H,
+    within=section,
+]{codeblockfloat}
+
+\DeclareDocumentCommand{\listofcodeblocks}{}{
+    \listof{codeblockfloat}{List~of~Code~Blocks}
+}
+
 \IfShellEscapeTF{
     \tcbuselibrary{minted}
     \bool_if:NT \g_rubos_minted_workaround_bool {
@@ -569,8 +584,11 @@
     % Minted Line Number Styling
     \renewcommand{\theFancyVerbLine}{\tikz{\coordinate(a);\node[text~width=5mm,inner~sep=0pt,align=center]{\ttfamily\textcolor{white}{\scriptsize\arabic{FancyVerbLine}}};}}
 
-    % Environment für meinen Code-Style (Arg 1 = minted Options, Arg 2 = tcolorbox Options)
-    \NewTCBListing{codeBlock}{ O{} m }{
+    % Environment für meinen Code-Style
+    % $1 (optional): Minted Options
+    % $2:(optional): listing title for list of code blocks
+    % $3: Tcolorbox Options
+    \NewTCBListing{codeBlock}{ O{} O{} m }{
         listing~engine=minted, % Minted verwenden
         colback=\IfDarkModeTF{codebg}{black!10!\thepagecolor}, %Hintergrundfarbe
         colframe=black!70, % Randfarbe
@@ -601,11 +619,26 @@
                 \fill[black!70] (frame.south~west) rectangle ([xshift=5mm]frame.north~west); % Zeilennummernbereich färben
             \end{tcbclipinterior}
         },
-        #2 % Weitere Argumente zulassen
+        %\begin{noindent}
+        before~upper={
+            \begin{codeblockfloat}\vspace{-\baselineskip}
+        },
+        after~upper={
+        \hbox to 0cm{\captionlistentry[codeblockfloat]{\mbox{}\quad\tl_if_blank:eTF{#2}{\kvtcb@title}{#2}}}
+        \end{codeblockfloat}
+        \vspace{-2.5\baselineskip}
+        },
+        %\end{noindent}
+        #3 % Weitere Argumente zulassen
     }
-    \NewTCBInputListing{\inputCode}{ O{} m m }{
+    % Input Listing für Code-Style
+    % $1 (optional): Minted Options
+    % $2:(optional): listing title for list of code blocks
+    % $3: Tcolorbox Options
+    % $4: File Name
+    \NewTCBInputListing{\inputCode}{ O{} O{} m m }{
         listing~engine=minted, % Minted verwenden
-        listing~file={#3},
+        listing~file={#4},
         colback=\IfDarkModeTF{codebg}{black!10!\thepagecolor}, %Hintergrundfarbe
         colframe=black!70, % Randfarbe
         coltext=.,
@@ -635,12 +668,25 @@
                 \fill[black!70] (frame.south~west) rectangle ([xshift=5mm]frame.north~west); % Zeilennummernbereich färben
             \end{tcbclipinterior}
         },
-        #2 % Weitere Argumente zulassen
+        %\begin{noindent}
+        before~upper={
+            \begin{codeblockfloat}\vspace{-\baselineskip}
+        },
+        after~upper={
+        \hbox to 0cm{\captionlistentry[codeblockfloat]{\mbox{}\quad\tl_if_blank:eTF{#2}{\kvtcb@title}{#2}}}
+        \end{codeblockfloat}
+        \vspace{-2.5\baselineskip}
+        },
+        %\end{noindent}
+        #3 % Weitere Argumente zulassen
     }
 }{
     \tcbuselibrary{listingsutf8}
-    % Environment für meinen Code-Style (Arg 1 = minted Options, Arg 2 = tcolorbox Options)
-    \NewTCBListing{codeBlock}{ O{} m }{
+    % Environment für meinen Code-Style
+    % $1 (optional): Minted Options
+    % $2:(optional): listing title for list of code blocks
+    % $3: Tcolorbox Options
+    \NewTCBListing{codeBlock}{ O{} O{} m }{
         listing~engine=listings, % Minted verwenden
         colback=\IfDarkModeTF{codebg}{black!10!\thepagecolor}, %Hintergrundfarbe
         colframe=black!70, % Randfarbe
@@ -662,11 +708,26 @@
                 \fill[black!70] (frame.south~west) rectangle ([xshift=5mm]frame.north~west); % Zeilennummernbereich färben
             \end{tcbclipinterior}
         },
-        #2 % Weitere Argumente zulassen
+        %\begin{noindent}
+        before~upper={
+            \begin{codeblockfloat}\vspace{-\baselineskip}
+        },
+        after~upper={
+        \hbox to 0cm{\captionlistentry[codeblockfloat]{\mbox{}\quad\tl_if_blank:eTF{#2}{\kvtcb@title}{#2}}}
+        \end{codeblockfloat}
+        \vspace{-2.5\baselineskip}
+        },
+        %\end{noindent}
+        #3 % Weitere Argumente zulassen
     }
-    \NewTCBInputListing{\inputCode}{ O{} m m }{
+    % Input Listing für Code-Style
+    % $1 (optional): Minted Options
+    % $2:(optional): listing title for list of code blocks
+    % $3: Tcolorbox Options
+    % $4: File Name
+    \NewTCBInputListing{\inputCode}{ O{} O{} m m }{
         listing~engine=listings, % Minted verwenden
-        listing~file={#3},
+        listing~file={#4},
         colback=\IfDarkModeTF{codebg}{black!10!\thepagecolor}, %Hintergrundfarbe
         colframe=black!70, % Randfarbe
         coltext=.,
@@ -687,7 +748,17 @@
                 \fill[black!70] (frame.south~west) rectangle ([xshift=5mm]frame.north~west); % Zeilennummernbereich färben
             \end{tcbclipinterior}
         },
-        #2 % Weitere Argumente zulassen
+        %\begin{noindent}
+        before~upper={
+            \begin{codeblockfloat}\vspace{-\baselineskip}
+        },
+        after~upper={
+        \hbox to 0cm{\captionlistentry[codeblockfloat]{\mbox{}\quad\tl_if_blank:eTF{#2}{\kvtcb@title}{#2}}}
+        \end{codeblockfloat}
+        \vspace{-2.5\baselineskip}
+        },
+        %\end{noindent}
+        #3 % Weitere Argumente zulassen
     }
 }
 
@@ -716,7 +787,10 @@
     \DeclareDocumentCommand{\code}{m}{{\texttt{\footnotesize #1}}}
 }
 
-\DeclareDocumentCommand{\codeBlockTitle}{m}{\faCode\hfill\mbox{}#1\hfill\faCode}
+% \DeclareDocumentCommand{\codeBlockTitle}{m}{\faCode\hfill\mbox{}#1\hfill\faCode}
+\DeclareDocumentCommand{\codeBlockTitle}{m}{
+    \texorpdfstring{\faCode\hfill\mbox{}#1\hfill\faCode}{#1}
+}
 
 \DeclareDocumentCommand{\raisedcode}{m}{\raisebox{.1em}{\code{#1}}}
 \DeclareDocumentCommand{\bluecode}{m}{\code{\textcolor{\IfDarkModeTF{cyan}{blue}}{#1}}}
