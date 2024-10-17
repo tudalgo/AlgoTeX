@@ -56,7 +56,6 @@
 \RequirePackage{babel}
 \RequirePackage{float}
 \RequirePackage{fontawesome5}
-\PassOptionsToPackage{babel}{csquotes}
 \RequirePackage{csquotes}
 \RequirePackage{media9}
 \RequirePackage{animate}
@@ -67,7 +66,7 @@
 \RequirePackage{listings}
 % \RequirePackage[style=numeric]{biblatex}
 \RequirePackage{amsmath, amsthm, amssymb}
-\RequirePackage[squaren]{SIunits}
+\RequirePackage{siunitx}
 \RequirePackage{standalone}
 \RequirePackage[straightvoltages]{circuitikz}
 \RequirePackage{caption}[2013/01/01] % needs v3.3 or newer
