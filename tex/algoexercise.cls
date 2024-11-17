@@ -679,7 +679,7 @@
                     \exp_args:No \tl_if_empty:nF {#4}
                     {:~}
                     \bool_if:NT \l__ptxcd_points_auto_bool {
-                        \exp_args:NNf \prop_get:NnN \g__ptxcd_loaded_points_prop {\thetask} \l_ptxcd_tmp_tl
+                        \exp_args:NNx \prop_get:NnN \g__ptxcd_loaded_points_prop {\thetask} \l_ptxcd_tmp_tl
                         \quark_if_no_value:NF \l_ptxcd_tmp_tl {
                             \fp_set:Nn \l_ptxcd_ex_task_points_fp {\l_ptxcd_tmp_tl}
                         }
