@@ -1,7 +1,8 @@
 ### VS-Code ###
 .vscode/*
-!.vscode/settings.json
 !.vscode/extensions.json
+!.vscode/settings.default.json
+!.vscode/*.code-snippets
 .VSCodeCounter/
 
 ### Intellij ###
@@ -108,6 +109,7 @@ comp/
 
 ## Bibliography auxiliary files (bibtex/biblatex/biber):
 *.bbl
+*.bbl-SAVE-ERROR
 *.bcf
 *.blg
 *-blx.aux
@@ -377,6 +379,9 @@ TSWLatexianTemp*
 # option is specified. Footnotes are the stored in a file with suffix Notes.bib.
 # Uncomment the next line to have this generated file ignored.
 #*Notes.bib
+.secrets
+options.cfg
+svg-inkscape/
 .xamples
 algotex-ctan.zip
 algotex.tds.zip

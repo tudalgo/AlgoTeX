@@ -1,5 +1,7 @@
 {
     "recommendations": [
-        "James-Yu.latex-workshop"
+        "James-Yu.latex-workshop",
+        "dangmai.workspace-default-settings",
+        "valentjn.vscode-ltex"
     ]
 }

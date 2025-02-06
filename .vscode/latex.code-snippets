@@ -1,0 +1,76 @@
+{
+    // Place your FOP-2425-H01-TeX workspace snippets here. Each snippet is defined under a snippet name and has a scope, prefix, body and
+    // description. Add comma separated ids of the languages where the snippet is applicable in the scope field. If scope
+    // is left empty or omitted, the snippet gets applied to all languages. The prefix is what is
+    // used to trigger the snippet and the body will be expanded and inserted. Possible variables are:
+    // $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders.
+    // Placeholders with the same ids are connected.
+    // Example:
+    // "Print to console": {
+    // 	"scope": "javascript,typescript",
+    // 	"prefix": "log",
+    // 	"body": [
+    // 		"console.log('$1');",
+    // 		"$2"
+    // 	],
+    // 	"description": "Log output to console"
+    // }
+    "task": {
+        "prefix": "\\task",
+        "body": [
+            "\\begin{task}[points=${1:auto}]{${2:Aufgabentitel}}",
+            "\t$0",
+            "\\end{task}"
+        ],
+        "description": "Create A Task Environment",
+        "scope": "latex"
+    },
+    "subtask": {
+        "prefix": "\\subtask",
+        "body": [
+            "\\begin{subtask*}[points=${1:1}]{${2:Aufgabentitel}}",
+            "\t$0",
+            "\\end{subtask*}"
+        ],
+        "description": "Create A Subtask Environment",
+        "scope": "latex"
+    },
+    "inlinejava": {
+        "prefix": [
+            "\\inlinejava",
+        ],
+        "body": "\\inlinejava{$0}",
+        "description": "Displays java code inline",
+        "scope": "latex"
+    },
+    "Def Box": {
+        "prefix": "\\defBox",
+        "body": [
+            "\\begin{defBox}",
+            "\t$0",
+            "\\end{defBox}"
+        ],
+        "description": "Create An Definition Box (accentcolor Stripe, light accentcolor Background)",
+        "scope": "latex"
+    },
+    "Info Box": {
+        "prefix": "\\infoBox",
+        "body": [
+            "\\begin{infoBox}",
+            "\t$0",
+            "\\end{infoBox}"
+        ],
+        "description": "Create An Info Box (accentcolor Stripe, no Background)",
+        "scope": "latex"
+    },
+    "Gray Info Box": {
+        "prefix": "\\grayInfoBox",
+        "body": [
+            "\\begin{grayInfoBox}",
+            "\t$0",
+            "\\end{grayInfoBox}"
+        ],
+        "description": "Create A Gray Info Box (gray Stripe, gray Background)",
+        "scope": "latex"
+    },
+}
