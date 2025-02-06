@@ -1,7 +1,7 @@
 \documentclass[
     ngerman,
     accentcolor=3b,
-    dark_mode,
+    % dark_mode,
     fontsize=12pt,
     a4paper,
     aspectratio=169,
@@ -31,7 +31,7 @@
 \department{TU Darmstadt | Algo}
 \date{\today}
 \logo*{\includegraphics{example-image-16x9}}
-\titlegraphic*{\includegraphics{example-image}}
+\titlegraphic*{\includegraphics{example-image-a}}
 
 %%----------------------------%%
 %%--Stilistische Anpassungen--%%
@@ -79,7 +79,7 @@
 
     \begin{frame}[fragile,c]
         \slidehead{}
-        \begin{codeBlock}[]{title=\codeBlockTitle{Java-Example}}
+        \begin{codeBlock}[]{title=\codeBlockTitle{Java-Example},top=0cm,bottom=0cm}
         package com.example;
 
         // This is a comment
@@ -96,7 +96,7 @@
     \subsection{racket}
     \begin{frame}[fragile,c]
         \slidehead{}
-        \begin{codeBlock}[]{minted language=racket,title=\codeBlockTitle{Racket-Example}}
+        \begin{codeBlock}[]{minted language=racket,title=\codeBlockTitle{Racket-Example},top=0cm,bottom=0cm}
         ;; Type: real -> real
         ;; Precondition: n is a natural number
         ;; Returns: The fibbonacci number of the given number
