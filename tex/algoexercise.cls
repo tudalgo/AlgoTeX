@@ -832,7 +832,7 @@
 
 
 % Better Task Titles
-\IfTudaciVersionAtLeastTF{3.13}{
+\IfTudaciVersionBetweenTF{3.13}{3.40}{
     \renewcommand*\sectionlinesformat[4]{%
         \parbox{\linewidth}{
             \bool_if:cT {g__ptxcd_ruled_#1_bool} {
@@ -865,8 +865,46 @@
                 \rule[-\dp\strutbox]{0pt}{\dp\strutbox}\par}\nointerlineskip
             \skip_vertical:n {\ptxcd_titlerule_sep: -\dp\strutbox}
             \bool_if:cT {g__ptxcd_ruled_#1_bool} {\smash{\rule{\linewidth}{\g_ptxcd_titlerule_dim}}}
-        }}
-}{}
+        }
+    }
+}{
+    \IfTudaciVersionAtLeastTF{4.0}{
+        \renewcommand*\sectionlinesformat[4]{%
+            \parbox{\linewidth}{
+                \bool_if:cT {g__ptxcd_ruled_#1_bool} {
+                    \rule[5\g_ptxcd_titlerule_dim]{\linewidth}{\g_ptxcd_titlerule_dim}\par\nointerlineskip
+                }
+                \@hangfrom{%
+                    \hskip #2#3}{
+                    \tl_if_eq:nnT {#1} {task} {
+                        \exp_args:No \tl_if_empty:nF {#4}
+                        {:~}
+                        \bool_if:NT \l__ptxcd_points_auto_bool {
+                            \exp_args:NNx \prop_get:NnN \g__ptxcd_loaded_points_prop {\thetask} \l_ptxcd_tmp_tl
+                            \quark_if_no_value:NF \l_ptxcd_tmp_tl {
+                                \fp_set:Nn \l__ptxcd_task_points_fp {\l_ptxcd_tmp_tl}
+                            }
+                        }
+                    }
+                    {#4\ensuremath{\vcenter{\hbox{\tikz{\node[inner~sep=0pt, text~height=1.1em]{};}}}}}% Übungstitel mit Seriefen
+                    \tl_if_in:nnT {#1} {task} {
+                        \hfill\tl_if_empty:cTF{l__ptxcd_#1_credit_tl}
+                        {\pointformat{\fp_to_decimal:c {l__ptxcd_#1_points_fp}}}
+                        {\creditformat{\tl_use:c {l__ptxcd_#1_credit_tl}}}
+                        \fp_compare:nT {\l_algo_ex_vue_difficulty_fp >= 0} {
+                            \quad{}\textbf{
+                                %Schwierigkeit:~
+                                \starrating{\l_algo_ex_vue_difficulty_fp}{\l_algo_ex_vue_max_difficulty_fp}
+                            }
+                        }
+                    }
+                    \rule[-\dp\strutbox]{0pt}{\dp\strutbox}\par}\nointerlineskip
+                \skip_vertical:n {\ptxcd_titlerule_sep: -\dp\strutbox}
+                \bool_if:cT {g__ptxcd_ruled_#1_bool} {\smash{\rule{\linewidth}{\g_ptxcd_titlerule_dim}}}
+            }
+        }
+    }{}
+}
 
 \AtBeginDocument{
     \regex_match:nVT {SNAPSHOT} \g_rubos_document_version_tl {
