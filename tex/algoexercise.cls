@@ -141,8 +141,10 @@
     % Discover tudaci-Version
     \exp_args:NNnx \seq_set_split:Nnn \g_tuda_version_seq { ~ } { \use:c {ver@tudaexercise.cls} }
     \tl_set:Nx \g_tudaci_version_tl { \seq_item:Nn \g_tuda_version_seq { 2 } }
-    \tl_set:Nx \g_tudaci_version_tl {\tl_tail:N \g_tudaci_version_tl}
-    \regex_replace_once:nnN { [a-z] } { } \g_tudaci_version_tl
+    \regex_extract_once:nVNF { (\d+(\.\d+)*) } \g_tudaci_version_tl \l_tudaci_version_seq {
+        \ClassError{algoexercise}{Could~not~determine~TUDA-Exercise~Version}{Please~update~your~TUDA-Exercise~Class}
+    }
+    \tl_gset:Nx \g_tudaci_version_tl { \seq_item:Nn \l_tudaci_version_seq { 1 } }
 
     \newcommand{\getTudaciVersion}[1]{
         \tl_use:N \g_tudaci_version_tl
