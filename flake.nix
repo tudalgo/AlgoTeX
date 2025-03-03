@@ -20,7 +20,7 @@
       pkgs = import nixpkgs { inherit system; };
     in
     {
-      # shell for using algotex
+      # minimal example shell for using algotex
       devShells.${system}.default = pkgs.mkShell {
         buildInputs = [
           pkgs.python313Packages.pygments
@@ -29,6 +29,7 @@
       };
 
       packages.${system} = {
+        # algotex and logo only
         algotex = pkgs.stdenvNoCC.mkDerivation (finalAttrs: {
           name = "algotex";
           src = ./.;
@@ -41,10 +42,12 @@
           installPhase = ''
             runHook preInstall
 
+            # copy algotex files
             algotex_path=$out/tex/latex/algotex
             mkdir -p $algotex_path
             cp $src/tex/* $algotex_path/
 
+            # build tuda logo
             logo_path=$out/tex/latex/local
             mkdir -p $logo_path
             rsvg-convert -f pdf -o $logo_path/tuda_logo.pdf ${tuda-logo}
@@ -55,6 +58,7 @@
           dontBuild = true;
         });
 
+        # full texlive distribution with algotex and the logo file
         latex_with_algotex = pkgs.texlive.combine {
           inherit (pkgs.texlive) scheme-full;
           inherit (self.packages.${system}) algotex;
