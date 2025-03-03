@@ -1,7 +1,7 @@
 % FOP and AuD Exercise template class
 % Author: Ruben Deisenroth
-\def\fileversion{2.4.0}
-\def\filedate{2025-02-11}
+\def\fileversion{2.4.1}
+\def\filedate{2025-03-03}
 
 % Sets the LaTeX version for the package to work.
 \NeedsTeXFormat{LaTeX2e}
@@ -141,7 +141,7 @@
     % Discover tudaci-Version
     \exp_args:NNnx \seq_set_split:Nnn \g_tuda_version_seq { ~ } { \use:c {ver@tudaexercise.cls} }
     \tl_set:Nx \g_tudaci_version_tl { \seq_item:Nn \g_tuda_version_seq { 2 } }
-    \regex_extract_once:nVNF { (\d+(\.\d+)*) } \g_tudaci_version_tl \l_tudaci_version_seq {
+    \exp_args:NnV \regex_extract_once:nnNF { (\d+(\.\d+)*) } \g_tudaci_version_tl \l_tudaci_version_seq {
         \ClassError{algoexercise}{Could~not~determine~TUDA-Exercise~Version}{Please~update~your~TUDA-Exercise~Class}
     }
     \tl_gset:Nx \g_tudaci_version_tl { \seq_item:Nn \l_tudaci_version_seq { 1 } }
