@@ -2,21 +2,36 @@
   "nodes": {
     "nixpkgs": {
       "locked": {
-        "lastModified": 1697915759,
-        "narHash": "sha256-WyMj5jGcecD+KC8gEs+wFth1J1wjisZf8kVZH13f1Zo=",
-        "owner": "NixOS",
+        "lastModified": 1740916017,
+        "narHash": "sha256-Ze/3XCElkVljFCnBKezLldOz2ZaGp7eozxRqFzACnMI=",
+        "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "51d906d2341c9e866e48c2efcaac0f2d70bfd43e",
+        "rev": "b58e19b11fe72175fd7a9e014a4786a91e99da5f",
         "type": "github"
       },
       "original": {
-        "id": "nixpkgs",
-        "type": "indirect"
+        "owner": "nixos",
+        "ref": "nixpkgs-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
       }
     },
     "root": {
       "inputs": {
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": "nixpkgs",
+        "tuda-logo": "tuda-logo"
+      }
+    },
+    "tuda-logo": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-F/1F1yQbDhyXKXqeWZFFVB/tLWoSuVSbEgFolQrrSoM=",
+        "type": "file",
+        "url": "https://upload.wikimedia.org/wikipedia/de/2/24/TU_Darmstadt_Logo.svg"
+      },
+      "original": {
+        "type": "file",
+        "url": "https://upload.wikimedia.org/wikipedia/de/2/24/TU_Darmstadt_Logo.svg"
       }
     }
   },
