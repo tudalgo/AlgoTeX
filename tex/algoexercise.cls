@@ -1,6 +1,6 @@
 % FOP and AuD Exercise template class
 % Author: Ruben Deisenroth
-\def\fileversion{2.4.1}
+\def\fileversion{2.4.2}
 \def\filedate{2025-03-03}
 
 % Sets the LaTeX version for the package to work.
@@ -683,47 +683,84 @@
 
 \IfCorporateDesignT{
     % Custom Headline Style
-    \clist_map_inline:nn {odd, even, oneside} {
-        \exp_args:Nf \keys_define:nn {\tudaPkgPrefix/exercise/headline} {
-            #1 .choice:,
-            #1 / title-name-id .code:n = \tl_gset:cn {g_ \tudaPkgPrefix _ex_headline_#1_tl} {
-                \getShorttitle
-                \par
-                \StudentName
-                \StudentID
-            },
-            #1 / title-name .code:n = \tl_gset:cn {g_ \tudaPkgPrefix _ex_headline_#1_tl} {
-                \getShorttitle\par
-                \smallskip
-                \StudentName
-            },
-            #1 / title .code:n = \tl_gset:cn {g_ \tudaPkgPrefix _ex_headline_#1_tl} {\getShorttitle},
-            #1 / fulltitle-centered .code:n = \tl_gset:cn {g_ \tudaPkgPrefix _ex_headline_#1_tl} {
-                \centering
-                \textbf{\textsf{\@title}
-                }
-            },
-            #1 / name-id .code:n = \tl_gset:cn {g_ \tudaPkgPrefix _ex_headline_#1_tl} {
-                \StudentName
-                \StudentID
-            },
-            #1 / name .code:n = \tl_gset:cn {g_ \tudaPkgPrefix _ex_headline_#1_tl} {
-                \StudentName
-            },
-            #1 / algo .code:n = \tl_gset:cn {g_ \tudaPkgPrefix _ex_headline_#1_tl} {
-                \textsf{\textbf{\getFach{}\space{}}
-                    im\space\fatsf{\getSemester{}}\space{}
-                    bei\space\fatsf{\getDozent{}}\hfill\fatsf{\@title}~--~\getShorttitle\par
-                    \StudentName\StudentID}
-            },
-            #1 / algo-min .code:n = \tl_gset:cn {g_ \tudaPkgPrefix _ex_headline_#1_tl} {
-                \textsf{\textbf{\getFach{}\space{}}
-                    im\space\fatsf{\getSemester{}}\space{}
-                    bei\space\fatsf{\getDozent{}}\hfill\fatsf{\@title}~--~\getShorttitle}
-            },
-            % Backwards Compatibility
-            #1 / aud .meta:n = {#1 / algo = ##1},
-            #1 / aud-min .meta:n = {#1 / algo-min = ##1},
+    \IfTudaciVersionAtLeastTF{4.0}{
+        \clist_map_inline:nn {odd, even, oneside} {
+            \exp_args:Nf \keys_define:nn {\tudaPkgPrefix/exercise/headline} {
+                #1 .choice:,
+                #1 / title-name-id .meta:n = {
+                    #1 = {
+                        \getShorttitle\par
+                        \StudentName\StudentID
+                    }
+                },
+                #1 / title-name .meta:n = {
+                    #1 = {
+                        \getShorttitle\par
+                        \smallskip
+                        \StudentName
+                    }
+                },
+                #1 / title .meta:n = {#1 = {\getShorttitle}},
+                #1 / fulltitle-centered .meta:n = {#1 = {\centering\textbf{\textsf{\@title}}}},
+                #1 / name-id .meta:n = {#1 = {\StudentName\StudentID}},
+                #1 / name .meta:n = {#1 = {\StudentName}},
+                #1 / algo .meta:n = {#1 = {
+                        \textsf{\textbf{\getFach{}\space{}}
+                            im\space\fatsf{\getSemester{}}\space{}
+                            bei\space\fatsf{\getDozent{}}\hfill\fatsf{\@title}~--~\getShorttitle\par
+                            \StudentName\StudentID}
+                    }},
+                #1 / algo-min .meta:n = {#1 = {
+                        \textsf{\textbf{\getFach{}\space{}}
+                            im\space\fatsf{\getSemester{}}\space{}
+                            bei\space\fatsf{\getDozent{}}\hfill\fatsf{\@title}~--~\getShorttitle}
+                    }},
+                #1 / unknown .code:n = \tl_gset:cn {g__ \tudaPkgPrefix _headline_#1_tl} {##1}
+            }
+        }
+    }{
+        \clist_map_inline:nn {odd, even, oneside} {
+            \exp_args:Nf \keys_define:nn {\tudaPkgPrefix/exercise/headline} {
+                #1 .choice:,
+                #1 / title-name-id .code:n = \tl_gset:cn {g_ \tudaPkgPrefix _ex_headline_#1_tl} {
+                    \getShorttitle
+                    \par
+                    \StudentName
+                    \StudentID
+                },
+                #1 / title-name .code:n = \tl_gset:cn {g_ \tudaPkgPrefix _ex_headline_#1_tl} {
+                    \getShorttitle\par
+                    \smallskip
+                    \StudentName
+                },
+                #1 / title .code:n = \tl_gset:cn {g_ \tudaPkgPrefix _ex_headline_#1_tl} {\getShorttitle},
+                #1 / fulltitle-centered .code:n = \tl_gset:cn {g_ \tudaPkgPrefix _ex_headline_#1_tl} {
+                    \centering
+                    \textbf{\textsf{\@title}
+                    }
+                },
+                #1 / name-id .code:n = \tl_gset:cn {g_ \tudaPkgPrefix _ex_headline_#1_tl} {
+                    \StudentName
+                    \StudentID
+                },
+                #1 / name .code:n = \tl_gset:cn {g_ \tudaPkgPrefix _ex_headline_#1_tl} {
+                    \StudentName
+                },
+                #1 / algo .code:n = \tl_gset:cn {g_ \tudaPkgPrefix _ex_headline_#1_tl} {
+                    \textsf{\textbf{\getFach{}\space{}}
+                        im\space\fatsf{\getSemester{}}\space{}
+                        bei\space\fatsf{\getDozent{}}\hfill\fatsf{\@title}~--~\getShorttitle\par
+                        \StudentName\StudentID}
+                },
+                #1 / algo-min .code:n = \tl_gset:cn {g_ \tudaPkgPrefix _ex_headline_#1_tl} {
+                    \textsf{\textbf{\getFach{}\space{}}
+                        im\space\fatsf{\getSemester{}}\space{}
+                        bei\space\fatsf{\getDozent{}}\hfill\fatsf{\@title}~--~\getShorttitle}
+                },
+                % Backwards Compatibility
+                #1 / aud .meta:n = {#1 / algo = ##1},
+                #1 / aud-min .meta:n = {#1 / algo-min = ##1},
+            }
         }
     }
 }
