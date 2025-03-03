@@ -22,17 +22,12 @@
     {
       # shell for using algotex
       devShells.${system}.default = pkgs.mkShell {
-        buildInputs = with pkgs; [
-          python311Packages.pygments
-          pre-commit
-          python310Packages.editorconfig
-
+        buildInputs = [
+          pkgs.python313Packages.pygments
           self.packages.${system}.latex_with_algotex
         ];
-        shellHook = ''
-          pre-commit install
-        '';
       };
+
       packages.${system} = {
         algotex = pkgs.stdenvNoCC.mkDerivation (finalAttrs: {
           name = "algotex";
