@@ -2,11 +2,11 @@
   "nodes": {
     "nixpkgs": {
       "locked": {
-        "lastModified": 1740916017,
-        "narHash": "sha256-Ze/3XCElkVljFCnBKezLldOz2ZaGp7eozxRqFzACnMI=",
+        "lastModified": 1743259260,
+        "narHash": "sha256-ArWLUgRm1tKHiqlhnymyVqi5kLNCK5ghvm06mfCl4QY=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "b58e19b11fe72175fd7a9e014a4786a91e99da5f",
+        "rev": "eb0e0f21f15c559d2ac7633dc81d079d1caf5f5f",
         "type": "github"
       },
       "original": {
@@ -19,19 +19,19 @@
     "root": {
       "inputs": {
         "nixpkgs": "nixpkgs",
-        "tuda-logo": "tuda-logo"
+        "tuda-pdf": "tuda-pdf"
       }
     },
-    "tuda-logo": {
+    "tuda-pdf": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-F/1F1yQbDhyXKXqeWZFFVB/tLWoSuVSbEgFolQrrSoM=",
+        "narHash": "sha256-ThoKm1Tg818VJ/Hx6gWGMWqwg9puoUxL7mvLJhMyDvU=",
         "type": "file",
-        "url": "https://upload.wikimedia.org/wikipedia/de/2/24/TU_Darmstadt_Logo.svg"
+        "url": "https://www.tu-darmstadt.de/media/medien_stabsstelle_km/services/medien_cd/das_bild_der_tu_darmstadt.pdf"
       },
       "original": {
         "type": "file",
-        "url": "https://upload.wikimedia.org/wikipedia/de/2/24/TU_Darmstadt_Logo.svg"
+        "url": "https://www.tu-darmstadt.de/media/medien_stabsstelle_km/services/medien_cd/das_bild_der_tu_darmstadt.pdf"
       }
     }
   },

@@ -3,8 +3,8 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixpkgs-unstable";
-    tuda-logo = {
-      url = "https://upload.wikimedia.org/wikipedia/de/2/24/TU_Darmstadt_Logo.svg";
+    tuda-pdf = {
+      url = "https://www.tu-darmstadt.de/media/medien_stabsstelle_km/services/medien_cd/das_bild_der_tu_darmstadt.pdf";
       flake = false;
     };
   };
@@ -13,7 +13,7 @@
     {
       self,
       nixpkgs,
-      tuda-logo,
+      tuda-pdf,
     }:
     let
       system = "x86_64-linux";
@@ -38,7 +38,10 @@
             tlType = "run";
             tlDeps = with pkgs.texlive; [ latex ];
           };
-          nativeBuildInputs = with pkgs; [ librsvg ];
+          nativeBuildInputs = with pkgs; [
+            inkscape
+            librsvg
+          ];
           installPhase = ''
             runHook preInstall
 
@@ -50,7 +53,13 @@
             # build tuda logo
             logo_path=$out/tex/latex/local
             mkdir -p $logo_path
-            rsvg-convert -f pdf -o $logo_path/tuda_logo.pdf ${tuda-logo}
+            cp ${tuda-pdf} tuda.pdf
+
+            # see https://github.com/tudalgo/AlgoTeX/blob/5de6300bcbbf4ffb5c6ec9e8fb29fdd2f3b7896b/Dockerfile.logo
+            inkscape tuda.pdf --export-filename=p1_i.svg --export-dpi=3000 --pages=1
+            sed -i 's/icc-color([^)]*)//g' p1_i.svg
+            sed -i 's/#000000/#1d1d1bff/g' p1_i.svg
+            rsvg-convert -f pdf -o $logo_path/tuda_logo.pdf p1_i.svg --export-id=g23
 
             runHook postInstall
           '';
