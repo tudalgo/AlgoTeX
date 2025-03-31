@@ -16,64 +16,82 @@
       tuda-pdf,
     }:
     let
-      system = "x86_64-linux";
-      pkgs = import nixpkgs { inherit system; };
+      systems = [
+        "aarch64-darwin"
+        "aarch64-linux"
+        "x86_64-darwin"
+        "x86_64-linux"
+      ];
+      forAllSystems = nixpkgs.lib.genAttrs systems;
+      allPkgs = forAllSystems (system: import nixpkgs { inherit system; });
     in
     {
       # minimal example shell for using algotex
-      devShells.${system}.default = pkgs.mkShell {
-        buildInputs = [
-          pkgs.python313Packages.pygments
-          self.packages.${system}.latex_with_algotex
-        ];
-      };
-
-      packages.${system} = {
-        # algotex and logo only
-        algotex = pkgs.stdenvNoCC.mkDerivation (finalAttrs: {
-          name = "algotex";
-          src = ./.;
-          passthru = {
-            pkgs = [ finalAttrs.finalPackage ];
-            tlType = "run";
-            tlDeps = with pkgs.texlive; [ latex ];
-          };
-          nativeBuildInputs = with pkgs; [
-            inkscape
-            librsvg
+      devShells = forAllSystems (
+        system:
+        let
+          inherit (allPkgs.${system}) pkgs;
+        in
+        pkgs.mkShell {
+          buildInputs = [
+            pkgs.python313Packages.pygments
+            self.packages.${system}.latex_with_algotex
           ];
-          installPhase = ''
-            runHook preInstall
+        }
+      );
 
-            # copy algotex files
-            algotex_path=$out/tex/latex/algotex
-            mkdir -p $algotex_path
-            cp $src/tex/* $algotex_path/
+      packages = forAllSystems (
+        system:
+        let
+          inherit (allPkgs.${system}) pkgs;
+        in
+        {
+          # algotex and logo only
+          algotex = pkgs.stdenvNoCC.mkDerivation (finalAttrs: {
+            name = "algotex";
+            src = ./.;
+            passthru = {
+              pkgs = [ finalAttrs.finalPackage ];
+              tlType = "run";
+              tlDeps = with pkgs.texlive; [ latex ];
+            };
+            nativeBuildInputs = with pkgs; [
+              inkscape
+              librsvg
+            ];
+            installPhase = ''
+              runHook preInstall
 
-            # build tuda logo
-            logo_path=$out/tex/latex/local
-            mkdir -p $logo_path
-            cp ${tuda-pdf} tuda.pdf
+              # copy algotex files
+              algotex_path=$out/tex/latex/algotex
+              mkdir -p $algotex_path
+              cp $src/tex/* $algotex_path/
 
-            # see https://github.com/tudalgo/AlgoTeX/blob/5de6300bcbbf4ffb5c6ec9e8fb29fdd2f3b7896b/Dockerfile.logo
-            inkscape tuda.pdf --export-filename=p1_i.svg --export-dpi=3000 --pages=1
-            sed -i 's/icc-color([^)]*)//g' p1_i.svg
-            sed -i 's/#000000/#1d1d1bff/g' p1_i.svg
-            rsvg-convert -f pdf -o $logo_path/tuda_logo.pdf p1_i.svg --export-id=g23
+              # build tuda logo
+              logo_path=$out/tex/latex/local
+              mkdir -p $logo_path
+              cp ${tuda-pdf} tuda.pdf
 
-            runHook postInstall
-          '';
-          dontConfigure = true;
-          dontBuild = true;
-        });
+              # see https://github.com/tudalgo/AlgoTeX/blob/5de6300bcbbf4ffb5c6ec9e8fb29fdd2f3b7896b/Dockerfile.logo
+              inkscape tuda.pdf --export-filename=p1_i.svg --export-dpi=3000 --pages=1
+              sed -i 's/icc-color([^)]*)//g' p1_i.svg
+              sed -i 's/#000000/#1d1d1bff/g' p1_i.svg
+              rsvg-convert -f pdf -o $logo_path/tuda_logo.pdf p1_i.svg --export-id=g23
 
-        # full texlive distribution with algotex and the logo file
-        latex_with_algotex = pkgs.texlive.combine {
-          inherit (pkgs.texlive) scheme-full;
-          inherit (self.packages.${system}) algotex;
-        };
+              runHook postInstall
+            '';
+            dontConfigure = true;
+            dontBuild = true;
+          });
 
-        default = self.packages.${system}.latex_with_algotex;
-      };
+          # full texlive distribution with algotex and the logo file
+          latex_with_algotex = pkgs.texlive.combine {
+            inherit (pkgs.texlive) scheme-full;
+            inherit (self.packages.${system}) algotex;
+          };
+
+          default = self.packages.${system}.latex_with_algotex;
+        }
+      );
     };
 }
