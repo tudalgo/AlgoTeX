@@ -178,3 +178,12 @@
     \end{grayInfoBox}
 }
 
+\DeclareSnippet{javadoc-hinweise}{Hinweise zur Vorlage}{
+    \begin{infoBox}
+        \fatsf{Hinweise Vorlage:}
+        \medskip\\
+        Ab dieser Übung werden die vorgegebenen Klassen, Attribute, Konstruktoren und Methoden nicht mehr im Detail beschrieben.
+        Bitte entnehmen Sie alle weiteren Informationen den Javadocs der Vorlage.
+        Eigenständig zu implementierende Konstrukte sind weiterhin im Übungsblatt erläutert.
+    \end{infoBox}
+}
