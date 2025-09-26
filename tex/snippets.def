@@ -74,6 +74,18 @@
     \end{defBox}
     Die für diese Hausübung relevanten Verzeichnisse sind \texttt{src/main/java/h\getSheetnumber{}} und ggf. \texttt{src/test/java/h\getSheetnumber{}}.
 }
+\DeclareSnippet{exercise-introduction-fop-2526}{Globale Verbindliche Anforderungen und Hinweise}{
+    \begin{defBox}
+        \fatsf{Beachten Sie die Seite \href{https://moodle.informatik.tu-darmstadt.de/mod/page/view.php?id=76582}{\emph{Verbindliche Anforderungen für alle Abgaben}} im Moodle-Kurs.}
+        \medskip\\
+        Verstöße gegen verbindliche Anforderungen führen zu Punktabzügen und können die korrekte Bewertung Ihrer Abgabe beeinflussen.
+        Sofern vorhanden,
+        müssen die in der Vorlage mit \inlinejava{TODO} markierten \inlinejava{crash}-Aufrufe entfernt werden.
+        Andernfalls wird die jeweilige Aufgabe nicht bewertet.
+    \end{defBox}
+    Die für diese Hausübung relevanten Verzeichnisse sind \texttt{src/main/java/h\getSheetnumber{}} und ggf. \texttt{src/test/java/h\getSheetnumber{}}.
+}
+
 
 \DeclareSnippet{tests-introduction}{Globale Hinweise für Tests}{
     \begin{hinweis}
