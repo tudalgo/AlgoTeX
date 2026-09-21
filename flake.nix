@@ -1,59 +1,79 @@
 {
   description = "AlgoTeX flake";
 
-  outputs = { self, nixpkgs, }:
+  inputs = {
+    nixpkgs.url = "github:nixos/nixpkgs?ref=nixpkgs-unstable";
+    tuda-pdf = {
+      url = "https://www.tu-darmstadt.de/media/medien_stabsstelle_km/services/medien_cd/das_bild_der_tu_darmstadt.pdf";
+      flake = false;
+    };
+  };
+
+  outputs =
+    {
+      self,
+      nixpkgs,
+      tuda-pdf,
+    }:
     let
       system = "x86_64-linux";
-      pkgs = import nixpkgs { inherit system; };
-      algotex = with pkgs;
-        stdenvNoCC.mkDerivation (finalAttrs: {
+      pkgs = nixpkgs.legacyPackages.${system};
+    in
+    {
+      # minimal example shell for using algotex
+      devShells.${system}.default = pkgs.mkShell {
+        buildInputs = [
+          pkgs.python313Packages.pygments
+          self.packages.${system}.latex_with_algotex
+        ];
+      };
+
+      packages.${system} = {
+        # algotex and logo only
+        algotex = pkgs.stdenvNoCC.mkDerivation (finalAttrs: {
           name = "algotex";
-          src = fetchFromGitHub {
-            owner = "tudalgo";
-            repo = "AlgoTeX";
-            rev = "5f0d8bd394bba5b04eef0d11614b3cadd315f1c8";
-            hash = "sha256-hpuPeK1xj62xveMBh8X1NvRKgtRTSUBZk5eOPixxIpY=";
-          };
+          src = ./.;
           passthru = {
             pkgs = [ finalAttrs.finalPackage ];
             tlType = "run";
-            tlDeps = with texlive; [ latex ];
+            tlDeps = with pkgs.texlive; [ latex ];
           };
-          buildInputs = [ librsvg ];
-          installPhase = ''
-            mkdir -p $out/tex/latex/algotex
-            cp -t $out/tex/latex/algotex/ $src/tex/*
-            cp $out/tex/latex/algotex/FOPBot.sty $out/tex/latex/algotex/fopbot.sty
-
-            mkdir -p $out/tex/latex/local
-            rsvg-convert -f pdf -o $out/tex/latex/local/tuda_logo.pdf ${
-              builtins.fetchurl {
-                url =
-                  "https://upload.wikimedia.org/wikipedia/de/2/24/TU_Darmstadt_Logo.svg";
-                sha256 =
-                  "sha256:0wb2ygg0wzd2ajdzv847xp1qxkx4m1j64p1gdrq4r05klbrddbwl";
-              }
-            }
-          '';
-        });
-      patched-latex = with pkgs.texlive;
-        combine {
-          inherit scheme-full;
-          inherit algotex;
-        };
-    in {
-      devShells.${system}.default = with pkgs;
-        mkShell {
-          buildInputs = [
-            python311Packages.pygments
-            patched-latex
-            pre-commit
-            python310Packages.editorconfig
+          nativeBuildInputs = with pkgs; [
+            inkscape
+            librsvg
           ];
-          shellHook = ''
-            pre-commit install
+          installPhase = ''
+            runHook preInstall
+
+            # copy algotex files
+            algotex_path=$out/tex/latex/algotex
+            mkdir -p $algotex_path
+            cp $src/tex/* $algotex_path/
+
+            # build tuda logo
+            logo_path=$out/tex/latex/local
+            mkdir -p $logo_path
+            cp ${tuda-pdf} tuda.pdf
+
+            # see https://github.com/tudalgo/AlgoTeX/commit/ce0e2c032d3067070ef07bd8c84520f8209e1997
+            inkscape tuda.pdf --export-filename=p1_i.svg --export-dpi=3000 --pages=1
+            sed -i 's/icc-color([^)]*)//g' p1_i.svg
+            sed -i 's/#000000/#1d1d1bff/g' p1_i.svg
+            rsvg-convert -f pdf -o $logo_path/tuda_logo.pdf p1_i.svg --export-id=g20
+
+            runHook postInstall
           '';
+          dontConfigure = true;
+          dontBuild = true;
+        });
+
+        # full texlive distribution with algotex and the logo file
+        latex_with_algotex = pkgs.texlive.combine {
+          inherit (pkgs.texlive) scheme-full;
+          inherit (self.packages.${system}) algotex;
         };
-      packages.${system}.default = patched-latex;
+
+        default = self.packages.${system}.latex_with_algotex;
+      };
     };
 }
